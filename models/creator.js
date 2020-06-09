@@ -6,6 +6,7 @@ module.exports = function(sequelize, DataTypes) {
   Creator.associate = function(models) {
     // Each creator can have many pokemon
     Creator.hasMany(models.Pokemon, {
+      as: "Pokemon",
       onDelete: "cascade"
     });
   };
