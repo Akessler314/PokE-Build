@@ -12,8 +12,8 @@ module.exports = function(sequelize, DataTypes) {
   Pokemon.associate = function(models) {
     Pokemon.belongsTo(models.Creator, {
       foreignKey: {
-        allowNull: false,
-      },
+        allowNull: false
+      }
     });
   };
 
