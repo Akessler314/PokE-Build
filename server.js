@@ -1,5 +1,6 @@
 // Requiring necessary npm packages
 const express = require("express");
+const expressHandle = require("express-handlebars");
 
 // Setting up port and requiring models for syncing
 const PORT = process.env.PORT || 8080;
@@ -10,6 +11,10 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
+
+// Requiring Handlebars
+app.engine("handlebars", expressHandle({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 // Requiring our routes
 require("./routes/html-routes.js")(app);
