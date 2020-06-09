@@ -6,7 +6,11 @@ module.exports = function(sequelize, DataTypes) {
     defense: DataTypes.INTEGER,
     spdefense: DataTypes.INTEGER,
     attack: DataTypes.INTEGER,
-    spattack: DataTypes.INTEGER
+    spattack: DataTypes.INTEGER,
+    moveid1: DataTypes.INTEGER,
+    moveid2: DataTypes.INTEGER,
+    moveid3: DataTypes.INTEGER,
+    moveid4: DataTypes.INTEGER
   });
 
   Pokemon.associate = function(models) {
