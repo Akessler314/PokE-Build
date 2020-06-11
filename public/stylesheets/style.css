@@ -10,6 +10,8 @@ html, body {
     flex-direction: column;
 }
 
+/* Navbar styling */
+
 .navbar {
     background-color: rgb(255, 35, 35) !important;
     height: 100px;
@@ -24,6 +26,8 @@ html, body {
     font-size: 14px;
     outline: none;
 }
+
+/* Main index page styling */
 
 .searchRow {
     margin-top: 50px;
@@ -67,6 +71,10 @@ html, body {
     margin-top: 100px;
 }
 
+.container {
+    margin-top: 50px;
+}
+
 .viewAll, .viewYour, .createNew {
     margin-top: 20px;
     background-color: rgb(255, 35, 35);
@@ -75,6 +83,33 @@ html, body {
     outline:none;
     padding: 10px;
 }
+
+
+/* Styling for viewing own pokemon */
+
+.pokemonImg {
+    border: 3px solid black;
+    border-radius: 1rem;
+    box-shadow: 2px 5px 8px -3px #444;
+    float: left;
+    margin-right: 50px;
+    padding: 15px;
+    width: 50%;
+}
+
+.pokemonText {
+    font-family: 'Press Start 2P', cursive;
+}
+
+.card {
+    border: 5px solid rgb(255, 35, 35);
+    border-radius: 1rem;
+    box-shadow: 2px 6px 15px -3px #444;
+    margin: 0 auto 50px auto;
+    width: 65%;
+}
+
+/* Footers */
 
 footer {
     border-top: 2px solid black;
