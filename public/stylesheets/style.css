@@ -16,10 +16,28 @@ html, body {
     border-bottom: 2px solid black;
 }
 
+.signIn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    outline: none;
+}
+
+.searchRow {
+    margin-top: 50px;
+}
+
+.searchFor {
+    display: block;
+    margin: 25px auto 40px auto;
+}
+
 .searchBar {
     box-shadow: 0px 6px 10px -3px #444;
     border: 2px black solid;
-    border-radius: 50rem;
+    border-radius: 50rem !important;
     font-family: 'Press Start 2P', cursive;
     font-size: 18px;
     padding: 25px 15px;
@@ -27,13 +45,17 @@ html, body {
 
 .searchBtn {
     background-color: transparent;
-    border:none;
-    color: white;
-    outline:none;
+    border: none;
+    color: rgb(255, 35, 35);
+    outline: none;
 }
 
-.searchBtn:focus {
+.searchBtn:focus, .signIn:focus {
     outline: none;
+}
+
+.input-group {
+    margin-bottom: 70px;
 }
 
 /* Font Awesome icon */
