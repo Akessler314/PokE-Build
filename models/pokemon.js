@@ -1,4 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
+<<<<<<< HEAD
   const Pokemon = sequelize.define("Pokemon", {
     name: {
       type: DataTypes.STRING,
@@ -28,6 +29,20 @@ module.exports = function(sequelize, DataTypes) {
         len: [0, 18]
       }
     }
+=======
+  const Pokemon = sequelize.define('Pokemon', {
+    name: DataTypes.STRING,
+    hp: DataTypes.INTEGER,
+    speed: DataTypes.INTEGER,
+    defense: DataTypes.INTEGER,
+    spdefense: DataTypes.INTEGER,
+    attack: DataTypes.INTEGER,
+    spattack: DataTypes.INTEGER,
+    moveid1: DataTypes.INTEGER,
+    moveid2: DataTypes.INTEGER,
+    moveid3: DataTypes.INTEGER,
+    moveid4: DataTypes.INTEGER
+>>>>>>> 3a95ebe14271c81e6ab14b8a99aa2a8c0a3a7829
   });
 
   Pokemon.associate = function(models) {
