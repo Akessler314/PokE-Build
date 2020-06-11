@@ -1,1 +1,1 @@
-// Front-end Javascript
+// Front-end Javascript for the index page
