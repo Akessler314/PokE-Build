@@ -16,13 +16,21 @@ module.exports = function(app) {
   });
 
   // Search for pokemon by name
-  app.get('/api/pokemon/search/:term', (req, res) => {
+  app.get('/api/pokemon/search/:term/:page?', (req, res) => {
+    let page = 0;
+    const pageLimit = 20;
+    if (req.params.page) {
+      page = parseInt(req.params.page);
+    }
+
     db.Pokemon.findAll({
       where: {
         searchableName: {
           [Op.like]: '%' + req.params.term.toLowerCase() + '%'
         }
-      }
+      },
+      limit: pageLimit,
+      offset: page * pageLimit
     }).then(pokemon => {
       res.json(pokemon);
     });
