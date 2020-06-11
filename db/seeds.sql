@@ -2,4 +2,4 @@ USE dreamteam_db;
 
 INSERT INTO creators(username, createdAt, updatedAt) VALUES ("Ash", "2000-01-01 12:12:12", "2000-01-01 12:12:12");
 
-INSERT INTO pokemons(name, hp, speed, defense, spdefense, attack, spattack, moveid1, moveid2, moveid3, moveid4, createdAt, updatedAt, CreatorId) VALUES ("Pikachu", 50, 50, 50, 50, 50, 50, 1, 2, 3, 4, "2000-01-01 12:12:12", "2000-01-01 12:12:12", 1);
+INSERT INTO pokemons(name, searchableName, stats, moves, type1, type2, createdAt, updatedAt, CreatorId) VALUES ('Pikachu', 'pikachu', '{"hp":50,"speed":50,"attack":50,"spAttack":50,"defense":50,"spDefense":50}', '{"move1":1,"move2":2,"move3":3,"move4":4}', 1, 2, "2000-01-01 12:12:12", "2000-01-01 12:12:12", 1);
