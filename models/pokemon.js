@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  const Pokemon = sequelize.define("Pokemon", {
+  const Pokemon = sequelize.define('Pokemon', {
     name: DataTypes.STRING,
     hp: DataTypes.INTEGER,
     speed: DataTypes.INTEGER,

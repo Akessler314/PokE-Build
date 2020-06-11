@@ -32,7 +32,7 @@
     "prefer-arrow-callback": "error",
     "prefer-const": "error",
     "prettier/prettier": "error",
-    "quotes": ["error", "double"],
+    "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "vars-on-top": "error",
     "yoda": "error"
