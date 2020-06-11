@@ -18,6 +18,8 @@ module.exports = function(sequelize, DataTypes) {
     },
 
     // Types should use a value from the 'pokeTypes' array in the constants.js file
+    // The first type can not be 'null' or 'None', as the Pokemon needs at least one type.
+    // The second type can be 'None' or 'null', since some Pokemon may only have one type
     type1: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -31,6 +33,12 @@ module.exports = function(sequelize, DataTypes) {
       validate: {
         len: [0, 18]
       }
+    },
+
+    // The Pokemon's sprite is stored as Base64, which is then used by the Canvas api to render the sprite as a .gif
+    sprite: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   });
 
