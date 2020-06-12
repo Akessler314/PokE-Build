@@ -1,6 +1,9 @@
 module.exports = function(app) {
-  app.get('/placeholder', (req, res) => {
-    res.end();
+  app.get('/pokemon/battle/:id1/:id2', (req, res) => {
+    res.render('battle', {
+      pokemon1: req.params.id1,
+      pokemon2: req.params.id2
+    });
   });
 
   app.get('/', (req, res) => {
