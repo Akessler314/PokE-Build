@@ -34,13 +34,10 @@ a:hover {
     font-family: 'Press Start 2P', cursive;
     font-size: 14px;
     outline: none;
+    padding-bottom: 5px;
 }
 
 /* Main index page styling */
-
-.searchRow {
-    margin-top: 50px;
-}
 
 .searchFor {
     display: block;
@@ -73,9 +70,10 @@ a:hover {
 
 .error {
     color: red;
-    font-size: 25px;
-    text-align: center;
     font-family: 'Press Start 2P', cursive;
+    font-size: 25px;
+    padding-right: 50px;
+    text-align: center;
 }
 
 /* Font Awesome icon */
@@ -92,12 +90,32 @@ a:hover {
 }
 
 .viewAll, .viewYour, .createNew {
-    margin-top: 20px;
     background-color: rgb(255, 35, 35);
     border: 2px solid black;
     border-radius: 1rem;
+    margin-top: 20px;
     outline:none;
     padding: 10px;
+}
+
+.viewAll:hover, .viewYour:hover, .createNew:hover {
+    transition: ease-in-out 0.3s;
+    transform: scale(1.05);
+} 
+
+.buttonRow {
+    border: 5px solid rgb(255, 35, 35);
+    border-radius: 1rem;
+    box-shadow: 2px 5px 8px -3px #444;
+    margin-bottom: 50px;
+    padding: 15px;
+}
+
+.indexImg {
+    display: block;
+    margin: 0 auto;
+    height: 250px;
+    width: 250px;
 }
 
 
