@@ -12,6 +12,7 @@ $('#sizePicker').submit(event => {
   $tableElement.html(''); //clear
 
   makeGrid(height, width);
+  console.log('pixel grid created');
   addCellClickListener();
 });
 

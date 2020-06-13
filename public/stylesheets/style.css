@@ -182,3 +182,29 @@ footer {
 .hide {
     display: none;
 }
+
+/* stuff for the pixel art maker  */
+
+table,tr,td {
+    border: 1px solid rgb(100, 100, 100);
+    background-color: white;
+}
+/* used to remove the grid  */
+.opacity{
+    border: 1px solid rgba(100, 100, 100, 0);
+}
+
+table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    margin-bottom: 40px;
+}
+
+tr {
+    height: 20px;
+}
+
+td {
+    width: 20px;
+    height: 20px;
+}
