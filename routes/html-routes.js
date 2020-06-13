@@ -19,7 +19,6 @@ module.exports = function(app) {
   app.get('/pokemon/index/:page', (req, res) => {
     Pokemon.findAllInOrder('updatedAt', 'DESC', req.params.page).then(
       results => {
-        console.log(results);
         res.render('view-all-pokemon', { pokemon: results });
       }
     );

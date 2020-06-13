@@ -18,21 +18,12 @@
                 <div class="card resultCard">
                     <div class="card-body">
                         <a href="/pokemon/{{this.dataValues.searchableName}}">
-<<<<<<< HEAD
-                            {{#if sprite}}
-                            <img src="{{sprite}}" alt="Picture of {{name}}" class="resultImg">
-                            {{/if}}
-
-                            {{#unless sprite}}
-                            <img src="/img/no-img.jpg" alt="Picture of {{name}} couldn't be found" class="resultImg">
-=======
                             {{#if this.dataValues.sprite}}
                             <img src="{{this.dataValues.sprite}}" alt="Picture of {{this.dataValues.name}}" class="resultImg">
                             {{/if}}
 
                             {{#unless this.dataValues.sprite}}
                             <img src="/img/no-img.jpg" alt="Picture of {{this.dataValues.name}} couldn't be found" class="resultImg">
->>>>>>> 083766e7cc3d1ee61f5ec25efdc25b33acbd13da
                             {{/unless}}
 
                             <p class="resultText">Name: {{this.dataValues.name}}</p>
