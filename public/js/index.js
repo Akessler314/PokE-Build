@@ -23,7 +23,7 @@ $('.searchBtn').on('click', event => {
 
       const img = $('<img>')
         .attr({
-          src: 'https://via.placeholder.com/150',
+          src: pokemon.sprite,
           alt: `Picture of ${pokemon.name}`
         })
         .addClass('resultImg');
