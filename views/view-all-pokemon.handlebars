@@ -17,13 +17,13 @@
             <div class="col-lg-3">
                 <div class="card resultCard">
                     <div class="card-body">
-                        <a href="/pokemon/{{searchableName}}">
+                        <a href="/pokemon/{{this.dataValues.searchableName}}">
                             {{#if sprite}}
                             <img src="{{sprite}}" alt="Picture of {{name}}" class="resultImg">
                             {{/if}}
 
                             {{#unless sprite}}
-                            <img src="../img/no-img.jpg" alt="Picture of {{name}} couldn't be found" class="resultImg">
+                            <img src="/img/no-img.jpg" alt="Picture of {{name}} couldn't be found" class="resultImg">
                             {{/unless}}
 
                             <p class="resultText">Name: {{name}}</p>

@@ -1,3 +1,5 @@
+const Pokemon = require('../controllers/pokemonController');
+
 module.exports = function(app) {
   app.get('/pokemon/battle/:id1/:id2', (req, res) => {
     res.render('battle', {
@@ -12,5 +14,14 @@ module.exports = function(app) {
 
   app.get('/pixel', (req, res) => {
     res.render('pixel');
+  });
+
+  app.get('/pokemon/index/:page', (req, res) => {
+    Pokemon.findAllInOrder('updatedAt', 'DESC', req.params.page).then(
+      results => {
+        console.log(results);
+        res.render('view-all-pokemon', { pokemon: results });
+      }
+    );
   });
 };
