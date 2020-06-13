@@ -93,9 +93,9 @@ a:hover {
     background-color: rgb(255, 35, 35);
     border: 2px solid black;
     border-radius: 1rem;
-    margin-top: 20px;
+    margin: 20px auto 0 auto;
     outline:none;
-    padding: 10px;
+    padding: 10px 25px;
 }
 
 .viewAll:hover, .viewYour:hover, .createNew:hover {
@@ -181,9 +181,4 @@ footer {
 
 .hide {
     display: none;
-<<<<<<< HEAD
 }
-=======
-}
-
->>>>>>> 86712dab0e407248de380f9e8508bfaeb101604b
