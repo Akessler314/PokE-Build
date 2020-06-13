@@ -9,4 +9,8 @@ module.exports = function(app) {
   app.get('/', (req, res) => {
     res.render('index');
   });
+
+  app.get('/pixel', (req, res) => {
+    res.render('pixel');
+  });
 };
