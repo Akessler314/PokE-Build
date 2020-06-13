@@ -90,7 +90,7 @@ a:hover {
 }
 
 .viewAll, .viewYour, .createNew {
-    background-color: rgb(255, 35, 35);
+    background-color: rgb(255, 33, 35);
     border: 2px solid black;
     border-radius: 1rem;
     margin: 20px auto 0 auto;
