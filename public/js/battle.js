@@ -3,13 +3,12 @@ let canvas = null;
 let context = null;
 
 let player = null;
-const playerSprite = new Image();
 
 let opponent = null;
 const opponentSprite = new Image();
 
-const messageText = '';
-const messageBoxImage = null;
+const messageBox = new MessageBox('/img/messageBox.png');
+const optionsBox = new OptionsBox('/img/optionsBox.png');
 
 $(document).ready(() => {
   loadData();
@@ -25,9 +24,9 @@ function loadData() {
         results.stats,
         results.moves,
         results.type1,
-        results.type2
+        results.type2,
+        results.sprite
       );
-      playerSprite.src = results.sprite;
     })
     .then(() => {
       $.ajax({
@@ -39,9 +38,9 @@ function loadData() {
             results.stats,
             results.moves,
             results.type1,
-            results.type2
+            results.type2,
+            results.sprite
           );
-          opponentSprite.src = results.sprite;
         })
         .then(initCanvas);
     });
@@ -50,21 +49,41 @@ function loadData() {
 function initCanvas() {
   canvas = $('#battle-canvas')[0];
   context = canvas.getContext('2d');
+
+  drawCanvas();
 }
 
 function drawCanvas() {
+  // Clear
+  context.fillStyle = 'white';
+  context.fillRect(0, 0, canvas.width, canvas.height);
+
   context.drawImage(
-    playerSprite,
-    32,
-    344,
-    playerSprite.width * 4,
-    playerSprite.height * 4
+    player.sprite,
+    8,
+    86,
+    player.sprite.width,
+    player.sprite.height
   );
   context.drawImage(
-    opponentSprite,
-    640,
-    32,
-    opponentSprite.width * 4,
-    opponentSprite.height * 4
+    opponent.sprite,
+    160,
+    8,
+    opponent.sprite.width,
+    opponent.sprite.height
+  );
+  context.drawImage(
+    messageBox.sprite,
+    0,
+    118,
+    messageBox.sprite.width,
+    messageBox.sprite.height
+  );
+  context.drawImage(
+    optionsBox.sprite,
+    125,
+    118,
+    optionsBox.sprite.width,
+    optionsBox.sprite.height
   );
 }
