@@ -1,7 +1,7 @@
 let canvas;
 let context;
 
-$('body').on('load', () => {
+$(document).ready(() => {
   initCanvas();
 });
 

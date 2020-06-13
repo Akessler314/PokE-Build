@@ -45,6 +45,8 @@ module.exports = function(app) {
     gif.on('readable', () => {
       const base64 = 'data:image/gif;base64,' + gif.read().toString('base64');
 
+      console.log(base64);
+
       db.Pokemon.update(
         {
           sprite: base64
