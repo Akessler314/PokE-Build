@@ -1,84 +1,30 @@
-const db = require('../models');
-const sequelize = require('sequelize');
-const Op = sequelize.Op;
-const gifEncoder = require('gif-encoder');
+const Pokemon = require('../controllers/pokemonController');
 
 module.exports = function(app) {
   // Get creator by id
   app.get('/api/pokemon/:id', (req, res) => {
-    db.Pokemon.findOne({
-      where: {
-        id: req.params.id
-      },
-      include: [db.Creator]
-    }).then(pokemon => {
-      res.json(pokemon);
+    Pokemon.findById(req.params.id).then(results => {
+      res.json(results);
     });
   });
 
   // Search for pokemon by name
   app.get('/api/pokemon/search/:term/:page?', (req, res) => {
-    let page = 0;
-    const pageLimit = 20;
-    if (req.params.page) {
-      page = parseInt(req.params.page);
-    }
-
-    db.Pokemon.findAll({
-      where: {
-        searchableName: {
-          [Op.like]: '%' + req.params.term.toLowerCase() + '%'
-        }
-      },
-      limit: pageLimit,
-      offset: page * pageLimit
-    }).then(pokemon => {
-      res.json(pokemon);
+    const page = req.params.page || 0;
+    Pokemon.findByTerm(req.params.term, page).then(results => {
+      res.json(results);
     });
   });
 
-  // Show all pokemon
   app.get('/api/pokemon/index/:page', (req, res) => {
-    let page = 0;
-    const pageLimit = 20;
-    if (req.params.page) {
-      page = parseInt(req.params.page);
-    }
-
-    db.Pokemon.findAll({
-      order: [['updatedAt', 'DESC']],
-      limit: pageLimit,
-      offset: page * pageLimit
-    }).then(pokemon => {
-      res.json(pokemon);
+    const page = req.params.page || 0;
+    Pokemon.findAllInOrder('updatedAt', 'DESC', page).then(results => {
+      res.json(results);
     });
   });
 
-  // Add sprite to this Pokemon
   app.post('/api/pokemon/:id/sprite', (req, res) => {
-    const gif = new gifEncoder(req.body.width, req.body.height);
-
-    // When the gif is created, add it as a data URL to the pokemon
-    gif.on('readable', () => {
-      const base64 = 'data:image/gif;base64,' + gif.read().toString('base64');
-
-      db.Pokemon.update(
-        {
-          sprite: base64
-        },
-        {
-          where: {
-            id: req.params.id
-          }
-        }
-      ).then(() => {
-        res.end();
-      });
-    });
-
-    // Create gif
-    gif.writeHeader();
-    gif.addFrame(req.body.pixelVals);
-    gif.finish();
+    Pokemon.updateSprite(req.params.id, req.body);
+    res.end();
   });
 };

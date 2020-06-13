@@ -1,10 +1,15 @@
 /* eslint-disable no-unused-vars */
-let canvas;
-let context;
+let canvas = null;
+let context = null;
+
 let player = null;
 const playerSprite = new Image();
+
 let opponent = null;
 const opponentSprite = new Image();
+
+const messageText = '';
+const messageBoxImage = null;
 
 $(document).ready(() => {
   loadData();
@@ -45,7 +50,21 @@ function loadData() {
 function initCanvas() {
   canvas = $('#battle-canvas')[0];
   context = canvas.getContext('2d');
+}
 
-  context.drawImage(playerSprite, 50, 50);
-  context.drawImage(opponentSprite, 100, 100);
+function drawCanvas() {
+  context.drawImage(
+    playerSprite,
+    32,
+    344,
+    playerSprite.width * 4,
+    playerSprite.height * 4
+  );
+  context.drawImage(
+    opponentSprite,
+    640,
+    32,
+    opponentSprite.width * 4,
+    opponentSprite.height * 4
+  );
 }
