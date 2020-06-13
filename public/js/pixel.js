@@ -1,36 +1,17 @@
-const $tableElement = $('#pixelCanvas');
-const $inputHeight = $('#inputHeight');
-const $inputWidth = $('#inputWidth');
 const $colorPicker = $('#colorPicker');
 
-$('#sizePicker').submit(event => {
-  event.preventDefault();
-
-  const width = $inputWidth.val();
-  const height = $inputHeight.val();
-
-  $tableElement.html(''); //clear
-
-  makeGrid(height, width);
-  console.log('pixel grid created');
+$(document).ready(() => {
   addCellClickListener();
 });
 
-function makeGrid(height, width) {
-  for (let i = 0; i < height; i++) {
-    $tableElement.append('<tr></tr>');
-  }
-
-  for (let i = 0; i < width; i++) {
-    $('tr').append('<td></td>');
-  }
-}
-
 //Adds a color to the clicked on cell
 function addCellClickListener() {
-  $('td').click(event => {
-    const color = $colorPicker.val();
-    $(event.currentTarget).css('background-color', color);
+  $('table').click(event => {
+    console.log(event.target.matches('td'));
+    if (event.target.matches('td')) {
+      const color = $colorPicker.val();
+      $(event.target).css('background-color', color);
+    }
   });
 }
 
