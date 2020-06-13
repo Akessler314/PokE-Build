@@ -156,6 +156,8 @@ a:hover {
 .resultImg {
     display: block;
     margin: 0 auto 15px auto;
+    height: 160px;
+    width: 160px;
 }
 
 .pokemonBtn {
