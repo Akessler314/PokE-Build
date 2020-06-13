@@ -37,6 +37,23 @@ module.exports = function(app) {
     });
   });
 
+  // Show all pokemon
+  app.get('/api/pokemon/index/:page', (req, res) => {
+    let page = 0;
+    const pageLimit = 20;
+    if (req.params.page) {
+      page = parseInt(req.params.page);
+    }
+
+    db.Pokemon.findAll({
+      order: [['updatedAt', 'DESC']],
+      limit: pageLimit,
+      offset: page * pageLimit
+    }).then(pokemon => {
+      res.json(pokemon);
+    });
+  });
+
   // Add sprite to this Pokemon
   app.post('/api/pokemon/:id/sprite', (req, res) => {
     const gif = new gifEncoder(req.body.width, req.body.height);
@@ -44,8 +61,6 @@ module.exports = function(app) {
     // When the gif is created, add it as a data URL to the pokemon
     gif.on('readable', () => {
       const base64 = 'data:image/gif;base64,' + gif.read().toString('base64');
-
-      console.log(base64);
 
       db.Pokemon.update(
         {

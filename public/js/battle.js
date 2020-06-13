@@ -1,17 +1,51 @@
+/* eslint-disable no-unused-vars */
 let canvas;
 let context;
+let player = null;
+const playerSprite = new Image();
+let opponent = null;
+const opponentSprite = new Image();
 
 $(document).ready(() => {
-  initCanvas();
+  loadData();
 });
+
+function loadData() {
+  $.ajax({
+    url: '/api/pokemon/' + playerPokemon,
+    method: 'get'
+  })
+    .then(results => {
+      player = new Pokemon(
+        results.stats,
+        results.moves,
+        results.type1,
+        results.type2
+      );
+      playerSprite.src = results.sprite;
+    })
+    .then(() => {
+      $.ajax({
+        url: '/api/pokemon/' + opponentPokemon,
+        method: 'get'
+      })
+        .then(results => {
+          opponent = new Pokemon(
+            results.stats,
+            results.moves,
+            results.type1,
+            results.type2
+          );
+          opponentSprite.src = results.sprite;
+        })
+        .then(initCanvas);
+    });
+}
 
 function initCanvas() {
   canvas = $('#battle-canvas')[0];
   context = canvas.getContext('2d');
 
-  context.fillStyle = 'rgb(200, 0, 0)';
-  context.fillRect(10, 10, 50, 50);
-
-  context.fillStyle = 'rgba(0, 0, 200, 0.5)';
-  context.fillRect(30, 30, 50, 50);
+  context.drawImage(playerSprite, 50, 50);
+  context.drawImage(opponentSprite, 100, 100);
 }
