@@ -1,0 +1,36 @@
+<div class="container-xl">
+    <div class="row searchRow">
+        <div class="col-lg-12">
+            <img src="https://fontmeme.com/permalink/200611/65ca505017db3f3ecf7d7fcd3f743e02.png" alt="Search for Pokemon" class="searchFor">
+
+            <form class="input-group">
+                <input class="form-control mr-sm-2 searchBar" type="search" placeholder="Search Pokemon" aria-label="Search">
+                <button class="searchBtn"><i class="fas fa-search"></i></button>
+            </form>
+            
+            <div class="error" style="display: none;"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        {{#each pokemon}}
+            <div class="col-lg-3">
+                <div class="card resultCard">
+                    <div class="card-body">
+                        <a href="/pokemon/{{searchableName}}">
+                            {{#if sprite}}
+                            <img src="{{sprite}}" alt="Picture of {{name}}" class="resultImg">
+                            {{/if}}
+
+                            {{#unless sprite}}
+                            <img src="../img/no-img.jpg" alt="Picture of {{name}} couldn't be found" class="resultImg">
+                            {{/unless}}
+
+                            <p class="resultText">Name: {{name}}</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
