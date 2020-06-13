@@ -90,12 +90,12 @@ a:hover {
 }
 
 .viewAll, .viewYour, .createNew {
-    background-color: rgb(255, 35, 35);
+    background-color: rgb(255, 33, 35);
     border: 2px solid black;
     border-radius: 1rem;
-    margin-top: 20px;
+    margin: 20px auto 0 auto;
     outline:none;
-    padding: 10px;
+    padding: 10px 25px;
 }
 
 .viewAll:hover, .viewYour:hover, .createNew:hover {
@@ -181,9 +181,30 @@ footer {
 
 .hide {
     display: none;
-<<<<<<< HEAD
-}
-=======
 }
 
->>>>>>> 86712dab0e407248de380f9e8508bfaeb101604b
+/* stuff for the pixel art maker  */
+
+table,tr,td {
+    border: 1px solid rgb(100, 100, 100);
+    background-color: white;
+}
+/* used to remove the grid  */
+.opacity{
+    border: 1px solid rgba(100, 100, 100, 0);
+}
+
+table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    margin-bottom: 40px;
+}
+
+tr {
+    height: 20px;
+}
+
+td {
+    width: 20px;
+    height: 20px;
+}
