@@ -1,5 +1,6 @@
-// Constant data used throughout the site
+/* eslint-disable no-unused-vars */
 
+// Constant data used throughout the site
 const DATA = {
   pokeTypes: [
     'none',
@@ -23,5 +24,3 @@ const DATA = {
     'fairy'
   ]
 };
-
-module.exports = DATA;
