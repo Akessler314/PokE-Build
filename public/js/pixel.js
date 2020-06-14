@@ -15,11 +15,7 @@ function addCellClickListener() {
   });
 }
 
-//removes the grid
-$('#removeGrid').click(() => {
-  $('table tr td').addClass('opacity');
-});
-//adds grid back
-$('#returnGrid').click(() => {
-  $('table tr td').removeClass('opacity');
+// Toggles grid opacity
+$('#toggle').click(() => {
+  $('table tr td').toggleClass('opacity');
 });
