@@ -1,4 +1,12 @@
 const $colorPicker = $('#colorPicker');
+//code for the pokemon stats
+// let avaialblePoitns = 100;
+// let $hp = $('#hp');
+// let $speed = $('#speed');
+// let $defense = $('#defense');
+// let $spDefense = $('#SP_Defense');
+// let $attack = $('#attack');
+// let $spAttack = $('#SP_Attack');
 
 $(document).ready(() => {
   addCellClickListener();
