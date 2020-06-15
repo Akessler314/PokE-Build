@@ -67,29 +67,21 @@
 {{!-- Stat input --}}
 <div>
     <p>Points Available: 100</p>
-    <form>
+    <form id="pokeStats">
         <label for="hp">HP:</label>
         <input type="number" id="hp" name="hp" min="0" max="100" value="0">
-    </form>
-    <form>
         <label for="hp">Speed:</label>
         <input type="number" id="speed" name="speed" min="0" max="100" value="0">
-    </form>
-    <form>
         <label for="hp">Defense:</label>
         <input type="number" id="defense" name="Defense" min="0" max="100" value="0">
-    </form>
-    <form>
         <label for="hp">SP_Defense:</label>
         <input type="number" id="SP_Defense" name="SP_Defense" min="0" max="100" value="0">
-    </form>
-    <form>
         <label for="hp">Attack:</label>
         <input type="number" id="attack" name="Attack" min="0" max="100" value="0">
-    </form>
-    <form>
         <label for="hp">SP_Attack:</label>
         <input type="number" id="SP_Attack" name="SP_Attack" min="0" max="100" value="0">
+        <br>
+        <button type="button" id="statSubmit">Submit Stats</button>
     </form>
 </div>
 
