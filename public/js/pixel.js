@@ -1,6 +1,5 @@
 const $colorPicker = $('#colorPicker');
 //code for the pokemon stats
-// const avaialblePoitns = 100;
 const $hp = $('#hp');
 const $speed = $('#speed');
 const $defense = $('#defense');
@@ -22,6 +21,8 @@ const stats = {
 
 $(document).ready(() => {
   addCellClickListener();
+  //Call this on page load to give the initial amount of poitns avaialable.
+  pointPoolUpdater();
 });
 
 //Adds a color to the clicked on cell
@@ -137,6 +138,7 @@ $('a').click(function() {
   $('.typeNext').slideDown('slow');
 });
 
+//event listiner for when the user submits stats STILL NEED TO ADD REDUCTION FROM AVAILABLE POINT POOL.
 $('#statSubmit').click(() => {
   const newPokeStats = Object.create(stats);
   newPokeStats.hp = $hp.val();
@@ -146,4 +148,30 @@ $('#statSubmit').click(() => {
   newPokeStats.attack = $attack.val();
   newPokeStats.spAttack = $spAttack.val();
   console.log(newPokeStats);
+});
+
+//Point updater
+function pointPoolUpdater() {
+  //var for the initial point pool the user will have avialible.
+  const avaialblePoitns = 100;
+  //this will add up the values of all the points put into stats, and store it in a variable to be used.
+  const usedPoints =
+    parseInt($hp.val()) +
+    parseInt($speed.val()) +
+    parseInt($defense.val()) +
+    parseInt($spDefense.val()) +
+    parseInt($defense.val()) +
+    parseInt($spAttack.val());
+  if (usedPoints > 100) {
+    alert('You have run out of points!');
+  } else {
+    $('#pointPool').text(
+      'Current Points Left: ' + (avaialblePoitns - usedPoints)
+    );
+  }
+}
+
+//event listener for when a user changes the value of a stat
+$('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').change(() => {
+  pointPoolUpdater();
 });
