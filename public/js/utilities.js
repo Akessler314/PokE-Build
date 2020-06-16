@@ -23,7 +23,8 @@ const DATA = {
     'dark',
     'fairy'
   ],
-  battleOptions: ['Attack', 'Info']
+  battleOptions: ['Attack', 'Info'],
+  critRates: [1 / 24, 1 / 8, 1 / 2, 1]
 };
 
 function formatMoveName(move) {

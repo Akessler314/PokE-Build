@@ -9,6 +9,7 @@ class Pokemon {
     this.maxSpAttack = this.spAttack = stats.spAttack;
     this.maxDefense = this.defense = stats.defense;
     this.maxSpDefense = this.spDefense = stats.spDefense;
+    this.critRate = 0;
     this.move1 = this.move2 = this.move3 = this.move4 = null;
     this.type1 = this.type2 = null;
     this.sprite = new Image();
@@ -49,13 +50,13 @@ class Pokemon {
       url: 'https://pokeapi.co/api/v2/type/' + type1,
       method: 'GET'
     }).then(results => {
-      this.type1 = type1;
+      this.type1 = results;
     });
     $.ajax({
       url: 'https://pokeapi.co/api/v2/type/' + type2,
       method: 'GET'
     }).then(results => {
-      this.type2 = type2;
+      this.type2 = results;
     });
   }
 
@@ -70,8 +71,6 @@ class Pokemon {
   }
 
   attackPokemon(move, pokemon) {
-    console.log('attacking' + pokemon.name);
-
     // Assume all Pokemon are level 100
 
     const moveInfo = this['move' + move];
@@ -90,22 +89,88 @@ class Pokemon {
 
     let modifier = 1;
 
-    if (moveInfo.meta && moveInfo.meta.crit_rate) {
-      // TODO: check if critting, multiply by 2 if so
-      modifier *= 1;
+    // Check if we're critting
+    if (Math.random() < DATA.critRates[this.critRate]) {
+      modifier *= 1.5;
     }
 
-    // TODO: random value between 0.85 and 1
-    modifier *= 1;
+    // Random modifier
+    modifier *= (Math.random() * .15 + .85);
 
-    // TODO: Check for STAB
-    modifier *= 1;
+    // Check for STAB
+    const moveId = DATA.pokeTypes.indexOf(moveInfo.type.name);
+    if (moveId === this.type1.id || (this.type2 && moveId === this.type2.id)) {
+      modifier *= 1.5;
+    }
 
-    // TODO: Type modifier
-    modifier *= 1;
+    let effectiveness = 1; // 0 is 'doesn't affect', .25 or .5 is ineffective, 1 effective, 2 or 4 is super effective
+
+    // ---- DOUBLE DAMAGE FROM ----
+    const doubleDamageFrom = pokemon.type1.damage_relations.double_damage_from;
+    
+    if (pokemon.type2.damage_relations) {
+      doubleDamageFrom.push(...pokemon.type2.damage_relations.double_damage_from);
+    }
+
+    for (let i = 0; i < doubleDamageFrom.length; i++) {
+      if (moveInfo.type.name === doubleDamageFrom[i].name) {
+        modifier *= 2;
+        effectiveness *= 2;
+      }
+    }
+
+    // ---- HALF DAMAGE FROM ----
+    const halfDamageFrom = pokemon.type1.damage_relations.half_damage_from;
+    
+    if (pokemon.type2.damage_relations) {
+      halfDamageFrom.push(...pokemon.type2.damage_relations.half_damage_from);
+    }
+
+    for (let i = 0; i < halfDamageFrom.length; i++) {
+      if (moveInfo.type.name === halfDamageFrom[i].name) {
+        modifier *= .5;
+        effectiveness *= .5;
+      }
+    }
+
+    // ---- NO DAMAGE FROM ----
+    const noDamageFrom = pokemon.type1.damage_relations.no_damage_from;
+    
+    if (pokemon.type2.damage_relations) {
+      noDamageFrom.push(...pokemon.type2.damage_relations.no_damage_from);
+    }
+
+    for (let i = 0; i < noDamageFrom.length; i++) {
+      if (moveInfo.type.name === noDamageFrom[i].name) {
+        modifier *= 0;
+        effectiveness *= 0;
+        break;
+      }
+    }
+
+    amount *= modifier;
+
+    // Check if we missed
+    if (Math.random() * 100 > moveInfo.accuracy) {
+      effectiveness = -1;
+      amount *= 0;
+    }
 
     // return damage amount
-    return amount;
+    const attackResult = {
+      damage: amount,
+      effective: effectiveness,
+      minTimesToAttack: moveInfo.meta.min_hits || 1,
+      maxTimesToAttack: moveInfo.meta.max_hits || 1
+    };
+    return attackResult;
+  }
+
+  takeDamage(amount) {
+    this.hp -= amount;
+    if (this.hp < 0) {
+      this.hp = 0;
+    }
   }
 }
 
