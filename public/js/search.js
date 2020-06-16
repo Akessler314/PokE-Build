@@ -66,9 +66,9 @@ function searchForPokemon() {
   
       const text = $('<p>').text(`Name: ${pokemon.name}`).addClass('resultText');
   
-      div.append(card);
-      card.append(link);
-      link.append(cardBody);
+      div.append(link);
+      link.append(card);
+      card.append(cardBody);
       cardBody.append(img);
       cardBody.append(text);
   
