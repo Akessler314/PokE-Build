@@ -68,6 +68,7 @@ $('.pixelNext').click(() => {
   goToNext();
 });
 
+//button to continue after selcting types
 $('.typeNext').click(() => {
   nextName = 'type';
   goToNext();
@@ -138,22 +139,10 @@ $('a').click(function() {
   $('.typeNext').slideDown('slow');
 });
 
-//event listiner for when the user submits stats STILL NEED TO ADD REDUCTION FROM AVAILABLE POINT POOL.
-$('#statSubmit').click(() => {
-  const newPokeStats = Object.create(stats);
-  newPokeStats.hp = $hp.val();
-  newPokeStats.speed = $speed.val();
-  newPokeStats.defense = $defense.val();
-  newPokeStats.spDefense = $spDefense.val();
-  newPokeStats.attack = $attack.val();
-  newPokeStats.spAttack = $spAttack.val();
-  console.log(newPokeStats);
-});
-
 //Point updater
 function pointPoolUpdater() {
   //var for the initial point pool the user will have avialible.
-  const avaialblePoitns = 100;
+  const avaialblePoitns = 500;
   //this will add up the values of all the points put into stats, and store it in a variable to be used.
   const usedPoints =
     parseInt($hp.val()) +
@@ -162,13 +151,33 @@ function pointPoolUpdater() {
     parseInt($spDefense.val()) +
     parseInt($defense.val()) +
     parseInt($spAttack.val());
-  if (usedPoints > 100) {
+  if (usedPoints > 500) {
+    //alert user they are over the aloted points
     alert('You have run out of points!');
+    // } else if ((usedPoints = isNaN)) {
+    //   //Alert the user that an input was cleared
+    //   alert('Please enter a value');
   } else {
     $('#pointPool').text(
       'Current Points Left: ' + (avaialblePoitns - usedPoints)
     );
   }
+
+  //event listiner for when the user submits stats STILL NEED TO ADD REDUCTION FROM AVAILABLE POINT POOL.
+  $('#statSubmit').click(() => {
+    if (usedPoints > 500) {
+      alert('Your pokemon is too strong!');
+    } else {
+      const newPokeStats = Object.create(stats);
+      newPokeStats.hp = $hp.val();
+      newPokeStats.speed = $speed.val();
+      newPokeStats.defense = $defense.val();
+      newPokeStats.spDefense = $spDefense.val();
+      newPokeStats.attack = $attack.val();
+      newPokeStats.spAttack = $spAttack.val();
+      console.log(newPokeStats);
+    }
+  });
 }
 
 //event listener for when a user changes the value of a stat
