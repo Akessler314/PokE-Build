@@ -1,10 +1,11 @@
 /* eslint-disable indent */
-/* eslint-disable no-unused-vars */
-let canvas = null;
-let context = null;
+let canvas;
+let context;
 
-let player = null;
-let opponent = null;
+let player;
+let opponent;
+
+let canInput = true;
 
 const messageBox = new MessageBox('/img/messageBox.png', 0, 472);
 const optionsBox = new OptionsBox('/img/optionsBox.png', 500, 472);
@@ -13,10 +14,19 @@ $(document).ready(() => {
   loadData();
 
   $(document.body).on('keydown', event => {
+    if (!canInput) {
+      return;
+    }
     switch (event.which) {
       case 13: // Enter key
-        optionsBox.chooseOption(player, messageBox);
-        drawCanvas();
+        const attack = optionsBox.chooseOption(player, messageBox);
+        if (attack) {
+          canInput = false;
+
+          playerAttack(attack);
+        } else {
+          drawCanvas();
+        }
         break;
       case 38: // Up key
         optionsBox.keyUp();
@@ -39,6 +49,7 @@ function loadData() {
   })
     .then(results => {
       player = new Pokemon(
+        results.name,
         results.stats,
         results.moves,
         results.type1,
@@ -55,6 +66,7 @@ function loadData() {
       })
         .then(results => {
           opponent = new Pokemon(
+            results.name,
             results.stats,
             results.moves,
             results.type1,
@@ -73,8 +85,6 @@ function initCanvas() {
   context = canvas.getContext('2d');
   context.imageSmoothingEnabled = false;
 
-  messageBox.setMessage('Hello! This is a test...');
-
   drawCanvas();
 }
 
@@ -87,4 +97,24 @@ function drawCanvas() {
   opponent.draw(context);
   messageBox.draw(context);
   optionsBox.draw(context);
+}
+
+function playerAttack(move) {
+  const moveName = player['move' + move].name;
+  messageBox.setMessage(
+    player.name + ' uses ' + formatMoveName(moveName) + '!'
+  );
+
+  drawCanvas();
+
+  setTimeout(() => {
+    player.attackPokemon(move, opponent);
+
+    // Queue up enemy attack after displaying info for .5s
+    setTimeout(opponentAttack, 500);
+  }, 500);
+}
+
+function opponentAttack() {
+  canInput = true;
 }

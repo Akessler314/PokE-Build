@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 class Pokemon {
-  constructor(stats, moves, type1, type2, sprite, x, y) {
+  constructor(name, stats, moves, type1, type2, sprite, x, y) {
+    this.name = name;
     this.maxHP = this.hp = stats.hp;
     this.maxSpeed = this.speed = stats.speed;
     this.maxAttack = this.attack = stats.attack;
@@ -66,6 +67,45 @@ class Pokemon {
       this.sprite.width * 4,
       this.sprite.height * 4
     );
+  }
+
+  attackPokemon(move, pokemon) {
+    console.log('attacking' + pokemon.name);
+
+    // Assume all Pokemon are level 100
+
+    const moveInfo = this['move' + move];
+    let amount = 42 * moveInfo.power;
+
+    if (moveInfo.damage_class.name === 'physical') {
+      amount *= this.attack;
+      amount /= pokemon.defense;
+    } else if (moveInfo.damage_class.name === 'special') {
+      amount *= this.spAttack;
+      amount /= pokemon.spDefense;
+    }
+
+    amount /= 50;
+    amount += 2;
+
+    let modifier = 1;
+
+    if (moveInfo.meta && moveInfo.meta.crit_rate) {
+      // TODO: check if critting, multiply by 2 if so
+      modifier *= 1;
+    }
+
+    // TODO: random value between 0.85 and 1
+    modifier *= 1;
+
+    // TODO: Check for STAB
+    modifier *= 1;
+
+    // TODO: Type modifier
+    modifier *= 1;
+
+    // return damage amount
+    return amount;
   }
 }
 
@@ -163,11 +203,16 @@ class OptionsBox {
     } else {
       // Get the current move context (should we show info, or attack?)
       const move = pokemon['move' + (this.currentOption + 1)];
+      let returnVal = null;
       if (this.moveContext === 'Info') {
         let message = 'Type: ' + formatMoveName(move.type.name) + '   PP: ' + move.ppLeft + '/' + move.pp;
         message += '\nAccuracy: ' + move.accuracy + '   ' + 'Power: ' + move.power;
         message += '\n' + move.flavor_text_entries[0].flavor_text;
         messageBox.setMessage(message);
+      }
+      else if (this.moveContext === 'Attack')
+      {
+        returnVal = this.currentOption + 1;
       }
 
       // Draw the attack/info options
@@ -175,6 +220,8 @@ class OptionsBox {
 
       this.currentOption = 0;
       this.moveContext = null;
+
+      return returnVal;
     }
   }
 }
