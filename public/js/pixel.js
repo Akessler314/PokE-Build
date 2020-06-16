@@ -150,6 +150,7 @@ $('a').click(function(event) {
     event.preventDefault();
 
     $('.dropdown-2').text($(this).text());
+
     const secondType = new Object();
     secondType.type2 = $(this).attr('data-id');
     console.log(secondType);
@@ -161,7 +162,7 @@ $('a').click(function(event) {
 //Point updater
 function pointPoolUpdater() {
   //var for the initial point pool the user will have avialible.
-  const avaialblePoitns = 500;
+  const availablePoints = 400;
   //this will add up the values of all the points put into stats, and store it in a variable to be used.
   const usedPoints =
     parseInt($hp.val()) +
@@ -170,7 +171,7 @@ function pointPoolUpdater() {
     parseInt($spDefense.val()) +
     parseInt($defense.val()) +
     parseInt($spAttack.val());
-  if (usedPoints > 500) {
+  if (usedPoints > 400) {
     //alert user they are over the aloted points
     alert('You have run out of points!');
     // } else if ((usedPoints = isNaN)) {
@@ -178,13 +179,13 @@ function pointPoolUpdater() {
     //   alert('Please enter a value');
   } else {
     $('#pointPool').text(
-      'Current Points Left: ' + (avaialblePoitns - usedPoints)
+      'Current Points Left: ' + (availablePoints - usedPoints)
     );
   }
 
   //event listiner for when the user submits stats STILL NEED TO ADD REDUCTION FROM AVAILABLE POINT POOL.
   $('#statSubmit').click(() => {
-    if (usedPoints > 500) {
+    if (usedPoints > 400) {
       alert('Your pokemon is too strong!');
     } else {
       const newPokeStats = Object.create(stats);
