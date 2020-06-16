@@ -323,8 +323,10 @@ table,tr,td {
 
 table {
     border-collapse: collapse;
+    border: 5px solid;
     margin: 0 auto;
     margin-bottom: 40px;
+    box-shadow: 2px 5px 8px -3px #444
 }
 
 tr {
