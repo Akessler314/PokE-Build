@@ -124,24 +124,38 @@ function goToNext() {
     // Wait for the above animations to finish
     setTimeout(() => {
       $('.chooseType').removeClass('current');
-      $('.statsRow').slideDown('slow');
+      $('.chooseStats').slideDown('slow');
+      $('.chooseStats').addClass('current');
+
+      setTimeout(() => {
+        $('html, body').animate({ scrollTop: 550 }, 'fast');
+      }, 500);
     }, 700);
   }
 }
 
-$('a').click(function() {
+$('a').click(function(event) {
   if ($(this).hasClass('first')) {
+    event.preventDefault();
+
+    $('.dropdown-1').text($(this).text());
+
+    $('.typeNext').slideDown('slow');
+
     $('.dropdown-1').text($(this).text());
     const firstType = new Object();
     firstType.type1 = $(this).attr('data-id');
     console.log(firstType);
-  } else {
+  } else if ($(this).hasClass('second')) {
+    event.preventDefault();
+
     $('.dropdown-2').text($(this).text());
     const secondType = new Object();
     secondType.type2 = $(this).attr('data-id');
     console.log(secondType);
+
+    $('.typeNext').slideDown('slow');
   }
-  $('.typeNext').slideDown('slow');
 });
 
 //Point updater
@@ -188,4 +202,5 @@ function pointPoolUpdater() {
 //event listener for when a user changes the value of a stat
 $('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').change(() => {
   pointPoolUpdater();
+  $('#statSubmit').slideDown('slow');
 });
