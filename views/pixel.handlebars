@@ -2,7 +2,8 @@
     <div class="row namePokemon">
         <div class="col-lg-12">
             {{!-- Name Your Pokemon --}}
-            <img src="https://fontmeme.com/permalink/200615/7133306a565e73ac84f3ecbd1934eddd.png" alt="Name Your Pokemon" class="namePokemonImg">
+            <img src="https://fontmeme.com/permalink/200615/7133306a565e73ac84f3ecbd1934eddd.png"
+                alt="Name Your Pokemon" class="namePokemonImg">
 
             {{!-- name input --}}
             <form id="nameInputDiv">
@@ -10,13 +11,16 @@
                 <input type="text" id="fname" name="fname" placeholder="Enter your Pokemon's name">
             </form>
 
-            <button class="nextBtn nameNext" style="display: none;"><img src="https://fontmeme.com/permalink/200615/b7642a141a63c1498e8a1d639443d567.png" alt="Next button"></button>
+            <button class="nextBtn nameNext" style="display: none;"><img
+                    src="https://fontmeme.com/permalink/200615/b7642a141a63c1498e8a1d639443d567.png"
+                    alt="Next button"></button>
         </div>
     </div>
 
     <div class="row pixelCreator" style="display: none;">
         <div class="col-lg-12">
-            <img src="https://fontmeme.com/permalink/200615/91234c628efe66fe54cd64d403271992.png" alt="Draw Your Pokemon" class="drawPokemonImg">
+            <img src="https://fontmeme.com/permalink/200615/91234c628efe66fe54cd64d403271992.png"
+                alt="Draw Your Pokemon" class="drawPokemonImg">
 
             {{!-- Tools --}}
             <div class="tools">
@@ -1120,67 +1124,79 @@
                 </tbody>
             </table>
 
-            <button class="nextBtn pixelNext"><img src="https://fontmeme.com/permalink/200615/b7642a141a63c1498e8a1d639443d567.png" alt="Next button"></button>
+            <button class="nextBtn pixelNext"><img
+                    src="https://fontmeme.com/permalink/200615/b7642a141a63c1498e8a1d639443d567.png"
+                    alt="Next button"></button>
         </div>
     </div>
 
     <div class="row chooseType" style="display: none;">
         <div class="col-lg-12">
-            <img src="https://fontmeme.com/permalink/200616/a0c7be8d676d6dc60f6d88b3a5c34868.png" alt="Choose Your Pokemon Type" class="chooseTypeImg">
+            <img src="https://fontmeme.com/permalink/200616/a0c7be8d676d6dc60f6d88b3a5c34868.png"
+                alt="Choose Your Pokemon Type" class="chooseTypeImg">
 
             {{!-- Type inputs  --}}
             <div class="dropdown-div">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle dropdown-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">First Type </button>
+                    <button class="btn btn-secondary dropdown-toggle dropdown-1" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">First
+                        Type </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item first" href="">Normal</a>
-                        <a class="dropdown-item first" href="">Fighting</a>
-                        <a class="dropdown-item first" href="">Flying</a>
-                        <a class="dropdown-item first" href="">Poison</a>
-                        <a class="dropdown-item first" href="">Ground</a>
-                        <a class="dropdown-item first" href="">Rock</a>
-                        <a class="dropdown-item first" href="">Bug</a>
-                        <a class="dropdown-item first" href="">Ghost</a>
-                        <a class="dropdown-item first" href="">Steel</a>
-                        <a class="dropdown-item first" href="">Fire</a>
-                        <a class="dropdown-item first" href="">Water</a>
-                        <a class="dropdown-item first" href="">Grass</a>
-                        <a class="dropdown-item first" href="">Electric</a>
-                        <a class="dropdown-item first" href="">Psychic</a>
-                        <a class="dropdown-item first" href="">Ice</a>
-                        <a class="dropdown-item first" href="">Dragon</a>
-                        <a class="dropdown-item first" href="">Dark</a>
-                        <a class="dropdown-item first" href="">Fairy</a>
+
+                        <a class="dropdown-item first" href="" data-id=1>Normal</a>
+                        <a class="dropdown-item first" href="" data-id=2>Fighting</a>
+                        <a class="dropdown-item first" href="" data-id=3>Flying</a>
+                        <a class="dropdown-item first" href="" data-id=4>Poison</a>
+                        <a class="dropdown-item first" href="" data-id=5>Ground</a>
+                        <a class="dropdown-item first" href="" data-id=6>Rock</a>
+                        <a class="dropdown-item first" href="" data-id=7>Bug</a>
+                        <a class="dropdown-item first" href="" data-id=8>Ghost</a>
+                        <a class="dropdown-item first" href="" data-id=9>Steel</a>
+                        <a class="dropdown-item first" href="" data-id=10>Fire</a>
+                        <a class="dropdown-item first" href="" data-id=11>Water</a>
+                        <a class="dropdown-item first" href="" data-id=12>Grass</a>
+                        <a class="dropdown-item first" href="" data-id=13>Electric</a>
+                        <a class="dropdown-item first" href="" data-id=14>Psychic</a>
+                        <a class="dropdown-item first" href="" data-id=15>Ice</a>
+                        <a class="dropdown-item first" href="" data-id=16>Dragon</a>
+                        <a class="dropdown-item first" href="" data-id=17>Dark</a>
+                        <a class="dropdown-item first" href="" data-id=18>Fairy</a>
+
                     </div>
                 </div>
 
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle dropdown-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">Second Type (optional) </button>
+                    <button class="btn btn-secondary dropdown-toggle dropdown-2" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">Second
+                        Type (optional) </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item second" href="javascript:return false;">None</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Normal</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Fighting</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Flying</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Poison</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Ground</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Rock</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Bug</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Ghost</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Steel</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Fire</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Water</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Grass</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Electric</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Psychic</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Ice</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Dragon</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Dark</a>
-                        <a class="dropdown-item second" href="javascript:return false;">Fairy</a>
+                        <a class="dropdown-item" href="" data-id=0>None</a>
+                        <a class="dropdown-item first" href="" data-id=1>Normal</a>
+                        <a class="dropdown-item first" href="" data-id=2>Fighting</a>
+                        <a class="dropdown-item first" href="" data-id=3>Flying</a>
+                        <a class="dropdown-item first" href="" data-id=4>Poison</a>
+                        <a class="dropdown-item first" href="" data-id=5>Ground</a>
+                        <a class="dropdown-item first" href="" data-id=6>Rock</a>
+                        <a class="dropdown-item first" href="" data-id=7>Bug</a>
+                        <a class="dropdown-item first" href="" data-id=8>Ghost</a>
+                        <a class="dropdown-item first" href="" data-id=9>Steel</a>
+                        <a class="dropdown-item first" href="" data-id=10>Fire</a>
+                        <a class="dropdown-item first" href="" data-id=11>Water</a>
+                        <a class="dropdown-item first" href="" data-id=12>Grass</a>
+                        <a class="dropdown-item first" href="" data-id=13>Electric</a>
+                        <a class="dropdown-item first" href="" data-id=14>Psychic</a>
+                        <a class="dropdown-item first" href="" data-id=15>Ice</a>
+                        <a class="dropdown-item first" href="" data-id=16>Dragon</a>
+                        <a class="dropdown-item first" href="" data-id=17>Dark</a>
+                        <a class="dropdown-item first" href="" data-id=18>Fairy</a>
+
                     </div>
                 </div>
             </div>
 
-            <button class="nextBtn typeNext" style="display: none;"><img src="https://fontmeme.com/permalink/200615/b7642a141a63c1498e8a1d639443d567.png" alt="Next button"></button>
+            <button class="nextBtn typeNext" style="display: none;"><img
+                    src="https://fontmeme.com/permalink/200615/b7642a141a63c1498e8a1d639443d567.png"
+                    alt="Next button"></button>
         </div>
     </div>
 
@@ -1210,9 +1226,15 @@
 
 
 {{!-- Bootstrap js links --}}
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
 
 {{!-- jQuery link --}}
 <script src="https://code.jquery.com/jquery.js"></script>
