@@ -133,12 +133,12 @@ $('a').click(function() {
   if ($(this).hasClass('first')) {
     $('.dropdown-1').text($(this).text());
     const firstType = new Object();
-    firstType.type1 = this.text;
+    firstType.type1 = $(this).attr('data-id');
     console.log(firstType);
   } else {
     $('.dropdown-2').text($(this).text());
     const secondType = new Object();
-    secondType.type2 = this.text;
+    secondType.type2 = $(this).attr('data-id');
     console.log(secondType);
   }
   $('.typeNext').slideDown('slow');
