@@ -1,17 +1,35 @@
+/* eslint-disable indent */
 /* eslint-disable no-unused-vars */
 let canvas = null;
 let context = null;
 
 let player = null;
-
 let opponent = null;
-const opponentSprite = new Image();
 
-const messageBox = new MessageBox('/img/messageBox.png');
-const optionsBox = new OptionsBox('/img/optionsBox.png');
+const messageBox = new MessageBox('/img/messageBox.png', 0, 472);
+const optionsBox = new OptionsBox('/img/optionsBox.png', 500, 472);
 
 $(document).ready(() => {
   loadData();
+
+  $(document.body).on('keydown', event => {
+    switch (event.which) {
+      case 13: // Enter key
+        optionsBox.chooseOption(player, messageBox);
+        drawCanvas();
+        break;
+      case 38: // Up key
+        optionsBox.keyUp();
+        drawCanvas();
+        break;
+      case 40: // Down key
+        optionsBox.keyDown();
+        drawCanvas();
+        break;
+      default:
+        break;
+    }
+  });
 });
 
 function loadData() {
@@ -25,7 +43,9 @@ function loadData() {
         results.moves,
         results.type1,
         results.type2,
-        results.sprite
+        results.sprite,
+        32,
+        344
       );
     })
     .then(() => {
@@ -39,7 +59,9 @@ function loadData() {
             results.moves,
             results.type1,
             results.type2,
-            results.sprite
+            results.sprite,
+            640,
+            32
           );
         })
         .then(initCanvas);
@@ -49,6 +71,9 @@ function loadData() {
 function initCanvas() {
   canvas = $('#battle-canvas')[0];
   context = canvas.getContext('2d');
+  context.imageSmoothingEnabled = false;
+
+  messageBox.setMessage('Hello! This is a test...');
 
   drawCanvas();
 }
@@ -58,32 +83,8 @@ function drawCanvas() {
   context.fillStyle = 'white';
   context.fillRect(0, 0, canvas.width, canvas.height);
 
-  context.drawImage(
-    player.sprite,
-    8,
-    86,
-    player.sprite.width,
-    player.sprite.height
-  );
-  context.drawImage(
-    opponent.sprite,
-    160,
-    8,
-    opponent.sprite.width,
-    opponent.sprite.height
-  );
-  context.drawImage(
-    messageBox.sprite,
-    0,
-    118,
-    messageBox.sprite.width,
-    messageBox.sprite.height
-  );
-  context.drawImage(
-    optionsBox.sprite,
-    125,
-    118,
-    optionsBox.sprite.width,
-    optionsBox.sprite.height
-  );
+  player.draw(context);
+  opponent.draw(context);
+  messageBox.draw(context);
+  optionsBox.draw(context);
 }
