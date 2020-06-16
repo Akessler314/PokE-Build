@@ -123,19 +123,30 @@ function goToNext() {
     // Wait for the above animations to finish
     setTimeout(() => {
       $('.chooseType').removeClass('current');
-      $('.statsRow').slideDown('slow');
+      $('.chooseStats').slideDown('slow');
+      $('.chooseStats').addClass('current');
+
+      setTimeout(() => {
+        $('html, body').animate({ scrollTop: 550 }, 'fast');
+      }, 500);
     }, 700);
   }
 }
 
-$('a').click(function() {
+$('a').click(function(event) {
   if ($(this).hasClass('first')) {
-    $('.dropdown-1').text($(this).text());
-  } else {
-    $('.dropdown-2').text($(this).text());
-  }
+    event.preventDefault();
 
-  $('.typeNext').slideDown('slow');
+    $('.dropdown-1').text($(this).text());
+
+    $('.typeNext').slideDown('slow');
+  } else if ($(this).hasClass('second')) {
+    event.preventDefault();
+
+    $('.dropdown-2').text($(this).text());
+
+    $('.typeNext').slideDown('slow');
+  }
 });
 
 //event listiner for when the user submits stats STILL NEED TO ADD REDUCTION FROM AVAILABLE POINT POOL.
@@ -174,4 +185,5 @@ function pointPoolUpdater() {
 //event listener for when a user changes the value of a stat
 $('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').change(() => {
   pointPoolUpdater();
+  $('#statSubmit').slideDown('slow');
 });
