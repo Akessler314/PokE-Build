@@ -59,6 +59,13 @@ $('#nameInputDiv').on('submit', event => {
 
 $('.nameNext').click(() => {
   nextName = 'name';
+  //create object for pokemone name with a searchable name (lowercase) for db
+  const pokemonName = new Object();
+  pokemonName.name = $('#fname').val();
+  pokemonName.searchableName = $('#fname')
+    .val()
+    .toLowerCase();
+  console.log(pokemonName);
   goToNext();
 });
 
@@ -174,18 +181,16 @@ function pointPoolUpdater() {
   if (usedPoints > 400) {
     //alert user they are over the aloted points
     alert('You have run out of points!');
-    // } else if ((usedPoints = isNaN)) {
-    //   //Alert the user that an input was cleared
-    //   alert('Please enter a value');
   } else {
     $('#pointPool').text(
       'Current Points Left: ' + (availablePoints - usedPoints)
     );
   }
 
-  //event listiner for when the user submits stats STILL NEED TO ADD REDUCTION FROM AVAILABLE POINT POOL.
+  //event listiner for when the user submits stats
   $('#statSubmit').click(() => {
     if (usedPoints > 400) {
+      //alert user they are over the aloted points if they try to submit a pokemon that has too many stats
       alert('Your pokemon is too strong!');
     } else {
       const newPokeStats = Object.create(stats);
