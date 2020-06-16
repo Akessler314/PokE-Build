@@ -63,15 +63,13 @@ function pointPoolUpdater() {
     parseInt($spDefense.val()) +
     parseInt($defense.val()) +
     parseInt($spAttack.val());
-  $('#pointPool').text(
-    'Current Points Left: ' + (avaialblePoitns - usedPoints)
-  );
-  // if (usedPoints <= 100) {
-  //   console.log('You have run out of points!');
-  // } else {
-  //   $('#pointPool').text(
-  //     'Current Points Left: ' + (avaialblePoitns - usedPoints)
-  // });
+  if (usedPoints > 100) {
+    alert('You have run out of points!');
+  } else {
+    $('#pointPool').text(
+      'Current Points Left: ' + (avaialblePoitns - usedPoints)
+    );
+  }
 }
 
 //event listener for when a user changes the value of a stat
