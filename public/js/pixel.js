@@ -71,6 +71,22 @@ $('.nameNext').click(() => {
 
 $('.pixelNext').click(() => {
   nextName = 'pixel';
+  //palceholder empty array to hold td cell color information.
+  const pixels = [];
+  //placeholder empty object to add the array
+  const spriteObject = {
+    sprite: []
+  };
+  //function to loop through the td cells and grab the css background color and push it into an array
+  $('td').each(function() {
+    const colorVals = $(this)
+      .css('background-color')
+      .match(/rgb\((\d+), (\d+), (\d+)\)/);
+    pixels.push(colorVals[1], colorVals[2], colorVals[3], 255);
+  });
+  const newPokeSprite = Object.create(spriteObject);
+  newPokeSprite.sprite = pixels;
+  console.log(newPokeSprite);
   $('table').toggleClass('enabled');
   goToNext();
 });
