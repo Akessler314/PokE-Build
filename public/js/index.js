@@ -2,6 +2,7 @@
 /* eslint-disable prettier/prettier */
 
 let viewAllRunning = false;
+let battleBtnRunning = false;
 
 $('.searchBtn').on('click', event => {
   event.preventDefault();
@@ -41,54 +42,161 @@ $(document).click(() => {
   }
 });
 
+// This is for when the user clicks to view a Pokemon
 $('body').delegate('.pokemonSearch', 'click', function(event) {
   event.preventDefault();
 
+  if (!battleBtnRunning) {
+    $('.searchResults').slideUp('slow');
+
+    setTimeout(() => {
+      $('.searchResults').empty();
+
+      $.ajax({
+        url: '/api/pokemon/' + $(this).attr('data-id')
+      }).then(results => {
+        let lastSearch;
+
+        if ($('.searchBar').val().trim() === '') {
+          lastSearch = 'View All';
+        } else {
+          lastSearch = $('.searchBar').val().trim();
+        }
+
+        $('.searchBar').val('');
+
+        const type1 = findType(results.type1);
+
+        const div = $('<div>').addClass('col-lg-12');
+
+        const creator = $('<p>')
+          .text(`Created by ${results.Creator.username}`)
+          .addClass('creatorName');
+
+        const card = $('<div>').addClass('card');
+
+        const cardBody = $('<div>').addClass('card-body');
+
+        const img = $('<div>').append(
+          $('<img>')
+            .attr({ src: results.sprite, alt: `Picture of ${results.name}` })
+            .addClass('pokemonImg')
+        );
+
+        const text = $('<div>')
+          .addClass('pokemonText')
+          .append($('<p>').text(`Name: ${results.name}`))
+          .append($('<p>').text(`Type: ${type1}`))
+          .append($('<p>').text(`HP: ${results.stats.hp}`))
+          .append($('<p>').text(`Attack: ${results.stats.attack}`))
+          .append($('<p>').text(`Defense: ${results.stats.defense}`))
+          .append($('<p>').text(`Speed: ${results.stats.defense}`));
+
+        const buttons = $('<div>')
+          .addClass('row')
+          .addClass('pokemonBtnRow')
+          .append(
+            $('<div>').addClass('col-lg-6')
+              .append($('<button>').append($('<img>')
+                .attr({
+                  'src': 'https://fontmeme.com/permalink/200617/54fe828c09c10c703837abef5daa4e99.png',
+                  'alt': 'Click on this button to go back to the previous screen',
+              }))
+              .addClass('goBackBtn btn')
+              .attr('data-search', lastSearch))
+          );
+
+        const div2 = $('<div>').addClass('col-lg-6');
+
+        const battleBtn = $('<button>').append($('<img>')
+            .attr({
+              'src': 'https://fontmeme.com/permalink/200617/496fe144d8c773fefe9c9dbe2e35d2bf.png',
+              'alt': 'Click on this button to battle this pokemon!',
+          }))
+          .addClass('battleBtn battleBtn2 btn')
+          .attr('data-id', results.id);
+
+        if (parseInt(sessionStorage.getItem('battleId1')) === results.id) {
+          battleBtn.attr('disabled', true);
+        }
+
+        div2.append(battleBtn);
+
+        buttons.append(div2);
+
+        div.append(creator).append(card).append(buttons);
+
+        card.append(cardBody);
+
+        cardBody.append(img).append(text);
+
+        $('.searchBar').val('');
+
+        $('.searchResults').append(div);
+
+        $('.searchResults').slideDown('slow');
+
+        setTimeout(() => {
+          $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
+        }, 500);
+      });
+    }, 1000);
+  }
+});
+
+// This is for when the user chooses to Battle a Pokemon
+$('body').delegate('.battleBtn', 'click', function() {
+  battleBtnRunning = true;
+
+  setTimeout(() => {
+    // eslint-disable-next-line eqeqeq
+    if (sessionStorage.getItem('battleId1') == null) {
+      sessionStorage.setItem('battleId1', $(this).attr('data-id'));
+
+      $(this).attr('disabled', true);
+    } else {
+      sessionStorage.setItem('battleId2', $(this).attr('data-id'));
+
+      $('.searchResults').slideUp('slow');
+      
+      setTimeout(() => {
+        $('.searchRow').slideUp('slow');
+
+        setTimeout(() => {
+          $('.letsBattleRow').slideDown();
+
+          const battleUrl = `/pokemon/battle/${sessionStorage.getItem('battleId2')}/${sessionStorage.getItem('battleId1')}`;
+
+          sessionStorage.clear();
+
+          setTimeout(() => {
+            window.location.href = battleUrl;
+          }, 1000);
+        }, 1000);
+      }, 800);
+    }
+
+    battleBtnRunning = false;
+  }, 300);
+});
+
+// This is for when the user clicks the go back button when viewing a Pokemon
+$('body').delegate('.goBackBtn', 'click', function() {
   $('.searchResults').slideUp('slow');
+
+  let lastSearchUrl;
+
+  if ($(this).attr('data-search') === 'View All') {
+    lastSearchUrl = '/api/pokemon/index/0';
+  } else {
+    $('.searchBar').val($(this).attr('data-search'));
+    lastSearchUrl = `/api/pokemon/search/${$(this).attr('data-search')}`;
+  }
 
   setTimeout(() => {
     $('.searchResults').empty();
 
-    $.ajax({
-      url: '/api/pokemon/' + $(this).attr('data-id')
-    }).then(results => {
-      $('.searchBar').val('');
-
-      const type1 = findType(results.type1);
-
-      const div = $('<div>').addClass('col-lg-12');
-
-      const card = $('<div>').addClass('card');
-
-      const cardBody = $('<div>').addClass('card-body');
-
-      const img = $('<div>').append(
-        $('<img>')
-          .attr({ src: results.sprite, alt: `Picture of ${results.name}` })
-          .addClass('pokemonImg')
-      );
-
-      const text = $('<div>')
-        .addClass('pokemonText')
-        .append($('<p>').text(`Name: ${results.name}`))
-        .append($('<p>').text(`Type: ${type1}`))
-        .append($('<p>').text(`HP: ${results.stats.hp}`))
-        .append($('<p>').text(`Attack: ${results.stats.attack}`))
-        .append($('<p>').text(`Defense: ${results.stats.defense}`))
-        .append($('<p>').text(`Speed: ${results.stats.defense}`));
-
-      div.append(card);
-
-      card.append(cardBody);
-
-      cardBody.append(img);
-
-      cardBody.append(text);
-
-      $('.searchResults').append(div);
-
-      $('.searchResults').slideDown('slow');
-    });
+    searchAll(lastSearchUrl);
   }, 1000);
 });
 
@@ -153,12 +261,25 @@ function searchAll(url) {
         .text(`Type: ${type1}`)
         .addClass('resultText');
 
+      const button = $('<button>')
+        .append($('<img>').attr({
+          'src': 'https://fontmeme.com/permalink/200617/3f39d10a8e1d4be552c1d41f697e8dcd.png',
+          'alt': 'Click on this button to battle this pokemon!',
+        }))
+        .addClass('battleBtn btn')
+        .attr('data-id', pokemon.id);
+
+      if (parseInt(sessionStorage.getItem('battleId1')) === pokemon.id) {
+        button.attr('disabled', true);
+      }
+
       div.append(link);
       link.append(card);
       card.append(cardBody);
       cardBody.append(img);
       cardBody.append(name);
       cardBody.append(type);
+      cardBody.append(button);
 
       $('.searchResults').append(div);
     });

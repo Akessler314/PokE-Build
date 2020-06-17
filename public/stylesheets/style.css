@@ -19,6 +19,11 @@ a:hover {
     color: black;
 }
 
+#letsBattleImg {
+    display: block;
+    margin: 0 auto 50px auto;
+}
+
 /* Navbar styling */
 
 .navbar {
@@ -61,7 +66,7 @@ a:hover {
     outline: none;
 }
 
-.searchBtn:focus, .signIn:focus, .nextBtn:focus {
+.searchBtn:focus, .signIn:focus, .nextBtn:focus, .battleBtn:focus {
     outline: none;
 }
 
@@ -94,7 +99,7 @@ a:hover {
     margin-top: 50px;
 }
 
-.viewAll, .viewYour, .createNew, .nextBtn, #toggle, .dropdown-toggle, #statSubmit {
+.viewAll, .viewYour, .createNew, .nextBtn, #toggle, .dropdown-toggle, #statSubmit, .battleBtn, .goBackBtn {
     background-color: rgb(255, 33, 35);
     border: 2px solid black;
     border-radius: 1rem;
@@ -103,13 +108,32 @@ a:hover {
     padding: 10px 25px;
 }
 
-.viewAll:hover, .viewYour:hover, .createNew:hover, .nextBtn:hover, #toggle:hover, #statSubmit:hover {
+.viewAll:hover, .viewYour:hover, .createNew:hover, .nextBtn:hover, #toggle:hover, #statSubmit:hover, .goBackBtn:hover {
     transition: ease-in-out 0.3s;
     transform: scale(1.05);
 }
 
 .dropdown-toggle:hover {
     background-color: rgb(255, 35, 35);
+}
+
+.battleBtn {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.battleBtn2 {
+    margin-top: 21px;
+}
+
+.goBackBtn {
+    width: 100%;
+}
+
+.battleBtn:hover:enabled {
+    transition: ease-in-out 0.3s;
+    transform: scale(1.05);
 }
 
 .buttonRow {
@@ -140,8 +164,18 @@ a:hover {
     width: 50%;
 }
 
-.pokemonText {
+.pokemonText, .creatorName {
     font-family: 'Press Start 2P', cursive;
+}
+
+.creatorName {
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.pokemonBtnRow {
+    margin: 0 180px 80px 180px;
 }
 
 .card {
