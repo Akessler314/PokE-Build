@@ -19,16 +19,17 @@ $('.searchBar').on('keydown', key => {
   
     if (key.keyCode === 8) {
       if ($('.searchBar').val().trim() === '') {
-        $('.buttonRow').slideDown('slow');
-        $('.searchResults').empty();
+        $('.searchResults').slideUp('slow');
+
+        setTimeout(() => {
+          $('.buttonRow').slideDown('slow');
+          $('.searchResults').empty();
+        }, 600);
+
       }
-    } else if (!viewAllRunning) {
+    } else {
       $('.buttonRow').slideUp('slow');
       $('.searchResults').slideUp('slow');
-  
-      // setTimeout(() => {
-      //   $('.searchResults').empty();
-      // }, 700);
     }
   }
 });
