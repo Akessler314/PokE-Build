@@ -26,6 +26,7 @@ $(document).ready(() => {
         const attack = optionsBox.chooseOption(player, messageBox);
         if (attack) {
           canInput = false;
+          optionsBox.drawOptions = false;
 
           playerAttack(attack);
         } else {
@@ -108,40 +109,31 @@ function drawCanvas() {
 }
 
 function playerAttack(move) {
-  const moveName = player['move' + move].name;
-  messageBox.setMessage(
-    player.name + ' uses ' + formatMoveName(moveName) + '!'
-  );
-
-  drawCanvas();
-
-  setTimeout(() => {
-    const attackResult = player.attackPokemon(move, opponent);
-    attackResult.minTimesToAttack -= 1;
-    attackResult.maxTimesToAttack -= 1;
-    let timesHit = 1;
-    let totalDamage = attackResult.damage;
-    if (attackResult.minTimesToAttack > 0 && attackResult.effective >= 0) {
-      const timesToHit = Math.ceil(
-        Math.random() *
-          (attackResult.maxTimesToAttack - attackResult.minTimesToAttack)
-      );
-      timesHit += timesToHit;
-      for (let i = 0; i < timesToHit; i++) {
-        totalDamage += player.attackPokemon(move, opponent).damage;
-      }
-
-      messageBox.setMessage('Hit ' + timesHit + ' times');
-      drawCanvas();
-    }
-
-    setTimeout(opponentTakesDamage, 1000, attackResult.effective, totalDamage);
-  }, 1000);
+  attackPokemon(player, opponent, move).then(results => {
+    setTimeout(() => {
+      pokemonTakesDamage(opponent, results.effectiveness, results.damage);
+      setTimeout(opponentAttack, 1000);
+    }, 1000);
+  });
 }
 
-function opponentTakesDamage(effectiveness, amount) {
+function opponentAttack() {
+  attackPokemon(opponent, player, Math.floor(Math.random() * 4 + 1)).then(results => { // Pick random move to fight with
+    setTimeout(() => {
+      pokemonTakesDamage(player, results.effectiveness, results.damage);
+      setTimeout(() => {
+        canInput = true;
+        optionsBox.drawOptions = true;
+        messageBox.setMessage('');
+        drawCanvas();
+      }, 1000);
+    }, 1000);
+  });
+}
+
+function pokemonTakesDamage(pokemon, effectiveness, amount) {
   amount = Math.floor(amount);
-  opponent.takeDamage(amount);
+  pokemon.takeDamage(amount);
 
   if (effectiveness < 0) {
     messageBox.setMessage('It missed!');
@@ -155,16 +147,47 @@ function opponentTakesDamage(effectiveness, amount) {
     messageBox.setMessage('It is super effective!');
   }
 
+  playerHealth.setHealth(player.hp);
   opponentHealth.setHealth(opponent.hp);
 
   drawCanvas();
-
-  // Queue up enemy attack after displaying info for .5s
-  setTimeout(opponentAttack, 1000);
 }
 
-function opponentAttack() {
-  canInput = true;
-  messageBox.setMessage('');
+function attackPokemon(attacking, target, move) {
+  const moveName = attacking['move' + move].name;
+  messageBox.setMessage(
+    attacking.name + ' uses ' + formatMoveName(moveName) + '!'
+  );
+
   drawCanvas();
+
+  return new Promise(resolve => {
+    setTimeout(() => {
+      const attackResult = attacking.attackPokemon(move, target);
+      attackResult.minTimesToAttack -= 1;
+      attackResult.maxTimesToAttack -= 1;
+      let timesHit = 1;
+      let totalDamage = attackResult.damage;
+      if (attackResult.minTimesToAttack > 0 && attackResult.effective >= 0) {
+        const timesToHit = Math.ceil(
+          Math.random() *
+            (attackResult.maxTimesToAttack - attackResult.minTimesToAttack)
+        );
+        timesHit += timesToHit;
+        for (let i = 0; i < timesToHit; i++) {
+          totalDamage += attacking.attackPokemon(move, target).damage;
+        }
+  
+        messageBox.setMessage('Hit ' + timesHit + ' times');
+        drawCanvas();
+      }
+  
+      const toReturn = {
+        effectiveness: attackResult.effective, 
+        damage: totalDamage
+      };
+
+      resolve(toReturn);
+    }, 1000);
+  });
 }

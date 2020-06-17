@@ -216,6 +216,7 @@ class OptionsBox {
     this.sprite.src = sprite;
     this.xPos = x;
     this.yPos = y;
+    this.drawOptions = true;
   }
 
   draw(context) {
@@ -227,14 +228,16 @@ class OptionsBox {
       this.sprite.height * 4
     );
 
-    for (let i = 0; i < this.options.length; i++) {
-      context.font = '22px monospace';
-      context.fillStyle = 'black';
-      context.fillText(
-        (i === this.currentOption ? '>' : '') + this.options[i],
-        this.xPos + 12,
-        this.yPos + 27 * (i + 1)
-      );
+    if (this.drawOptions) {
+      for (let i = 0; i < this.options.length; i++) {
+        context.font = '22px monospace';
+        context.fillStyle = 'black';
+        context.fillText(
+          (i === this.currentOption ? '>' : '') + this.options[i],
+          this.xPos + 12,
+          this.yPos + 27 * (i + 1)
+        );
+      }
     }
   }
 
