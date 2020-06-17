@@ -25,6 +25,7 @@ a:hover {
     background-color: rgb(255, 35, 35) !important;
     height: 100px;
     border-bottom: 2px solid black;
+    box-shadow: 2px 5px 8px -3px #444
 }
 
 .signIn {
@@ -114,7 +115,7 @@ a:hover {
 .buttonRow {
     border: 5px solid rgb(255, 35, 35);
     border-radius: 1rem;
-    box-shadow: 2px 5px 8px -3px #444;
+    box-shadow: 2px 5px 13px -2px black;
     margin-bottom: 50px;
     padding: 15px;
 }
@@ -146,7 +147,7 @@ a:hover {
 .card {
     border: 5px solid rgb(255, 35, 35);
     border-radius: 1rem;
-    box-shadow: 2px 6px 15px -3px #444;
+    box-shadow: 3px 5px 9px 0px black;
     margin: 0 auto 50px auto;
     width: 65%;
 }
@@ -180,6 +181,7 @@ footer {
     border-top: 2px solid black;
     padding-top: 15px;
     background-color: rgb(255, 35, 35);
+    box-shadow: 2px -3px 8px -3px #444;
     color: white;
     font-size: 20px;
     font-family: 'Press Start 2P', cursive;
