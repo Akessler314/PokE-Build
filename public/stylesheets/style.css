@@ -155,6 +155,11 @@ a:hover {
     width: 100%;
 }
 
+.resultCard:hover {
+    transition: ease-in-out 0.5s;
+    transform: scale(1.05);
+}
+
 .resultText {
     text-align: center;
     font-family: 'Press Start 2P', cursive;

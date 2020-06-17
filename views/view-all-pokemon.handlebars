@@ -15,21 +15,21 @@
     <div class="row pokemonRow">
         {{#each pokemon}}
             <div class="col-lg-3">
-                <div class="card resultCard">
-                    <div class="card-body">
-                        <a href="/pokemon/{{this.dataValues.searchableName}}">
-                            {{#if this.dataValues.sprite}}
-                            <img src="{{this.dataValues.sprite}}" alt="Picture of {{this.dataValues.name}}" class="resultImg">
-                            {{/if}}
+                <a href="/pokemon/{{this.dataValues.id}}" class="pokemonSearch">
+                    <div class="card resultCard">
+                        <div class="card-body">
+                                {{#if this.dataValues.sprite}}
+                                <img src="{{this.dataValues.sprite}}" alt="Picture of {{this.dataValues.name}}" class="resultImg">
+                                {{/if}}
 
-                            {{#unless this.dataValues.sprite}}
-                            <img src="/img/no-img.jpg" alt="Picture of {{this.dataValues.name}} couldn't be found" class="resultImg">
-                            {{/unless}}
+                                {{#unless this.dataValues.sprite}}
+                                <img src="/img/no-img.jpg" alt="Picture of {{this.dataValues.name}} couldn't be found" class="resultImg">
+                                {{/unless}}
 
-                            <p class="resultText">Name: {{this.dataValues.name}}</p>
-                        </a>
+                                <p class="resultText">Name: {{this.dataValues.name}}</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         {{/each}}
     </div>

@@ -19,7 +19,7 @@ $('.searchBtn').on('click', event => {
     results.forEach(pokemon => {
       const div = $('<div>').addClass('col-lg-3');
 
-      const link = $('<a>').attr('href', `/pokemon/${pokemon.searchableName}`);
+      const link = $('<a>').attr({'href': `/api/pokemon/${pokemon.id}`, 'data-id': pokemon.id}).addClass('pokemonSearch');
 
       const img = $('<img>')
         .attr({
@@ -34,9 +34,9 @@ $('.searchBtn').on('click', event => {
 
       const text = $('<p>').text(`Name: ${pokemon.name}`).addClass('resultText');
 
-      div.append(card);
-      card.append(link);
-      link.append(cardBody);
+      div.append(link);
+      link.append(card);
+      card.append(cardBody);
       cardBody.append(img);
       cardBody.append(text);
 
@@ -70,4 +70,9 @@ $(document).click(() => {
     $('.searchResults').slideUp('slow');
     $('.buttonRow').slideDown('slow');
   }
+});
+
+$('a').click(function(event) {
+  event.preventDefault();
+  console.log($(this));
 });
