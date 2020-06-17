@@ -1,9 +1,13 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable indent */
 let canvas;
 let context;
 
 let player;
 let opponent;
+
+let playerHealth;
+let opponentHealth;
 
 let canInput = true;
 
@@ -58,6 +62,7 @@ function loadData() {
         32,
         344
       );
+      playerHealth = new HealthBox(player.maxHP, player.name, 544, 344, '/img/healthBox.png');
     })
     .then(() => {
       $.ajax({
@@ -75,6 +80,7 @@ function loadData() {
             640,
             32
           );
+          opponentHealth = new HealthBox(opponent.maxHP, opponent.name, 0, 0, '/img/healthBox.png');
         })
         .then(initCanvas);
     });
@@ -95,6 +101,8 @@ function drawCanvas() {
 
   player.draw(context);
   opponent.draw(context);
+  playerHealth.draw(context);
+  opponentHealth.draw(context);
   messageBox.draw(context);
   optionsBox.draw(context);
 }
@@ -132,6 +140,7 @@ function playerAttack(move) {
 }
 
 function opponentTakesDamage(effectiveness, amount) {
+  amount = Math.floor(amount);
   opponent.takeDamage(amount);
 
   if (effectiveness < 0) {
@@ -145,6 +154,8 @@ function opponentTakesDamage(effectiveness, amount) {
   } else if (effectiveness > 1) {
     messageBox.setMessage('It is super effective!');
   }
+
+  opponentHealth.setHealth(opponent.hp);
 
   drawCanvas();
 
