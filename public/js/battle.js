@@ -26,6 +26,7 @@ $(document).ready(() => {
         const attack = optionsBox.chooseOption(player, messageBox);
         if (attack) {
           canInput = false;
+          optionsBox.drawOptions = false;
 
           playerAttack(attack);
         } else {
@@ -120,7 +121,12 @@ function opponentAttack() {
   attackPokemon(opponent, player, Math.floor(Math.random() * 4 + 1)).then(results => { // Pick random move to fight with
     setTimeout(() => {
       pokemonTakesDamage(player, results.effectiveness, results.damage);
-      canInput = true;
+      setTimeout(() => {
+        canInput = true;
+        optionsBox.drawOptions = true;
+        messageBox.setMessage('');
+        drawCanvas();
+      }, 1000);
     }, 1000);
   });
 }
