@@ -150,7 +150,7 @@ class Pokemon {
 
     amount *= modifier;
 
-    // Check if we missed
+    // Check if we missed, if so set the effectiveness to -1 so we can tell
     if (Math.random() * 100 > moveInfo.accuracy) {
       effectiveness = -1;
       amount *= 0;
@@ -288,5 +288,46 @@ class OptionsBox {
 
       return returnVal;
     }
+  }
+}
+
+class HealthBox {
+  constructor(maxHealth, pokemonName, x, y, sprite) {
+    this.health = this.maxHealth = maxHealth;
+    this.pokemonName = pokemonName;
+    this.posX = x;
+    this.posY = y;
+    this.sprite = new Image();
+    this.sprite.src = sprite;
+  }
+
+  setHealth(health) {
+    this.health = health;
+  }
+
+  draw(context) {
+    context.drawImage(this.sprite, this.posX, this.posY, this.sprite.width * 4, this.sprite.height * 4);
+    // Draw pokemon name
+    context.font = '22px monospace';
+    context.fillStyle = 'black';
+    context.fillText(this.pokemonName, this.posX + 12, this.posY + 27);
+    
+    // Draw health
+    context.font = '22px monospace';
+    context.fillStyle = 'black';
+    context.fillText(this.health + '/' + this.maxHealth + ' HP', this.posX + 12, this.posY + 78);
+
+    // Draw healthbar
+    if (this.health / this.maxHealth > 0.5) {
+      context.fillStyle = 'green';
+    } else if (this.health / this.maxHealth > .33) {
+      context.fillStyle = 'yellow';
+    } else if (this.health === 0) {
+      return;
+    } else {
+      context.fillStyle = 'red';
+    }
+    
+    context.fillRect(this.posX + 12, this.posY + 40, (this.health / this.maxHealth) * 232, 12);
   }
 }
