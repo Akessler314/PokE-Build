@@ -35,7 +35,7 @@ $('.searchBar').on('keydown', key => {
 });
 
 $(document).click(() => {
-  if ($('.searchBar').val().trim() === '' && !viewAllRunning) {
+  if ($('.searchBar').val().trim() === '' && !viewAllRunning && $('.searchResults').is(':hidden')) {
     $('.searchResults').slideUp('slow');
     $('.buttonRow').slideDown('slow');
   }
