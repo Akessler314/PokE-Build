@@ -9,6 +9,21 @@ const $spAttack = $('#SP_Attack');
 
 let nextName;
 
+//api call for all of the moves
+$.ajax({
+  url: 'https://pokeapi.co/api/v2/move/?offset=400&limit=400',
+  method: 'GET'
+}).then(response => {
+  console.log(response.results);
+});
+//api call for damge classes
+$.ajax({
+  url: 'https://pokeapi.co/api/v2/move-damage-class/',
+  method: 'GET'
+}).then(response => {
+  console.log(response.results);
+});
+
 //prottype object for pokemon stat object
 const stats = {
   hp: 0,
@@ -23,6 +38,8 @@ $(document).ready(() => {
   addCellClickListener();
   //Call this on page load to give the initial amount of poitns avaialable.
   pointPoolUpdater();
+  //this will imeaditely create an object to use later for the maker ID in the db
+  creatorIdFunction();
 });
 
 //Adds a color to the clicked on cell
@@ -185,7 +202,7 @@ $('a').click(function(event) {
 //Point updater
 function pointPoolUpdater() {
   //var for the initial point pool the user will have avialible.
-  const availablePoints = 400;
+  const availablePoints = 1000;
   //this will add up the values of all the points put into stats, and store it in a variable to be used.
   const usedPoints =
     parseInt($hp.val()) +
@@ -194,7 +211,7 @@ function pointPoolUpdater() {
     parseInt($spDefense.val()) +
     parseInt($defense.val()) +
     parseInt($spAttack.val());
-  if (usedPoints > 400) {
+  if (usedPoints > 1000) {
     //alert user they are over the aloted points
     alert('You have run out of points!');
   } else {
@@ -204,8 +221,8 @@ function pointPoolUpdater() {
   }
 
   //event listiner for when the user submits stats
-  $('#statSubmit').click(() => {
-    if (usedPoints > 400) {
+  $('.statSubmit').click(() => {
+    if (usedPoints > 1000) {
       //alert user they are over the aloted points if they try to submit a pokemon that has too many stats
       alert('Your pokemon is too strong!');
     } else {
@@ -226,3 +243,11 @@ $('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').change(() => {
   pointPoolUpdater();
   $('#statSubmit').slideDown('slow');
 });
+
+//function to create an object with the current userID to be used in the DB - this is currently set to always be 1 until log in feature is implimented
+function creatorIdFunction() {
+  const creatorId = 1;
+  const creatorIdObject = new Object();
+  creatorIdObject.CreatorId = creatorId;
+  console.log(creatorIdObject);
+}
