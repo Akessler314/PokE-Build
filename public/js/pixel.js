@@ -10,20 +10,6 @@ const $spAttack = $('#SP_Attack');
 let nextName;
 // let user;
 
-//api call for all of the moves
-$.ajax({
-  url: 'https://pokeapi.co/api/v2/move/?offset=0&limit=400',
-  method: 'GET'
-}).then(response1 => {
-  console.log(response1);
-});
-$.ajax({
-  url: 'https://pokeapi.co/api/v2/move/?offset=400&limit=800',
-  method: 'GET'
-}).then(response2 => {
-  console.log(response2);
-});
-
 //prottype object for pokemon stat object
 const stats = {
   hp: 0,
@@ -285,15 +271,16 @@ function creatorIdFunction() {
   console.log(creatorIdObject);
 }
 
-// function to append the moves into each move selector
+// function to append the moves into each move selector as well as the move name into a data-name attribute
 function appendMoves() {
   let moveSet1;
   let moveSet2;
+  // let moveSet1DataId;
+  // let moveSet2DataId;
   $.ajax({
     url: 'https://pokeapi.co/api/v2/move/?offset=0&limit=400',
     method: 'GET'
   }).then(response1 => {
-    console.log(response1);
     response1.results.forEach(move => {
       moveSet1 = move.name;
       $(
@@ -312,7 +299,6 @@ function appendMoves() {
         '#move1Dropdown, #move2Dropdown, #move3Dropdown, #move4Dropdown'
       ).append('<a class="dropdown-item move2" href="">' + moveSet2 + '</a>');
     });
-    console.log(response2);
   });
 }
 
@@ -325,3 +311,13 @@ $('body').delegate('.move1, .move2', 'click', function(event) {
 
   $('#statSubmit').slideDown('slow');
 });
+
+function formatMoveName(move) {
+  const words = move.split('-');
+
+  for (let i = 0; i < words.length; i++) {
+    words[i] = words[i].charAt(0).toUpperCase() + words[i].substr(1);
+  }
+
+  return words.join(' ');
+}
