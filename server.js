@@ -3,6 +3,8 @@ const express = require('express');
 const session = require('express-session');
 const expressHandle = require('express-handlebars');
 
+const passport = require('./config/passport');
+
 // Setting up port and requiring models for syncing
 const PORT = process.env.PORT || 8080;
 const db = require('./models');
@@ -26,7 +28,7 @@ app.set('view engine', 'handlebars');
 
 // Requiring our routes
 require('./routes/html-routes.js')(app);
-require('/routes/auth-api/routes.js')(app);
+require('./routes/auth-api-routes.js')(app);
 require('./routes/creator-api-routes.js')(app);
 require('./routes/pokemon-api-routes.js')(app);
 

@@ -29,7 +29,7 @@ module.exports = function(app) {
       res.json({});
     } else {
       res.json({
-        username: req.user.email,
+        username: req.user.username,
         id: req.user.id
       });
     }
