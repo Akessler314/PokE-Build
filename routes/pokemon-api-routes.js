@@ -1,7 +1,7 @@
 const Pokemon = require('../controllers/pokemonController');
 
 module.exports = function(app) {
-  // Get creator by id
+  // Get pokemon by id
   app.get('/api/pokemon/:id', (req, res) => {
     Pokemon.findById(req.params.id).then(results => {
       res.json(results);
