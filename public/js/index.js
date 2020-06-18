@@ -3,6 +3,24 @@
 
 let viewAllRunning = false;
 let battleBtnRunning = false;
+let user;
+
+$(document).ready(() => {
+  $.ajax({
+    url: '/api/auth/user'
+  }).then(res => {
+    user = res;
+
+    $('.userNameText').text(res.username);
+
+    if ($('.userNameText').text() === '') {
+      $('.userBtn').append($('<a>').attr({ href: '/signup' }).addClass('dropdown-item').text('Sign up'));
+      $('.userBtn').append($('<a>').attr({ href: '/login' }).addClass('dropdown-item').text('Sign in'));
+    } else {
+      $('.userBtn').append($('<a>').attr({ href: '/api/auth/logout' }).addClass('dropdown-item').text('Log out'));
+    }
+  });
+});
 
 $('.searchBtn').on('click', event => {
   event.preventDefault();
@@ -213,6 +231,16 @@ $('.viewAll').click((event) => {
   setTimeout(() => {
     searchAll('/api/pokemon/index/0');
   }, 1000);
+});
+
+$('.viewYour').click(event => {
+  event.preventDefault();
+
+  if ($('.userNameText').text() === '') {
+    window.location.href = '/login';
+  } else {
+    window.location.href = `/view-own/${user.id}`;
+  }
 });
 
 function searchAll(url) {
