@@ -154,6 +154,8 @@ $('body').delegate('.battleBtn', 'click', function() {
       sessionStorage.setItem('battleId1', $(this).attr('data-id'));
 
       $(this).attr('disabled', true);
+
+      $('#myModal').modal('show');
     } else {
       sessionStorage.setItem('battleId2', $(this).attr('data-id'));
 

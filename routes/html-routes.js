@@ -23,4 +23,12 @@ module.exports = function(app) {
       }
     );
   });
+
+  app.get('/signup', (req, res) => {
+    res.render('signUp');
+  });
+
+  app.get('/login', (req, res) => {
+    res.render('login');
+  });
 };
