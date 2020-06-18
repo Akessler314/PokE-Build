@@ -12,5 +12,7 @@ function signUp(event) {
       username: $('#signUpUsername').val(),
       password: $('#signUpPassword').val()
     }
+  }).then(() => {
+    window.location.replace('/');
   });
 }
