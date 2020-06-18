@@ -1,4 +1,28 @@
 <div class="container-xl">
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                    <!-- Modal header -->
+                    <div class="modal-header">
+                        <img src="https://fontmeme.com/permalink/200618/87ce7896ccebe5d1b44b5e2d3dbbc63a.png" alt="Battle Logo" class="modalLogo">
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                    <!-- Time format setting -->
+                    <div class="btn-group" role="group">
+                        <p class="modalText">Now pick a Pokemon you'd like to face in Battle!</p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secondary doneBtn" data-dismiss="modal"><img src="https://fontmeme.com/permalink/200618/a772b5d6b8856fefe9663f0538188e2d.png" alt="Done button. Click here to dismiss the modal"></button>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+
     <div class="row letsBattleRow" style="display: none;">
         <img src="https://fontmeme.com/permalink/200617/c481a7e89638f316964bff4c5a8d3575.png" alt="Let's Battle!" id="letsBattleImg">
     </div>
@@ -45,6 +69,14 @@
 
 {{!-- jQuery Link --}}
 <script src="https://code.jquery.com/jquery.js"></script>
+
+{{!-- Bootstrap js links --}}
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
 
 {{!-- js link --}}
 <script src="/js/index.js"></script>

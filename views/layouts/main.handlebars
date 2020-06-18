@@ -23,7 +23,18 @@
 <body>
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="/"><img src="https://fontmeme.com/permalink/200613/32cb5b2cee8d36534c828314732e972d.png" alt="Dream team logo"></a>
-        <button class="signIn"><span id="signInText">Sign in</span> <i class="fas fa-user"></i></button>
+        <div class="dropleft">
+            <button class="signIn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user"></i>
+            </button>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/signup">Sign up</a>
+                <a class="dropdown-item" href="/login">Sign in</a>
+            </div>
+        </div>
+        
+        {{!-- <a href="/signup" class="signIn"></i></a> --}}
     </nav>
 
     {{{ body }}}
