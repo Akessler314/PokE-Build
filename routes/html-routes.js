@@ -1,4 +1,5 @@
 const Pokemon = require('../controllers/pokemonController');
+const Creator = require('../controllers/creatorController');
 
 module.exports = function(app) {
   // The battle sim page
@@ -17,6 +18,21 @@ module.exports = function(app) {
       res.render('battle', {
         pokemon1: req.params.id1,
         pokemon2: req.params.id2
+      });
+    }
+  });
+
+  app.get('/', (req, res) => {
+    res.render('index');
+  });
+
+  // View own pokemon page
+  app.get('/view-own/:id', (req, res) => {
+    if (!req.user) {
+      res.redirect('/login');
+    } else {
+      Creator.findById(req.params.id).then(results => {
+        res.render('view-own-pokemon', { pokemon: results.dataValues });
       });
     }
   });
