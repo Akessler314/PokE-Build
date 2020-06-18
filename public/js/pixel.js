@@ -13,14 +13,14 @@ let nextName;
 $.ajax({
   url: 'https://pokeapi.co/api/v2/move/?offset=0&limit=400',
   method: 'GET'
-}).then(response => {
-  console.log(response);
+}).then(response1 => {
+  console.log(response1);
 });
 $.ajax({
   url: 'https://pokeapi.co/api/v2/move/?offset=400&limit=800',
   method: 'GET'
-}).then(response => {
-  console.log(response);
+}).then(response2 => {
+  console.log(response2);
 });
 
 //prottype object for pokemon stat object
@@ -255,10 +255,31 @@ function creatorIdFunction() {
 
 // function to append the moves into each move selector
 function appendMoves() {
-  $('#move1Dropdown, #move2Dropdown, #move3Dropdown, #move4Dropdown').append(
-    '<a class="dropdown-item" href="" data-id=0>TEST MOVE 1</a>',
-    '<a class="dropdown-item" href="" data-id=0>TEST MOVE 2</a>',
-    '<a class="dropdown-item" href="" data-id=0>TEST MOVE 3</a>',
-    '<a class="dropdown-item" href="" data-id=0>TEST MOVE 4</a>'
-  );
+  let moveSet1;
+  let moveSet2;
+  $.ajax({
+    url: 'https://pokeapi.co/api/v2/move/?offset=0&limit=400',
+    method: 'GET'
+  }).then(response1 => {
+    console.log(response1);
+    response1.results.forEach(move => {
+      moveSet1 = move.name;
+      $(
+        '#move1Dropdown, #move2Dropdown, #move3Dropdown, #move4Dropdown'
+      ).append('<a class="dropdown-item second" href="">' + moveSet1 + '</a>');
+    });
+  });
+
+  $.ajax({
+    url: 'https://pokeapi.co/api/v2/move/?offset=400&limit=800',
+    method: 'GET'
+  }).then(response2 => {
+    response2.results.forEach(move => {
+      moveSet2 = move.name;
+      $(
+        '#move1Dropdown, #move2Dropdown, #move3Dropdown, #move4Dropdown'
+      ).append('<a class="dropdown-item second" href="">' + moveSet2 + '</a>');
+    });
+    console.log(response2);
+  });
 }
