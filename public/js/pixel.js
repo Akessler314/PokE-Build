@@ -229,7 +229,7 @@ function pointPoolUpdater() {
   }
 
   //event listiner for when the user submits stats
-  $('.statSubmit').click(() => {
+  $('#statSubmit').click(() => {
     if (usedPoints > 1000) {
       //alert user they are over the aloted points if they try to submit a pokemon that has too many stats
       $('.modalText').text('Your Pokemon is too strong!');
