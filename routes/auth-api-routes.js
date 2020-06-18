@@ -2,10 +2,12 @@ const db = require('../models');
 const passport = require('../config/passport');
 
 module.exports = function(app) {
+  // Logs in the user with the provided username and password in req.body
   app.post('/api/auth/login', passport.authenticate('local'), (req, res) => {
     res.json(req.user);
   });
 
+  // Adds a new creator with the given username and password
   app.post('/api/auth/signup', (req, res) => {
     db.Creator.create({
       username: req.body.username,
@@ -20,11 +22,13 @@ module.exports = function(app) {
       });
   });
 
+  // Used to logout user
   app.get('/api/auth/logout', (req, res) => {
     req.logout();
     res.redirect('/');
   });
 
+  // For getting user and id of currently logged in user
   app.get('/api/auth/user', (req, res) => {
     if (!req.user) {
       res.json({});
