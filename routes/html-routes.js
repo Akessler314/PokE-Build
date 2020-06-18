@@ -7,12 +7,12 @@ module.exports = function(app) {
       res.redirect('/login');
     } else if (req.user.id !== req.params.id1) {
       res.status(401).end();
+    } else {
+      res.render('battle', {
+        pokemon1: req.params.id1,
+        pokemon2: req.params.id2
+      });
     }
-
-    res.render('battle', {
-      pokemon1: req.params.id1,
-      pokemon2: req.params.id2
-    });
   });
 
   app.get('/', (req, res) => {
@@ -23,8 +23,9 @@ module.exports = function(app) {
     // Check to see if the user is logged in
     if (!req.user) {
       res.redirect('/login');
+    } else {
+      res.render('pixel');
     }
-    res.render('pixel');
   });
 
   app.get('/pokemon/index/:page', (req, res) => {
@@ -38,14 +39,16 @@ module.exports = function(app) {
   app.get('/signup', (req, res) => {
     if (req.user) {
       res.redirect('/');
+    } else {
+      res.render('signUp');
     }
-    res.render('signUp');
   });
 
   app.get('/login', (req, res) => {
     if (req.user) {
       res.redirect('/');
+    } else {
+      res.render('login');
     }
-    res.render('login');
   });
 };

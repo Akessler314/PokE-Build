@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow-callback */
 const bcrypt = require('bcryptjs');
 
 module.exports = function(sequelize, DataTypes) {
@@ -21,16 +22,18 @@ module.exports = function(sequelize, DataTypes) {
     });
   };
 
-  Creator.prototype.validPassword = password => {
+  Creator.prototype.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
   };
 
-  Creator.addHook('beforeCreate', creator => {
-    Creator.password = bcrypt.hashSync(
+  Creator.beforeCreate(creator => {
+    creator.password = bcrypt.hashSync(
       creator.password,
       bcrypt.genSaltSync(10),
       null
     );
+
+    return creator;
   });
 
   return Creator;
