@@ -4,6 +4,21 @@
 let viewAllRunning = false;
 let battleBtnRunning = false;
 
+$(document).ready(() => {
+  $.ajax({
+    url: '/api/auth/user'
+  }).then(res => {
+    $('.userNameText').text(res.username);
+
+    if ($('.userNameText').text() === '') {
+      $('.dropdown-menu').append($('<a>').attr({ href: '/signup' }).addClass('dropdown-item').text('Sign up'));
+      $('.dropdown-menu').append($('<a>').attr({ href: '/login' }).addClass('dropdown-item').text('Sign in'));
+    } else {
+      $('.dropdown-menu').append($('<a>').attr({ href: '/api/auth/logout' }).addClass('dropdown-item').text('Log out'));
+    }
+  });
+});
+
 $('.searchBtn').on('click', event => {
   event.preventDefault();
 
