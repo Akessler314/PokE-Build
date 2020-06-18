@@ -196,7 +196,14 @@ function pointPoolUpdater() {
     parseInt($spAttack.val());
   if (usedPoints > 400) {
     //alert user they are over the aloted points
-    alert('You have run out of points!');
+    $('.modalText').text('You have run out of points!');
+
+    $('.modalImg').attr({
+      src: '../img/snorlax.jpg',
+      alt: 'Snorlax is not pleased'
+    });
+
+    $('#myModal').modal('show');
   } else {
     $('#pointPool').text(
       'Current Points Left: ' + (availablePoints - usedPoints)
@@ -207,7 +214,14 @@ function pointPoolUpdater() {
   $('#statSubmit').click(() => {
     if (usedPoints > 400) {
       //alert user they are over the aloted points if they try to submit a pokemon that has too many stats
-      alert('Your pokemon is too strong!');
+      $('.modalText').text('Your Pokemon is too strong!');
+
+      $('.modalImg').attr({
+        src: '../img/pikachu-scare.jpg',
+        alt: 'You scared Pikachu with how strong your Pokemon is!'
+      });
+
+      $('#myModal').modal('show');
     } else {
       const newPokeStats = Object.create(stats);
       newPokeStats.hp = $hp.val();
