@@ -112,7 +112,7 @@ a:hover {
 }
 
 .current {
-    margin-bottom: 250px;
+    margin-bottom: 200px;
 }
 
 /* Font Awesome icon */
@@ -346,7 +346,7 @@ footer {
     margin: 0 auto;
 }
 
-.tools, .chooseType, .statsRow {
+.tools, .chooseType, .statsRow, .moveRow {
     text-align: center;
     font-family: 'Press Start 2P', cursive;
     font-size: 16px;
@@ -367,7 +367,7 @@ footer {
     padding: 25px;
 }
 
-#statSubmit {
+#statSubmit, .moveRow {
     display: block;
     margin: 30px auto;
 }

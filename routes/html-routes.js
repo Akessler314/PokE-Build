@@ -22,12 +22,11 @@ module.exports = function(app) {
     }
   });
 
-
   app.get('/', (req, res) => {
     res.render('index');
   });
 
-  // View own pokemon page   
+  // View own pokemon page
   app.get('/view-own/:id', (req, res) => {
     if (!req.user) {
       res.redirect('/login');
@@ -38,7 +37,6 @@ module.exports = function(app) {
     }
   });
 
- 
   // Pokemon creation page
   app.get('/pixel', (req, res) => {
     // Check to see if the user is logged in
