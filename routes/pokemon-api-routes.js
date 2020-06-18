@@ -16,6 +16,7 @@ module.exports = function(app) {
     });
   });
 
+  // API page for pokemon index page
   app.get('/api/pokemon/index/:page', (req, res) => {
     const page = req.params.page || 0;
     Pokemon.findAllInOrder('updatedAt', 'DESC', page).then(results => {
@@ -23,7 +24,8 @@ module.exports = function(app) {
     });
   });
 
-  app.post('/api/pokemon/:id/sprite', (req, res) => {
+  // Updates a sprite to the given pokemon
+  app.put('/api/pokemon/:id/sprite', (req, res) => {
     if (!req.user || req.user.id !== req.params.id) {
       res.status(401);
     } else {
