@@ -47,6 +47,10 @@ a:hover {
     color: white;
 }
 
+.userNameText {
+    margin-right: 15px;
+}
+
 /* Modal styling */
 .modalLogo, .signUpLogo, .logInLogo {
     display: block;
