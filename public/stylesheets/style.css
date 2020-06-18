@@ -67,6 +67,7 @@ a:hover {
 .modalText {
     font-size: 16px;
     font-family: 'Press Start 2P', cursive;
+    line-height: 2.3em;
     text-align: center;
     margin: 10px 15px 20px 15px;
 }

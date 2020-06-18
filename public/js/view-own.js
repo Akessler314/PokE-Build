@@ -115,10 +115,10 @@ $('body').delegate('.battleBtn', 'click', function() {
       } else {
         sessionStorage.setItem('battleId2', $(this).attr('data-id'));
   
-        $('.searchResults').slideUp('slow');
+        $('.col-lg-12').slideUp('slow');
         
         setTimeout(() => {
-          $('.searchRow').slideUp('slow');
+          $('.mainContent').slideUp('slow');
   
           setTimeout(() => {
             $('.letsBattleRow').slideDown();

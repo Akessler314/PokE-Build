@@ -27,6 +27,9 @@ function signUp(event) {
     data: {
       username: $('#logInUsername').val(),
       password: $('#logInPassword').val()
+    },
+    error: function() {
+      $('#myModal').modal('show');
     }
   }).then(() => {
     window.location.replace('/');
