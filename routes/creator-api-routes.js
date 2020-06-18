@@ -19,7 +19,7 @@ module.exports = function(app) {
   app.post('/api/creators/:id/pokemon', (req, res) => {
     // Check to make sure we're logged in as the creator we're making the pokemon for
     if (!req.user || req.user.id !== req.params.id) {
-      res.status(401).end();
+      res.status(401);
     } else {
       Creator.addPokemonToCreator(req.params.id, req.body).then(results => {
         res.json(results);

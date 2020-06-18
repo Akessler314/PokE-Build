@@ -25,9 +25,9 @@ module.exports = function(app) {
 
   app.post('/api/pokemon/:id/sprite', (req, res) => {
     if (!req.user || req.user.id !== req.params.id) {
-      res.status(401).end();
+      res.status(401);
+    } else {
+      Pokemon.updateSprite(req.params.id, req.body);
     }
-    Pokemon.updateSprite(req.params.id, req.body);
-    res.end();
   });
 };
