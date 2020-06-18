@@ -11,17 +11,16 @@ let nextName;
 
 //api call for all of the moves
 $.ajax({
-  url: 'https://pokeapi.co/api/v2/move/?offset=400&limit=400',
+  url: 'https://pokeapi.co/api/v2/move/?offset=0&limit=400',
   method: 'GET'
 }).then(response => {
-  console.log(response.results);
+  console.log(response);
 });
-//api call for damge classes
 $.ajax({
-  url: 'https://pokeapi.co/api/v2/move-damage-class/',
+  url: 'https://pokeapi.co/api/v2/move/?offset=400&limit=800',
   method: 'GET'
 }).then(response => {
-  console.log(response.results);
+  console.log(response);
 });
 
 //prottype object for pokemon stat object
@@ -40,6 +39,8 @@ $(document).ready(() => {
   pointPoolUpdater();
   //this will imeaditely create an object to use later for the maker ID in the db
   creatorIdFunction();
+  // appends all of the mvoes to the move selctor dropdowns on load
+  appendMoves();
 });
 
 //Adds a color to the clicked on cell
@@ -250,4 +251,14 @@ function creatorIdFunction() {
   const creatorIdObject = new Object();
   creatorIdObject.CreatorId = creatorId;
   console.log(creatorIdObject);
+}
+
+// function to append the moves into each move selector
+function appendMoves() {
+  $('#move1Dropdown, #move2Dropdown, #move3Dropdown, #move4Dropdown').append(
+    '<a class="dropdown-item" href="" data-id=0>TEST MOVE 1</a>',
+    '<a class="dropdown-item" href="" data-id=0>TEST MOVE 2</a>',
+    '<a class="dropdown-item" href="" data-id=0>TEST MOVE 3</a>',
+    '<a class="dropdown-item" href="" data-id=0>TEST MOVE 4</a>'
+  );
 }
