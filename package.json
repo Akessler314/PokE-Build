@@ -15,13 +15,13 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
-    "bcryptjs": "2.4.3",
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.0",
     "express-handlebars": "^4.0.4",
     "express-session": "^1.16.1",
     "gif-encoder": "^0.7.2",
     "mysql2": "^1.6.5",
-    "passport": "^0.4.0",
+    "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "sequelize": "^5.8.6"
   },

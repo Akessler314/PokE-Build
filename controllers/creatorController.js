@@ -9,6 +9,9 @@ const Creator = {
       include: {
         model: db.Pokemon,
         as: 'Pokemon'
+      },
+      attributes: {
+        exclude: ['password']
       }
     });
   },

@@ -2,10 +2,17 @@ const Pokemon = require('../controllers/pokemonController');
 
 module.exports = function(app) {
   app.get('/pokemon/battle/:id1/:id2', (req, res) => {
-    res.render('battle', {
-      pokemon1: req.params.id1,
-      pokemon2: req.params.id2
-    });
+    // Check to see if the user is logged in and id1 is their pokemon
+    if (!req.user) {
+      res.redirect('/login');
+    } else if (req.user.id !== req.params.id1) {
+      res.status(401).end();
+    } else {
+      res.render('battle', {
+        pokemon1: req.params.id1,
+        pokemon2: req.params.id2
+      });
+    }
   });
 
   app.get('/', (req, res) => {
@@ -13,7 +20,12 @@ module.exports = function(app) {
   });
 
   app.get('/pixel', (req, res) => {
-    res.render('pixel');
+    // Check to see if the user is logged in
+    if (!req.user) {
+      res.redirect('/login');
+    } else {
+      res.render('pixel');
+    }
   });
 
   app.get('/pokemon/index/:page', (req, res) => {
@@ -25,10 +37,18 @@ module.exports = function(app) {
   });
 
   app.get('/signup', (req, res) => {
-    res.render('signUp');
+    if (req.user) {
+      res.redirect('/');
+    } else {
+      res.render('signUp');
+    }
   });
 
   app.get('/login', (req, res) => {
-    res.render('login');
+    if (req.user) {
+      res.redirect('/');
+    } else {
+      res.render('login');
+    }
   });
 };

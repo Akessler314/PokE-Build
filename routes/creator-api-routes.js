@@ -17,8 +17,13 @@ module.exports = function(app) {
 
   // Create a new pokemon for this creator
   app.post('/api/creators/:id/pokemon', (req, res) => {
-    Creator.addPokemonToCreator(req.params.id, req.body).then(results => {
-      res.json(results);
-    });
+    // Check to make sure we're logged in as the creator we're making the pokemon for
+    if (!req.user || req.user.id !== req.params.id) {
+      res.status(401);
+    } else {
+      Creator.addPokemonToCreator(req.params.id, req.body).then(results => {
+        res.json(results);
+      });
+    }
   });
 };

@@ -1,7 +1,7 @@
 const Pokemon = require('../controllers/pokemonController');
 
 module.exports = function(app) {
-  // Get creator by id
+  // Get pokemon by id
   app.get('/api/pokemon/:id', (req, res) => {
     Pokemon.findById(req.params.id).then(results => {
       res.json(results);
@@ -24,7 +24,10 @@ module.exports = function(app) {
   });
 
   app.post('/api/pokemon/:id/sprite', (req, res) => {
-    Pokemon.updateSprite(req.params.id, req.body);
-    res.end();
+    if (!req.user || req.user.id !== req.params.id) {
+      res.status(401);
+    } else {
+      Pokemon.updateSprite(req.params.id, req.body);
+    }
   });
 };
