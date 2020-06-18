@@ -1,35 +1,74 @@
 <div class="container">
-    <div class="row">
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                    <!-- Modal header -->
+                    <div class="modal-header">
+                        <img src="https://fontmeme.com/permalink/200618/87ce7896ccebe5d1b44b5e2d3dbbc63a.png" alt="Battle Logo" class="modalLogo">
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                    <!-- Time format setting -->
+                    <div class="btn-group" role="group">
+                        <p class="modalText">Now pick a Pokemon you'd like to face in Battle!</p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secondary doneBtn" data-dismiss="modal"><img src="https://fontmeme.com/permalink/200618/a772b5d6b8856fefe9663f0538188e2d.png" alt="Done button. Click here to dismiss the modal"></button>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+
+    <div class="row letsBattleRow" style="display: none;">
+        <img src="https://fontmeme.com/permalink/200617/c481a7e89638f316964bff4c5a8d3575.png" alt="Let's Battle!" id="letsBattleImg">
+    </div>
+
+    <div class="row mainContent">
+
+        <img src="https://fontmeme.com/permalink/200611/5cb3ac30028fbdf2a0ac059f87f553e3.png" alt="" style="display: block; margin: 0 auto 30px auto">
+        
         <div class="col-lg-12">
-            <img src="https://fontmeme.com/permalink/200611/5cb3ac30028fbdf2a0ac059f87f553e3.png" alt="" style="display: block; margin: 0 auto 30px auto">
 
-            <div class="card">
-                <div class="card-body">
-                    {{!-- Pokemon img --}}
-                    <div>
-                        <img src="/img/vaporeon.png" alt="" class="pokemonImg">
-                    </div>
+            {{#each pokemon.Pokemon}}
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <img src="{{this.dataValues.sprite}}" alt="Picture of {{this.dataValues.name}}" class="pokemonImg">
+                        </div>
 
-                    <div class="pokemonText">
-                        <p>Name: <span class="name">Vaporeon</span></p>
-                        <p>Type: <span class="type">Water</span></p>
-                    </div>
-                </div>
-            </div>
+                        <div class="pokemonText">
+                            <p>Name: {{this.dataValues.name}}</p>
+                            <p>Type: <span class="type{{@index}}">TBD</span></p>
+                            <p>HP: {{this.dataValues.stats.hp}}</p>
+                            <p>Attack: {{this.dataValues.stats.attack}}</p>
+                            <p>Defense: {{this.dataValues.stats.defense}}</p>
+                            <p>Speed: {{this.dataValues.stats.speed}}</p>
 
-            <div class="card">
-                <div class="card-body">
-                    {{!-- Pokemon img --}}
-                    <div>
-                        <img src="/img/charamander.png" alt="" class="pokemonImg">
-                    </div>
-
-                    <div class="pokemonText">
-                        <p>Name: <span class="name">Charamander</span></p>
-                        <p>Type: <span class="type">Fire</span></p>
+                            <button class="battleBtn battleBtn3 btn bb{{@index}}" data-id="{{this.dataValues.id}}">
+                                <img src="https://fontmeme.com/permalink/200617/496fe144d8c773fefe9c9dbe2e35d2bf.png" alt="Click on this button to battle this pokemon!">
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {{/each}}
         </div>
     </div>
 </div>
+
+{{!-- jQuery Link --}}
+<script src="https://code.jquery.com/jquery.js"></script>
+
+{{!-- Bootstrap js links --}}
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+
+{{!-- js link --}}
+<script src="/js/view-own.js"></script>

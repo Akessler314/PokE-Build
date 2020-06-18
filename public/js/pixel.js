@@ -8,6 +8,7 @@ const $attack = $('#attack');
 const $spAttack = $('#SP_Attack');
 
 let nextName;
+// let user;
 
 //prottype object for pokemon stat object
 const stats = {
@@ -20,6 +21,24 @@ const stats = {
 };
 
 $(document).ready(() => {
+  $.ajax({
+    url: '/api/auth/user'
+  }).then(res => {
+    // user = res;
+
+    $('.userNameText').text(res.username);
+
+    if ($('.userNameText').text() === '') {
+      // eslint-disable-next-line prettier/prettier
+      $('.userBtn').append($('<a>').attr({ href: '/signup' }).addClass('dropdown-item').text('Sign up'));
+      // eslint-disable-next-line prettier/prettier
+      $('.userBtn').append($('<a>').attr({ href: '/login' }).addClass('dropdown-item').text('Sign in'));
+    } else {
+      // eslint-disable-next-line prettier/prettier
+      $('.userBtn').append($('<a>').attr({ href: '/api/auth/logout' }).addClass('dropdown-item').text('Log out'));
+    }
+  });
+
   addCellClickListener();
   //Call this on page load to give the initial amount of poitns avaialable.
   pointPoolUpdater();
@@ -141,7 +160,7 @@ function goToNext() {
   // If the final next button is clicked
   else {
     // eslint-disable-next-line prettier/prettier
-    if ($('.dropdown-2').text().trim() === 'Second Type (optional)') {
+    if ($('.dropdown-2').text() === 'Second Type (optional)') {
       $('.dropdown-2').text('None');
     }
 
@@ -155,7 +174,7 @@ function goToNext() {
       $('.chooseStats').addClass('current');
 
       setTimeout(() => {
-        $('html, body').animate({ scrollTop: 550 }, 'fast');
+        $('html, body').animate({ scrollTop: 800 }, 'slow');
       }, 500);
     }, 700);
   }
@@ -242,7 +261,6 @@ function pointPoolUpdater() {
 //event listener for when a user changes the value of a stat
 $('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').change(() => {
   pointPoolUpdater();
-  $('#statSubmit').slideDown('slow');
 });
 
 //function to create an object with the current userID to be used in the DB - this is currently set to always be 1 until log in feature is implimented
@@ -267,13 +285,7 @@ function appendMoves() {
       moveSet1 = move.name;
       $(
         '#move1Dropdown, #move2Dropdown, #move3Dropdown, #move4Dropdown'
-      ).append(
-        '<a class="dropdown-item moveName" data-name="' +
-          moveSet1 +
-          '">' +
-          moveSet1 +
-          '</a>'
-      );
+      ).append('<a class="dropdown-item move1" href="">' + moveSet1 + '</a>');
     });
   });
 
@@ -285,19 +297,27 @@ function appendMoves() {
       moveSet2 = move.name;
       $(
         '#move1Dropdown, #move2Dropdown, #move3Dropdown, #move4Dropdown'
-      ).append(
-        '<a class="dropdown-item moveName" data-name="' +
-          moveSet2 +
-          '">' +
-          moveSet2 +
-          '</a>'
-      );
+      ).append('<a class="dropdown-item move2" href="">' + moveSet2 + '</a>');
     });
   });
 }
-//function for when the a tags on the move drop downs
-$('body').delegate('.moveName', 'click', function(event) {
+
+$('body').delegate('.move1, .move2', 'click', function(event) {
   event.preventDefault();
-  console.log($(this).attr('data-name'));
-  $('#move1Dropdown').text($(this).attr('data-name'));
+  $(this)
+    .parent()
+    .prev()
+    .text($(this).text());
+
+  $('#statSubmit').slideDown('slow');
 });
+
+function formatMoveName(move) {
+  const words = move.split('-');
+
+  for (let i = 0; i < words.length; i++) {
+    words[i] = words[i].charAt(0).toUpperCase() + words[i].substr(1);
+  }
+
+  return words.join(' ');
+}
