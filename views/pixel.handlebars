@@ -1192,7 +1192,8 @@
 
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle dropdown-2" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">Second Type (optional) </button>
+                        data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">Second
+                        Type (optional) </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item second" href="" data-id=0>None</a>
                         <a class="dropdown-item second" href="" data-id=1>Normal</a>
@@ -1226,23 +1227,54 @@
 
     <div class="row chooseStats" style="display: none;">
         <div class="col-lg-12">
-            <img src="https://fontmeme.com/permalink/200616/2141c8bba689287129940cc08f56632c.png" alt="Choose Pokemon Stats" class="chooseStatsImg">
+            <img src="https://fontmeme.com/permalink/200616/2141c8bba689287129940cc08f56632c.png"
+                alt="Choose Pokemon Stats" class="chooseStatsImg">
 
             {{!-- Stat input --}}
             <div class="statsRow">
-                <p id="pointPool">{{!-- added with Jquery --}}</p> 
+                <p id="pointPool">{{!-- added with Jquery --}}</p>
 
                 <form id="pokeStats">
                     <label for="hp">HP: <input type="number" id="hp" name="hp" min="125" max="1000" value="125"></label>
-                    <label for="hp">Speed: <input type="number" id="speed" name="speed" min="125" max="1000" value="125"></label>
-                    <label for="hp">Defense: <input type="number" id="defense" name="Defense" min="125" max="1000" value="125"></label>
-                    <label for="hp">SP_Defense: <input type="number" id="SP_Defense" name="SP_Defense" min="125" max="1000" value="125"></label>
-                    <label for="hp">Attack: <input type="number" id="attack" name="Attack" min="125" max="500" value="125"></label>
-                    <label for="hp">SP_Attack: <input type="number" id="SP_Attack" name="SP_Attack" min="125" max="1000" value="125"></label>
+                    <label for="hp">Speed: <input type="number" id="speed" name="speed" min="125" max="1000"
+                            value="125"></label>
+                    <label for="hp">Defense: <input type="number" id="defense" name="Defense" min="125" max="1000"
+                            value="125"></label>
+                    <label for="hp">SP_Defense: <input type="number" id="SP_Defense" name="SP_Defense" min="125"
+                            max="1000" value="125"></label>
+                    <label for="hp">Attack: <input type="number" id="attack" name="Attack" min="125" max="500"
+                            value="125"></label>
+                    <label for="hp">SP_Attack: <input type="number" id="SP_Attack" name="SP_Attack" min="125" max="1000"
+                            value="125"></label>
                 </form>
             </div>
 
-            <button type="button" id="statSubmit" class="statSubmit" style="display: none;"><img src="https://fontmeme.com/permalink/200616/1b12b1ef2799b320bbecccdea350c3b9.png" alt="Save and Create Pokemon"></button>
+            <button type="button" style="display: none;"><img
+                    src="https://fontmeme.com/permalink/200616/1b12b1ef2799b320bbecccdea350c3b9.png"
+                    alt="Save and Create Pokemon"></button>
+            {{!-- move selector dropdown for each move  --}}
+            <div class="dropdown-div">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">Move 1 </button>
+                    <div class="dropdown-menu" id="move1Dropdown" aria-labelledby="dropdownMenuButton"></div>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">Move 2 </button>
+                    <div class="dropdown-menu" id="move2Dropdown"></div>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false"> Move 3  </button>
+                    <div class="dropdown-menu" id="move3Dropdown"></div>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">Move 4 </button>
+                    <div class="dropdown-menu" id="move4Dropdown"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
