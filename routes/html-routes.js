@@ -1,4 +1,5 @@
 const Pokemon = require('../controllers/pokemonController');
+const Creator = require('../controllers/creatorController');
 
 module.exports = function(app) {
   app.get('/pokemon/battle/:id1/:id2', (req, res) => {
@@ -17,6 +18,16 @@ module.exports = function(app) {
 
   app.get('/', (req, res) => {
     res.render('index');
+  });
+
+  app.get('/view-own/:id', (req, res) => {
+    if (!req.user) {
+      res.redirect('/login');
+    } else {
+      Creator.findById(req.params.id).then(results => {
+        res.render('view-own-pokemon', { pokemon: results.dataValues });
+      });
+    }
   });
 
   app.get('/pixel', (req, res) => {

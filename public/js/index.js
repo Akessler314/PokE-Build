@@ -3,11 +3,14 @@
 
 let viewAllRunning = false;
 let battleBtnRunning = false;
+let user;
 
 $(document).ready(() => {
   $.ajax({
     url: '/api/auth/user'
   }).then(res => {
+    user = res;
+
     $('.userNameText').text(res.username);
 
     if ($('.userNameText').text() === '') {
@@ -228,6 +231,16 @@ $('.viewAll').click((event) => {
   setTimeout(() => {
     searchAll('/api/pokemon/index/0');
   }, 1000);
+});
+
+$('.viewYour').click(event => {
+  event.preventDefault();
+
+  if ($('.userNameText').text() === '') {
+    window.location.href = '/login';
+  } else {
+    window.location.href = `/view-own/${user.id}`;
+  }
 });
 
 function searchAll(url) {

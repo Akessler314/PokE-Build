@@ -8,6 +8,27 @@ const $attack = $('#attack');
 const $spAttack = $('#SP_Attack');
 
 let nextName;
+// let user;
+
+$(document).ready(() => {
+  $.ajax({
+    url: '/api/auth/user'
+  }).then(res => {
+    // user = res;
+
+    $('.userNameText').text(res.username);
+
+    if ($('.userNameText').text() === '') {
+      // eslint-disable-next-line prettier/prettier
+      $('.dropdown-menu').append($('<a>').attr({ href: '/signup' }).addClass('dropdown-item').text('Sign up'));
+      // eslint-disable-next-line prettier/prettier
+      $('.dropdown-menu').append($('<a>').attr({ href: '/login' }).addClass('dropdown-item').text('Sign in'));
+    } else {
+      // eslint-disable-next-line prettier/prettier
+      $('.dropdown-menu').append($('<a>').attr({ href: '/api/auth/logout' }).addClass('dropdown-item').text('Log out'));
+    }
+  });
+});
 
 //api call for all of the moves
 $.ajax({

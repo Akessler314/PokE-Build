@@ -1,5 +1,21 @@
+/* eslint-disable prettier/prettier */
 $(document).ready(() => {
   $('.logInBtn').on('click', signUp);
+
+  $.ajax({
+    url: '/api/auth/user'
+  }).then(res => {
+    user = res;
+
+    $('.userNameText').text(res.username);
+
+    if ($('.userNameText').text() === '') {
+      $('.dropdown-menu').append($('<a>').attr({ href: '/signup' }).addClass('dropdown-item').text('Sign up'));
+      $('.dropdown-menu').append($('<a>').attr({ href: '/login' }).addClass('dropdown-item').text('Sign in'));
+    } else {
+      $('.dropdown-menu').append($('<a>').attr({ href: '/api/auth/logout' }).addClass('dropdown-item').text('Log out'));
+    }
+  });
 });
 
 function signUp(event) {

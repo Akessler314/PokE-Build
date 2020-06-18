@@ -175,6 +175,11 @@ a:hover {
     margin-top: 21px;
 }
 
+.battleBtn3 {
+    width: 270px;
+    margin: 41px 0 0 0;
+}
+
 .goBackBtn {
     width: 100%;
 }
@@ -257,7 +262,7 @@ a:hover {
     width: 100%;
 }
 
-/* Styling for sign up page */
+/* Styling for sign up page and the login page */
 .signUpForm, .logInForm {
     border: 5px solid rgb(255, 35, 35);
     border-radius: 1rem;
@@ -277,6 +282,15 @@ a:hover {
 .signUpBtn, .logInBtn {
     float: right;
 }
+
+.loginText, .signUpText {
+    text-align: center;
+}
+
+.loginLink, .loginLink:hover, .signUpLink, .signUpLink:hover {
+    color: rgb(0, 123, 255);
+}
+
 
 /* Footers */
 
