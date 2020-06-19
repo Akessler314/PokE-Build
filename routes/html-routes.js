@@ -4,22 +4,10 @@ const Creator = require('../controllers/creatorController');
 module.exports = function(app) {
   // The battle sim page
   app.get('/pokemon/battle/:id1/:id2', (req, res) => {
-    // Main index page
-    app.get('/', (req, res) => {
-      res.render('index');
+    res.render('battle', {
+      pokemon1: req.params.id1,
+      pokemon2: req.params.id2
     });
-
-    // Check to see if the user is logged in and id1 is their pokemon
-    if (!req.user) {
-      res.redirect('/login');
-    } else if (req.user.id !== req.params.id1) {
-      res.redirect('/');
-    } else {
-      res.render('battle', {
-        pokemon1: req.params.id1,
-        pokemon2: req.params.id2
-      });
-    }
   });
 
   app.get('/', (req, res) => {
