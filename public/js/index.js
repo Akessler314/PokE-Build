@@ -111,11 +111,11 @@ $('body').delegate('.pokemonSearch', 'click', function(event) {
           .append($('<p>').text(`Defense: ${results.stats.defense}`))
           .append($('<p>').text(`Speed: ${results.stats.defense}`));
 
-        const buttons = $('<div>')
+        const goBack = $('<div>')
           .addClass('row')
           .addClass('pokemonBtnRow')
           .append(
-            $('<div>').addClass('col-lg-6')
+            $('<div>').addClass('col-lg-12')
               .append($('<button>').append($('<img>')
                 .attr({
                   'src': 'https://fontmeme.com/permalink/200617/54fe828c09c10c703837abef5daa4e99.png',
@@ -124,8 +124,6 @@ $('body').delegate('.pokemonSearch', 'click', function(event) {
               .addClass('goBackBtn btn')
               .attr('data-search', lastSearch))
           );
-
-        const div2 = $('<div>').addClass('col-lg-6');
 
         const battleBtn = $('<button>').append($('<img>')
             .attr({
@@ -139,11 +137,9 @@ $('body').delegate('.pokemonSearch', 'click', function(event) {
           battleBtn.attr('disabled', true);
         }
 
-        div2.append(battleBtn);
+        text.append(battleBtn);
 
-        buttons.append(div2);
-
-        div.append(creator).append(card).append(buttons);
+        div.append(creator).append(card).append(goBack);
 
         card.append(cardBody);
 
@@ -226,6 +222,7 @@ $('.viewAll').click((event) => {
 
   viewAllRunning = true;
 
+  $('.error').slideUp('slow');
   $('.buttonRow').slideUp('slow');
   $('.searchResults').empty();
 
