@@ -133,9 +133,13 @@ $('body').delegate('.pokemonSearch', 'click', function(event) {
           .addClass('battleBtn battleBtn2 btn')
           .attr('data-id', results.id);
 
-        if (parseInt(sessionStorage.getItem('battleId1')) === results.id) {
-          battleBtn.attr('disabled', true);
-        }
+          const battleId = JSON.parse(sessionStorage.getItem('battleId1'));
+      
+          if (battleId !== null) {
+            if (parseInt(battleId.id) === results.id) {
+              battleBtn.attr('disabled', true);
+            }
+          }
 
         text.append(battleBtn);
 
@@ -166,29 +170,57 @@ $('body').delegate('.battleBtn', 'click', function() {
   setTimeout(() => {
     // eslint-disable-next-line eqeqeq
     if (sessionStorage.getItem('battleId1') == null) {
-      sessionStorage.setItem('battleId1', $(this).attr('data-id'));
+      const battleObj = {
+        img: $(this).parent().parent().find('img').attr('src'),
+        id: $(this).attr('data-id')
+      };
+
+      sessionStorage.setItem('battleId1', JSON.stringify(battleObj));
 
       $(this).attr('disabled', true);
 
       $('#myModal').modal('show');
     } else {
-      sessionStorage.setItem('battleId2', $(this).attr('data-id'));
+      const battleObj = {
+        img: $(this).parent().parent().find('img').attr('src'),
+        id: $(this).attr('data-id')
+      };
+
+      sessionStorage.setItem('battleId2', JSON.stringify(battleObj));
 
       $('.searchResults').slideUp('slow');
       
       setTimeout(() => {
         $('.searchRow').slideUp('slow');
 
+        const battleObj1 = JSON.parse(sessionStorage.getItem('battleId1'));
+        const battleObj2 = JSON.parse(sessionStorage.getItem('battleId2'));
+
+        $('.battleImg1').attr('src', battleObj1.img);
+        $('.battleImg2').attr('src', battleObj2.img);
+
         setTimeout(() => {
           $('.letsBattleRow').slideDown();
 
-          const battleUrl = `/pokemon/battle/${sessionStorage.getItem('battleId2')}/${sessionStorage.getItem('battleId1')}`;
-
-          sessionStorage.clear();
-
           setTimeout(() => {
-            window.location.href = battleUrl;
-          }, 1000);
+            $('.battleImg1').slideDown('fast');
+
+            setTimeout(() => {
+              $('.vs').slideDown('fast');
+
+              setTimeout(() => {
+                $('.battleImg2').slideDown('fast');
+
+                setTimeout(() => {
+                  const battleUrl = `/pokemon/battle/${battleObj1.id}/${battleObj2.id}`;
+
+                  window.location.href = battleUrl;
+
+                  sessionStorage.clear();
+                }, 1000);
+              }, 500);
+            }, 500);
+          }, 500);
         }, 1000);
       }, 800);
     }
@@ -297,8 +329,12 @@ function searchAll(url) {
         .addClass('battleBtn btn')
         .attr('data-id', pokemon.id);
 
-      if (parseInt(sessionStorage.getItem('battleId1')) === pokemon.id) {
-        button.attr('disabled', true);
+      const battleId = JSON.parse(sessionStorage.getItem('battleId1'));
+      
+      if (battleId !== null) {
+        if (parseInt(battleId.id) === pokemon.id) {
+          button.attr('disabled', true);
+        }
       }
 
       div.append(link);
