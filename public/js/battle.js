@@ -11,6 +11,9 @@ let opponentHealth;
 
 let canInput = true;
 
+let isGameOver = false;
+
+
 const messageBox = new MessageBox('/img/messageBox.png', 0, 472);
 const optionsBox = new OptionsBox('/img/optionsBox.png', 500, 472);
 
@@ -20,7 +23,10 @@ $(document).ready(() => {
   $(document.body).on('keydown', event => {
     if (!canInput) {
       return;
+    } else if (isGameOver) {
+      window.location.href = '/';
     }
+
     switch (event.which) {
       case 13: // Enter key
         const attack = optionsBox.chooseOption(player, messageBox);
@@ -63,7 +69,13 @@ function loadData() {
         32,
         344
       );
-      playerHealth = new HealthBox(player.maxHP, player.name, 544, 344, '/img/healthBox.png');
+      playerHealth = new HealthBox(
+        player.maxHP,
+        player.name,
+        544,
+        344,
+        '/img/healthBox.png'
+      );
     })
     .then(() => {
       $.ajax({
@@ -81,7 +93,13 @@ function loadData() {
             640,
             32
           );
-          opponentHealth = new HealthBox(opponent.maxHP, opponent.name, 0, 0, '/img/healthBox.png');
+          opponentHealth = new HealthBox(
+            opponent.maxHP,
+            opponent.name,
+            0,
+            0,
+            '/img/healthBox.png'
+          );
         })
         .then(initCanvas);
     });
@@ -112,23 +130,35 @@ function playerAttack(move) {
   attackPokemon(player, opponent, move).then(results => {
     setTimeout(() => {
       pokemonTakesDamage(opponent, results.effectiveness, results.damage);
-      setTimeout(opponentAttack, 1000);
+
+      if (isGameOver) {
+        setTimeout(endGame, 1000, player, opponent);
+      } else {
+        setTimeout(opponentAttack, 1000);
+      }
     }, 1000);
   });
 }
 
 function opponentAttack() {
-  attackPokemon(opponent, player, Math.floor(Math.random() * 4 + 1)).then(results => { // Pick random move to fight with
-    setTimeout(() => {
-      pokemonTakesDamage(player, results.effectiveness, results.damage);
+  attackPokemon(opponent, player, Math.floor(Math.random() * 4 + 1)).then(
+    results => {
+      // Pick random move to fight with
       setTimeout(() => {
-        canInput = true;
-        optionsBox.drawOptions = true;
-        messageBox.setMessage('');
-        drawCanvas();
+        pokemonTakesDamage(player, results.effectiveness, results.damage);
+        if (isGameOver) {
+          setTimeout(endGame, 1000, opponent, player);
+        } else {
+          setTimeout(() => {
+            canInput = true;
+            optionsBox.drawOptions = true;
+            messageBox.setMessage('');
+            drawCanvas();
+          }, 1000);
+        }
       }, 1000);
-    }, 1000);
-  });
+    }
+  );
 }
 
 function pokemonTakesDamage(pokemon, effectiveness, amount) {
@@ -151,6 +181,10 @@ function pokemonTakesDamage(pokemon, effectiveness, amount) {
   opponentHealth.setHealth(opponent.hp);
 
   drawCanvas();
+
+  if (opponent.hp <= 0 || player.hp <= 0) {
+    isGameOver = true;
+  }
 }
 
 function attackPokemon(attacking, target, move) {
@@ -177,17 +211,29 @@ function attackPokemon(attacking, target, move) {
         for (let i = 0; i < timesToHit; i++) {
           totalDamage += attacking.attackPokemon(move, target).damage;
         }
-  
+
         messageBox.setMessage('Hit ' + timesHit + ' times');
         drawCanvas();
       }
-  
+
       const toReturn = {
-        effectiveness: attackResult.effective, 
+        effectiveness: attackResult.effective,
         damage: totalDamage
       };
 
       resolve(toReturn);
     }, 1000);
   });
+}
+
+function endGame(winner, loser) {
+  messageBox.setMessage(loser.name + ' was defeated, congrats ' + winner.name + '!');
+  loser.sprite.src = '';
+  drawCanvas();
+
+  setTimeout(() => {
+    messageBox.setMessage('Press any key to go back to the home\npage.');
+    drawCanvas();
+    canInput = true;
+  }, 2000);
 }
