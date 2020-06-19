@@ -24,6 +24,24 @@ a:hover {
     margin: 0 auto 50px auto;
 }
 
+.vsRow {
+    display: block;
+    text-align: center;
+}
+
+.vsImg {
+    margin: 0 100px;
+}
+
+.vsPic1, .vsPic2 {
+    border: 5px solid;
+    border-radius: 1rem;
+    height: 160px;
+    width: 160px;
+    padding: 10px;
+    box-shadow: 5px 7px 8px -3px #444;
+}
+
 /* Navbar styling */
 
 .navbar {
