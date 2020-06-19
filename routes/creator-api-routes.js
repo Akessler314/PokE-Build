@@ -8,6 +8,12 @@ module.exports = function(app) {
     });
   });
 
+  app.get('/api/creators/user/:username', (req, res) => {
+    Creator.findByUsername(req.params.username).then(results => {
+      res.json(results);
+    });
+  });
+
   // Add a new creator
   app.post('/api/creators', (req, res) => {
     Creator.addCreator(req.body.username).then(results => {

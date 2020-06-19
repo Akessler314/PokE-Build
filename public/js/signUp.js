@@ -20,13 +20,24 @@ function signUp(event) {
   event.preventDefault();
 
   $.ajax({
-    url: '/api/auth/signup',
-    method: 'POST',
-    data: {
-      username: $('#signUpUsername').val(),
-      password: $('#signUpPassword').val()
-    }
-  }).then(() => {
-    window.location.replace('/');
+    url: `/api/creators/user/${$('#signUpUsername').val().trim()}`,
+    method: 'GET'
+  }).then((results) => {
+    console.log(results);
+
+    if (results !== null) {
+      return $('#myModal').modal('show');
+    } 
+
+    $.ajax({
+      url: '/api/auth/signup',
+      method: 'POST',
+      data: {
+        username: $('#signUpUsername').val().trim(),
+        password: $('#signUpPassword').val().trim()
+      }
+    }).then(() => {
+      window.location.replace('/');
+    });
   });
 }
