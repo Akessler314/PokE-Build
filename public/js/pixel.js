@@ -82,7 +82,6 @@ $('#nameInputDiv').on('submit', event => {
 });
 
 $('.nameNext').click(() => {
-  nextName = 'name';
   //create object for pokemone name with a searchable name (lowercase) for db
   const pokemonName = new Object();
   pokemonName.name = $('#fname').val();
@@ -90,6 +89,8 @@ $('.nameNext').click(() => {
     .val()
     .toLowerCase();
   console.log(pokemonName);
+  
+  nextName = 'name';
   goToNext();
 });
 
@@ -187,13 +188,12 @@ $('a').click(function(event) {
 
     $('.dropdown-1').text($(this).text());
 
-    $('.typeNext').slideDown('slow');
-
-    $('.dropdown-1').text($(this).text());
     const firstType = new Object();
     firstType.type1 = $(this).attr('data-id');
     console.log(firstType);
-  } else if ($(this).hasClass('second')) {
+  } 
+  
+  else if ($(this).hasClass('second')) {
     event.preventDefault();
 
     $('.dropdown-2').text($(this).text());
@@ -201,7 +201,9 @@ $('a').click(function(event) {
     const secondType = new Object();
     secondType.type2 = $(this).attr('data-id');
     console.log(secondType);
+  }
 
+  if ($('.dropdown-1').text().trim() !== 'First Type') {
     $('.typeNext').slideDown('slow');
   }
 });
@@ -346,11 +348,18 @@ $('body').delegate('.move1, .move2', 'click', function(event) {
     move4Text !== 'Move 4'
   ) {
     $('#statSubmit').slideDown('slow');
+  } else {
+    $('#statSubmit').slideUp('slow');
   }
 
 });
 
 $('#statSubmit').click(() => {
+  moveOne = formatMoveName(moveOne);
+  moveTwo = formatMoveName(moveTwo);
+  moveThree = formatMoveName(moveThree);
+  moveFour = formatMoveName(moveFour);
+
   const PokemonMoveObject = {
     move1: moveOne,
     move2: moveTwo,
@@ -359,3 +368,13 @@ $('#statSubmit').click(() => {
   };
   console.log(PokemonMoveObject);
 });
+
+function formatMoveName(move) {
+  const words = move.split('-');
+
+  for (let i = 0; i < words.length; i++) {
+    words[i] = words[i].charAt(0).toUpperCase() + words[i].substr(1);
+  }
+
+  return words.join(' ');
+}
