@@ -15,6 +15,16 @@ const Creator = {
       }
     });
   },
+  findByUsername: function(username) {
+    return db.Creator.findOne({
+      where: {
+        username: username
+      },
+      attributes: {
+        exclude: ['password']
+      }
+    });
+  },
   addCreator: function(username) {
     return db.Creator.create(username);
   },

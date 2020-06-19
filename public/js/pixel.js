@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const $colorPicker = $('#colorPicker');
 //code for the pokemon stats
 const $hp = $('#hp');
@@ -302,60 +303,43 @@ function appendMoves() {
   });
 }
 
+let moveOne;
+let moveTwo;
+let moveThree;
+let moveFour;
+
 $('body').delegate('.move1, .move2', 'click', function(event) {
   event.preventDefault();
-  let moveOne;
-  let moveTwo;
-  let moveThree;
-  let moveFour;
   $(this)
     .parent()
     .prev()
     .text($(this).text());
-  console.log(
-    $(this)
-      .parent()
-      .prop('id')
-  );
-  if (
-    $(this)
-      .parent()
-      .prop('id') === 'move1Dropdown'
-  ) {
+
+  if ($(this).parent().prop('id') === 'move1Dropdown') {
     moveOne = $(this).text();
-    console.log(moveOne);
-  } else if (
-    $(this)
-      .parent()
-      .prop('id') === 'move2Dropdown'
-  ) {
+  } 
+  
+  else if ($(this).parent().prop('id') === 'move2Dropdown') {
     moveTwo = $(this).text();
-    console.log(moveTwo);
-  } else if (
-    $(this)
-      .parent()
-      .prop('id') === 'move2Dropdown'
-  ) {
+  } 
+  
+  else if ($(this).parent().prop('id') === 'move3Dropdown') {
     moveThree = $(this).text();
-    console.log(moveThree);
-  } else {
+  } 
+  
+  else {
     moveFour = $(this).text();
-    console.log(moveFour);
   }
-  $('#statSubmit').click(() => {
-    // const newPokemonMoveObject = Object.create(PokemonMoveObject);
-    // newPokemonMoveObject.move1 = moveOne;
-    // newPokemonMoveObject.move2 = moveTwo;
-    // newPokemonMoveObject.move3 = moveThree;
-    // newPokemonMoveObject.move4 = moveFour;
-    // console.log(newPokemonMoveObject);
-    const PokemonMoveObject = {
-      move1: moveOne,
-      move2: moveTwo,
-      move3: moveThree,
-      move4: moveFour
-    };
-    console.log(PokemonMoveObject);
-  });
+
   $('#statSubmit').slideDown('slow');
+});
+
+$('#statSubmit').click(() => {
+  const PokemonMoveObject = {
+    move1: moveOne,
+    move2: moveTwo,
+    move3: moveThree,
+    move4: moveFour
+  };
+  console.log(PokemonMoveObject);
 });
