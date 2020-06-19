@@ -1,4 +1,28 @@
 <div class="container">
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                    <!-- Modal header -->
+                    <div class="modal-header">
+                        <img src="https://fontmeme.com/permalink/200618/06c582a428e6bdc942539c3ab50b4e16.png" alt="Error logo" class="modalLogo">
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                    <!-- Time format setting -->
+                    <div class="btn-group" role="group">
+                        <p class="modalText"></p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secondary doneBtn" data-dismiss="modal"><img src="https://fontmeme.com/permalink/200618/a772b5d6b8856fefe9663f0538188e2d.png" alt="Done button. Click here to dismiss the modal"></button>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+
     <div class="row">
         <img src="https://fontmeme.com/permalink/200618/b5957589ca4b37c318055d77315cf1dd.png" alt="Sign up for Poke-Build logo" class="signUpLogo">
     
@@ -10,7 +34,8 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1"><img src="https://fontmeme.com/permalink/200618/42bf32646bb38dd3b85700879ff4d60e.png" alt="Type in your password below"></label>
-                    <input type="password" class="form-control" id="signUpPassword" placeholder="Enter in a password">
+                    <input type="password" class="form-control" id="signUpPassword" placeholder="Enter a password">
+                    <input type="password" class="form-control" id="reEnterPassword" placeholder="Please re-enter your password">
                 </div>
                 <button type="submit" class="btn signUpBtn"><img src="https://fontmeme.com/permalink/200618/735979eef13dacb12f821b1df76efcbb.png" alt="Sign up button"></button>
             </form>

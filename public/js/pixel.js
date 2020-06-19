@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const $colorPicker = $('#colorPicker');
 //code for the pokemon stats
 const $hp = $('#hp');
@@ -8,49 +9,24 @@ const $attack = $('#attack');
 const $spAttack = $('#SP_Attack');
 
 let nextName;
-// let user;
-
-//api call for all of the moves
-$.ajax({
-  url: 'https://pokeapi.co/api/v2/move/?offset=0&limit=400',
-  method: 'GET'
-}).then(response1 => {
-  console.log(response1);
-});
-$.ajax({
-  url: 'https://pokeapi.co/api/v2/move/?offset=400&limit=800',
-  method: 'GET'
-}).then(response2 => {
-  console.log(response2);
-});
 
 //prottype object for pokemon stat object
-const stats = {
-  hp: 0,
-  speed: 0,
-  defense: 0,
-  spDefense: 0,
-  attack: 0,
-  spAttack: 0
-};
+// const stats = {
+//   hp: 0,
+//   speed: 0,
+//   defense: 0,
+//   spDefense: 0,
+//   attack: 0,
+//   spAttack: 0
+// };
 
 $(document).ready(() => {
   $.ajax({
     url: '/api/auth/user'
   }).then(res => {
-    // user = res;
-
     $('.userNameText').text(res.username);
 
-    if ($('.userNameText').text() === '') {
-      // eslint-disable-next-line prettier/prettier
-      $('.userBtn').append($('<a>').attr({ href: '/signup' }).addClass('dropdown-item').text('Sign up'));
-      // eslint-disable-next-line prettier/prettier
-      $('.userBtn').append($('<a>').attr({ href: '/login' }).addClass('dropdown-item').text('Sign in'));
-    } else {
-      // eslint-disable-next-line prettier/prettier
-      $('.userBtn').append($('<a>').attr({ href: '/api/auth/logout' }).addClass('dropdown-item').text('Log out'));
-    }
+    $('.userBtn').append($('<a>').attr({ href: '/api/auth/logout' }).addClass('dropdown-item').text('Log out'));
   });
 
   addCellClickListener();
@@ -95,7 +71,6 @@ $('#nameInputDiv').on('submit', event => {
 });
 
 $('.nameNext').click(() => {
-  nextName = 'name';
   //create object for pokemone name with a searchable name (lowercase) for db
   const pokemonName = new Object();
   pokemonName.name = $('#fname').val();
@@ -103,6 +78,8 @@ $('.nameNext').click(() => {
     .val()
     .toLowerCase();
   console.log(pokemonName);
+  
+  nextName = 'name';
   goToNext();
 });
 
@@ -200,13 +177,12 @@ $('a').click(function(event) {
 
     $('.dropdown-1').text($(this).text());
 
-    $('.typeNext').slideDown('slow');
-
-    $('.dropdown-1').text($(this).text());
     const firstType = new Object();
     firstType.type1 = $(this).attr('data-id');
     console.log(firstType);
-  } else if ($(this).hasClass('second')) {
+  } 
+  
+  else if ($(this).hasClass('second')) {
     event.preventDefault();
 
     $('.dropdown-2').text($(this).text());
@@ -214,26 +190,47 @@ $('a').click(function(event) {
     const secondType = new Object();
     secondType.type2 = $(this).attr('data-id');
     console.log(secondType);
+  }
 
+  if ($('.dropdown-1').text().trim() !== 'First Type') {
     $('.typeNext').slideDown('slow');
   }
 });
 
+let usedPoints;
+
 //Point updater
-function pointPoolUpdater() {
+function pointPoolUpdater(prev, current) {
   //var for the initial point pool the user will have avialible.
   const availablePoints = 1000;
   //this will add up the values of all the points put into stats, and store it in a variable to be used.
-  const usedPoints =
+  usedPoints =
     parseInt($hp.val()) +
     parseInt($speed.val()) +
     parseInt($defense.val()) +
     parseInt($spDefense.val()) +
     parseInt($defense.val()) +
+    parseInt($attack.val()) +
     parseInt($spAttack.val());
+
   if (usedPoints > 1000) {
+    current.val(prev);
+
+    usedPoints =
+      parseInt($hp.val()) +
+      parseInt($speed.val()) +
+      parseInt($defense.val()) +
+      parseInt($spDefense.val()) +
+      parseInt($defense.val()) +
+      parseInt($attack.val()) +
+      parseInt($spAttack.val());
+
+    $('#pointPool').text(
+      'Current Points Left: ' + (availablePoints - usedPoints)
+    );
+    
     //alert user they are over the aloted points
-    $('.modalText').text('You have run out of points!');
+    $('.modalText').text('You ran out of points...');
 
     $('.modalImg').attr({
       src: '../img/snorlax.jpg',
@@ -246,35 +243,18 @@ function pointPoolUpdater() {
       'Current Points Left: ' + (availablePoints - usedPoints)
     );
   }
-
-  //event listiner for when the user submits stats
-  $('#statSubmit').click(() => {
-    if (usedPoints > 1000) {
-      //alert user they are over the aloted points if they try to submit a pokemon that has too many stats
-      $('.modalText').text('Your Pokemon is too strong!');
-
-      $('.modalImg').attr({
-        src: '../img/pikachu-scare.jpg',
-        alt: 'You scared Pikachu with how strong your Pokemon is!'
-      });
-
-      $('#myModal').modal('show');
-    } else {
-      const newPokeStats = Object.create(stats);
-      newPokeStats.hp = $hp.val();
-      newPokeStats.speed = $speed.val();
-      newPokeStats.defense = $defense.val();
-      newPokeStats.spDefense = $spDefense.val();
-      newPokeStats.attack = $attack.val();
-      newPokeStats.spAttack = $spAttack.val();
-      console.log(newPokeStats);
-    }
-  });
 }
 
 //event listener for when a user changes the value of a stat
-$('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').change(() => {
-  pointPoolUpdater();
+$('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').on('focus keypres', function() {
+  $(this).data('num', $(this).val());
+});
+
+$('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').change(function() {
+  const prevNum = $(this).data('num');
+  const currentNum = $(this);
+
+  pointPoolUpdater(prevNum, currentNum);
 });
 
 //function to create an object with the current userID to be used in the DB - this is currently set to always be 1 until log in feature is implimented
@@ -285,15 +265,16 @@ function creatorIdFunction() {
   console.log(creatorIdObject);
 }
 
-// function to append the moves into each move selector
+// function to append the moves into each move selector as well as the move name into a data-name attribute
 function appendMoves() {
   let moveSet1;
   let moveSet2;
+  // let moveSet1DataId;
+  // let moveSet2DataId;
   $.ajax({
     url: 'https://pokeapi.co/api/v2/move/?offset=0&limit=400',
     method: 'GET'
   }).then(response1 => {
-    console.log(response1);
     response1.results.forEach(move => {
       moveSet1 = move.name;
       $(
@@ -312,16 +293,105 @@ function appendMoves() {
         '#move1Dropdown, #move2Dropdown, #move3Dropdown, #move4Dropdown'
       ).append('<a class="dropdown-item move2" href="">' + moveSet2 + '</a>');
     });
-    console.log(response2);
   });
 }
 
+let moveOne;
+let moveTwo;
+let moveThree;
+let moveFour;
+
 $('body').delegate('.move1, .move2', 'click', function(event) {
   event.preventDefault();
+
   $(this)
     .parent()
     .prev()
     .text($(this).text());
 
-  $('#statSubmit').slideDown('slow');
+  if ($(this).parent().prop('id') === 'move1Dropdown') {
+    moveOne = $(this).text();
+  } 
+  
+  else if ($(this).parent().prop('id') === 'move2Dropdown') {
+    moveTwo = $(this).text();
+  } 
+  
+  else if ($(this).parent().prop('id') === 'move3Dropdown') {
+    moveThree = $(this).text();
+  } 
+  
+  else {
+    moveFour = $(this).text();
+  }
+
+  const move1Text = $('.move1Toggle').text().trim();
+  const move2Text = $('.move2Toggle').text().trim();
+  const move3Text = $('.move3Toggle').text().trim();
+  const move4Text = $('.move4Toggle').text().trim();
+
+  // This if statement is used just to check and make sure that the user has made a selection for
+  // all four moves and nothing is left undefined.
+  if (
+    move1Text !== 'Move 1' && 
+    move2Text !== 'Move 2' && 
+    move3Text !== 'Move 3' && 
+    move4Text !== 'Move 4'
+  ) {
+    $('#statSubmit').slideDown('slow');
+  } else {
+    $('#statSubmit').slideUp('slow');
+  }
+
 });
+
+//event listiner for when the user submits stats
+$('#statSubmit').click(() => {
+  if (usedPoints > 1000) {
+    console.log(usedPoints);
+
+    //alert user they are over the aloted points if they try to submit a pokemon that has too many stats
+    $('.modalText').text('Your Pokemon is too strong! Please nerf.');
+
+    $('.modalImg').attr({
+      src: '../img/pikachu-scare.jpg',
+      alt: 'You scared Pikachu with how strong your Pokemon is! Please nerf your pokemon.'
+    });
+
+    $('#myModal').modal('show');
+  } else {
+    const stats = {
+      hp: $hp.val(),
+      speed: $speed.val(),
+      defense: $defense.val(),
+      spDefense: $spDefense.val(),
+      attack: $attack.val(),
+      spAttack: $spAttack.val()
+    };
+
+    moveOne = formatMoveName(moveOne);
+    moveTwo = formatMoveName(moveTwo);
+    moveThree = formatMoveName(moveThree);
+    moveFour = formatMoveName(moveFour);
+
+    const pokemonMoveObject = {
+      move1: moveOne,
+      move2: moveTwo,
+      move3: moveThree,
+      move4: moveFour
+    };
+
+    console.log(pokemonMoveObject);
+    console.log(stats);
+  }
+});
+
+function formatMoveName(move) {
+  const words = move.split('-');
+
+  for (let i = 0; i < words.length; i++) {
+    words[i] = words[i].charAt(0).toUpperCase() + words[i].substr(1);
+  }
+
+  return words.join(' ');
+}

@@ -49,6 +49,18 @@ a:hover {
 
 .userNameText {
     margin-right: 15px;
+    font-size: 20px;
+}
+
+.userBtn {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    border: 3px solid;
+    border-radius: 1rem;
+}
+
+.dropdown-divider {
+    border-top: 1px solid #444;
 }
 
 /* Modal styling */
@@ -173,10 +185,6 @@ a:hover {
 }
 
 .battleBtn2 {
-    margin-top: 21px;
-}
-
-.battleBtn3 {
     width: 270px;
     margin: 41px 0 0 0;
 }
@@ -276,8 +284,13 @@ a:hover {
 #signUpUsername, 
 #signUpPassword,
 #logInUsername,
-#logInPassword {
+#logInPassword,
+#reEnterPassword {
     border: 2px solid;
+}
+
+#reEnterPassword {
+    margin-top: 20px;
 }
 
 .signUpBtn, .logInBtn {
@@ -398,6 +411,7 @@ input[type=number] {
 .dropdown-menu {         
     max-height: 200px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #colorPicker {
