@@ -11,14 +11,14 @@ const $spAttack = $('#SP_Attack');
 let nextName;
 
 //prottype object for pokemon stat object
-const stats = {
-  hp: 0,
-  speed: 0,
-  defense: 0,
-  spDefense: 0,
-  attack: 0,
-  spAttack: 0
-};
+// const stats = {
+//   hp: 0,
+//   speed: 0,
+//   defense: 0,
+//   spDefense: 0,
+//   attack: 0,
+//   spAttack: 0
+// };
 
 $(document).ready(() => {
   $.ajax({
@@ -197,21 +197,40 @@ $('a').click(function(event) {
   }
 });
 
+let usedPoints;
+
 //Point updater
-function pointPoolUpdater() {
+function pointPoolUpdater(prev, current) {
   //var for the initial point pool the user will have avialible.
   const availablePoints = 1000;
   //this will add up the values of all the points put into stats, and store it in a variable to be used.
-  const usedPoints =
+  usedPoints =
     parseInt($hp.val()) +
     parseInt($speed.val()) +
     parseInt($defense.val()) +
     parseInt($spDefense.val()) +
     parseInt($defense.val()) +
+    parseInt($attack.val()) +
     parseInt($spAttack.val());
+
   if (usedPoints > 1000) {
+    current.val(prev);
+
+    usedPoints =
+      parseInt($hp.val()) +
+      parseInt($speed.val()) +
+      parseInt($defense.val()) +
+      parseInt($spDefense.val()) +
+      parseInt($defense.val()) +
+      parseInt($attack.val()) +
+      parseInt($spAttack.val());
+
+    $('#pointPool').text(
+      'Current Points Left: ' + (availablePoints - usedPoints)
+    );
+    
     //alert user they are over the aloted points
-    $('.modalText').text('You have run out of points!');
+    $('.modalText').text('You ran out of points...');
 
     $('.modalImg').attr({
       src: '../img/snorlax.jpg',
@@ -224,35 +243,18 @@ function pointPoolUpdater() {
       'Current Points Left: ' + (availablePoints - usedPoints)
     );
   }
-
-  //event listiner for when the user submits stats
-  $('#statSubmit').click(() => {
-    if (usedPoints > 1000) {
-      //alert user they are over the aloted points if they try to submit a pokemon that has too many stats
-      $('.modalText').text('Your Pokemon is too strong!');
-
-      $('.modalImg').attr({
-        src: '../img/pikachu-scare.jpg',
-        alt: 'You scared Pikachu with how strong your Pokemon is!'
-      });
-
-      $('#myModal').modal('show');
-    } else {
-      const newPokeStats = Object.create(stats);
-      newPokeStats.hp = $hp.val();
-      newPokeStats.speed = $speed.val();
-      newPokeStats.defense = $defense.val();
-      newPokeStats.spDefense = $spDefense.val();
-      newPokeStats.attack = $attack.val();
-      newPokeStats.spAttack = $spAttack.val();
-      console.log(newPokeStats);
-    }
-  });
 }
 
 //event listener for when a user changes the value of a stat
-$('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').change(() => {
-  pointPoolUpdater();
+$('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').on('focus keypres', function() {
+  $(this).data('num', $(this).val());
+});
+
+$('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').change(function() {
+  const prevNum = $(this).data('num');
+  const currentNum = $(this);
+
+  pointPoolUpdater(prevNum, currentNum);
 });
 
 //function to create an object with the current userID to be used in the DB - this is currently set to always be 1 until log in feature is implimented
@@ -343,19 +345,45 @@ $('body').delegate('.move1, .move2', 'click', function(event) {
 
 });
 
+//event listiner for when the user submits stats
 $('#statSubmit').click(() => {
-  moveOne = formatMoveName(moveOne);
-  moveTwo = formatMoveName(moveTwo);
-  moveThree = formatMoveName(moveThree);
-  moveFour = formatMoveName(moveFour);
+  if (usedPoints > 1000) {
+    console.log(usedPoints);
 
-  const PokemonMoveObject = {
-    move1: moveOne,
-    move2: moveTwo,
-    move3: moveThree,
-    move4: moveFour
-  };
-  console.log(PokemonMoveObject);
+    //alert user they are over the aloted points if they try to submit a pokemon that has too many stats
+    $('.modalText').text('Your Pokemon is too strong! Please nerf.');
+
+    $('.modalImg').attr({
+      src: '../img/pikachu-scare.jpg',
+      alt: 'You scared Pikachu with how strong your Pokemon is! Please nerf your pokemon.'
+    });
+
+    $('#myModal').modal('show');
+  } else {
+    const stats = {
+      hp: $hp.val(),
+      speed: $speed.val(),
+      defense: $defense.val(),
+      spDefense: $spDefense.val(),
+      attack: $attack.val(),
+      spAttack: $spAttack.val()
+    };
+
+    moveOne = formatMoveName(moveOne);
+    moveTwo = formatMoveName(moveTwo);
+    moveThree = formatMoveName(moveThree);
+    moveFour = formatMoveName(moveFour);
+
+    const pokemonMoveObject = {
+      move1: moveOne,
+      move2: moveTwo,
+      move3: moveThree,
+      move4: moveFour
+    };
+
+    console.log(pokemonMoveObject);
+    console.log(stats);
+  }
 });
 
 function formatMoveName(move) {
