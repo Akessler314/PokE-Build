@@ -49,6 +49,18 @@ a:hover {
 
 .userNameText {
     margin-right: 15px;
+    font-size: 20px;
+}
+
+.userBtn {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    border: 3px solid;
+    border-radius: 1rem;
+}
+
+.dropdown-divider {
+    border-top: 1px solid #444;
 }
 
 /* Modal styling */

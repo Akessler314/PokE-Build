@@ -29,6 +29,7 @@ $(document).ready(() => {
 
     if ($('.userNameText').text() === '') {
       $('.userBtn').append($('<a>').attr({ href: '/signup' }).addClass('dropdown-item').text('Sign up'));
+      $('.userBtn').append($('<div>').addClass('dropdown-divider'));
       $('.userBtn').append($('<a>').attr({ href: '/login' }).addClass('dropdown-item').text('Sign in'));
     } else {
       $('.userBtn').append($('<a>').attr({ href: '/api/auth/logout' }).addClass('dropdown-item').text('Log out'));
