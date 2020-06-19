@@ -310,6 +310,7 @@ let moveFour;
 
 $('body').delegate('.move1, .move2', 'click', function(event) {
   event.preventDefault();
+
   $(this)
     .parent()
     .prev()
@@ -331,7 +332,22 @@ $('body').delegate('.move1, .move2', 'click', function(event) {
     moveFour = $(this).text();
   }
 
-  $('#statSubmit').slideDown('slow');
+  const move1Text = $('.move1Toggle').text().trim();
+  const move2Text = $('.move2Toggle').text().trim();
+  const move3Text = $('.move3Toggle').text().trim();
+  const move4Text = $('.move4Toggle').text().trim();
+
+  // This if statement is used just to check and make sure that the user has made a selection for
+  // all four moves and nothing is left undefined.
+  if (
+    move1Text !== 'Move 1' && 
+    move2Text !== 'Move 2' && 
+    move3Text !== 'Move 3' && 
+    move4Text !== 'Move 4'
+  ) {
+    $('#statSubmit').slideDown('slow');
+  }
+
 });
 
 $('#statSubmit').click(() => {
