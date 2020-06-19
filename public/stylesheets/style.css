@@ -276,8 +276,13 @@ a:hover {
 #signUpUsername, 
 #signUpPassword,
 #logInUsername,
-#logInPassword {
+#logInPassword,
+#reEnterPassword {
     border: 2px solid;
+}
+
+#reEnterPassword {
+    margin-top: 20px;
 }
 
 .signUpBtn, .logInBtn {

@@ -1,6 +1,26 @@
 /* eslint-disable prettier/prettier */
 $(document).ready(() => {
-  $('.signUpBtn').on('click', signUp);
+  $('.signUpBtn').click(event => {
+    event.preventDefault();
+
+    if ($('#signUpUsername').val().trim() === '') {
+      return errorHandle('Username cannot be blank');
+    }
+
+    if ($('#signUpPassword').val().trim() === '' || $('#reEnterPassword').val().trim() === '') {
+      return errorHandle('Both password fields must not be blank');
+    }
+
+    if ($('#signUpPassword').val().trim() !== $('#reEnterPassword').val().trim()) {
+      return errorHandle('Passwords did not match.');
+    }
+
+    if ($('#signUpPassword').val().trim().length < 6 || $('#signUpPassword').val().trim().length > 128) {
+      return errorHandle('Passwords must be between 6 and 128 characters');
+    }
+
+    signUp();
+  });
 
   $.ajax({
     url: '/api/auth/user'
@@ -16,17 +36,15 @@ $(document).ready(() => {
   });
 });
 
-function signUp(event) {
-  event.preventDefault();
-
+function signUp() {
   $.ajax({
     url: `/api/creators/user/${$('#signUpUsername').val().trim()}`,
     method: 'GET'
   }).then((results) => {
-    console.log(results);
-
+    // This will check to make sure that the username is not already taken
+    // If it is already taken then this will throw an error
     if (results !== null) {
-      return $('#myModal').modal('show');
+      return errorHandle('Sorry but that username is already taken.');
     } 
 
     $.ajax({
@@ -40,4 +58,10 @@ function signUp(event) {
       window.location.replace('/');
     });
   });
+}
+
+function errorHandle(str) {
+  $('.modalText').text(str);
+
+  $('#myModal').modal('show');
 }
