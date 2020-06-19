@@ -304,20 +304,58 @@ function appendMoves() {
 
 $('body').delegate('.move1, .move2', 'click', function(event) {
   event.preventDefault();
+  let moveOne;
+  let moveTwo;
+  let moveThree;
+  let moveFour;
   $(this)
     .parent()
     .prev()
     .text($(this).text());
-
+  console.log(
+    $(this)
+      .parent()
+      .prop('id')
+  );
+  if (
+    $(this)
+      .parent()
+      .prop('id') === 'move1Dropdown'
+  ) {
+    moveOne = $(this).text();
+    console.log(moveOne);
+  } else if (
+    $(this)
+      .parent()
+      .prop('id') === 'move2Dropdown'
+  ) {
+    moveTwo = $(this).text();
+    console.log(moveTwo);
+  } else if (
+    $(this)
+      .parent()
+      .prop('id') === 'move2Dropdown'
+  ) {
+    moveThree = $(this).text();
+    console.log(moveThree);
+  } else {
+    moveFour = $(this).text();
+    console.log(moveFour);
+  }
+  $('#statSubmit').click(() => {
+    // const newPokemonMoveObject = Object.create(PokemonMoveObject);
+    // newPokemonMoveObject.move1 = moveOne;
+    // newPokemonMoveObject.move2 = moveTwo;
+    // newPokemonMoveObject.move3 = moveThree;
+    // newPokemonMoveObject.move4 = moveFour;
+    // console.log(newPokemonMoveObject);
+    const PokemonMoveObject = {
+      move1: moveOne,
+      move2: moveTwo,
+      move3: moveThree,
+      move4: moveFour
+    };
+    console.log(PokemonMoveObject);
+  });
   $('#statSubmit').slideDown('slow');
 });
-
-function formatMoveName(move) {
-  const words = move.split('-');
-
-  for (let i = 0; i < words.length; i++) {
-    words[i] = words[i].charAt(0).toUpperCase() + words[i].substr(1);
-  }
-
-  return words.join(' ');
-}
