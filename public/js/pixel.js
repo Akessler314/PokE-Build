@@ -45,7 +45,6 @@ $(document.body).mouseup(() => {
 //Adds a color to the clicked on cell
 function addCellClickListener() {
   $('table').mousemove(event => {
-    console.log(mouseDown);
     if (mouseDown === true) {
       if ($('table').hasClass('enabled')) {
         if (event.target.matches('td')) {
@@ -282,31 +281,29 @@ $('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').change(function () 
 function appendMoves() {
   let moveSet1;
   let moveSet2;
-  let moveSet1DataId = 1;
-  let moveSet2DataId = 401;
   $.ajax({
-    url: 'https://pokeapi.co/api/v2/move/?offset=0&limit=400',
+    url: 'https://pokeapi.co/api/v2/move-damage-class/physical',
     method: 'GET'
   }).then(response1 => {
-    response1.results.forEach(move => {
+    response1.moves.forEach(move => {
       moveSet1 = move.name;
+      const moveId = move.url.match(/\/api\/v2\/move\/(\d+)/)[1];
       $(
         '#move1Dropdown, #move2Dropdown, #move3Dropdown, #move4Dropdown'
-      ).append('<a class="dropdown-item move1" href="" data-id = "' + moveSet1DataId + '">' + formatMoveName(moveSet1) + '</a>');
-      moveSet1DataId++;
+      ).append('<a class="dropdown-item move1" href="" data-id = "' + moveId + '">' + formatMoveName(moveSet1) + '</a>');
     });
   });
 
   $.ajax({
-    url: 'https://pokeapi.co/api/v2/move/?offset=400&limit=800',
+    url: 'https://pokeapi.co/api/v2/move-damage-class/special',
     method: 'GET'
   }).then(response2 => {
-    response2.results.forEach(move => {
+    response2.moves.forEach(move => {
       moveSet2 = move.name;
+      const moveId = move.url.match(/\/api\/v2\/move\/(\d+)/)[1];
       $(
         '#move1Dropdown, #move2Dropdown, #move3Dropdown, #move4Dropdown'
-      ).append('<a class="dropdown-item move1" href="" data-id = "' + moveSet2DataId + '">' + formatMoveName(moveSet2) + '</a>');
-      moveSet2DataId++;
+      ).append('<a class="dropdown-item move1" href="" data-id = "' + moveId + '">' + formatMoveName(moveSet2) + '</a>');
     });
   });
 }
