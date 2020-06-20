@@ -104,6 +104,13 @@ a:hover {
 
 /* Main index page styling */
 
+.resultImg,
+.pokemonImg,
+.battleImg1,
+.battleImg2 {
+    image-rendering: pixelated;
+}
+
 .searchFor {
     display: block;
     margin: 25px auto 40px auto;
