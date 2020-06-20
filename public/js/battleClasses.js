@@ -16,8 +16,9 @@ class Pokemon {
     this.sprite.src = sprite;
     this.xPos = x;
     this.yPos = y;
+    this.loaded = 0;
 
-    // Make api calls to pokeapi.co
+    // Load moves
     $.ajax({
       url: 'https://pokeapi.co/api/v2/move/' + moves.move1,
       method: 'GET'
@@ -30,6 +31,8 @@ class Pokemon {
       if (!this.move1.power) {
         this.move1.power = 50;
       }
+
+      this.loaded++;
     });
     $.ajax({
       url: 'https://pokeapi.co/api/v2/move/' + moves.move2,
@@ -43,6 +46,8 @@ class Pokemon {
       if (!this.move2.power) {
         this.move2.power = 50;
       }
+
+      this.loaded++;
     });
     $.ajax({
       url: 'https://pokeapi.co/api/v2/move/' + moves.move3,
@@ -56,6 +61,8 @@ class Pokemon {
       if (!this.move3.power) {
         this.move3.power = 50;
       }
+
+      this.loaded++;
     });
     $.ajax({
       url: 'https://pokeapi.co/api/v2/move/' + moves.move4,
@@ -69,12 +76,18 @@ class Pokemon {
       if (!this.move4.power) {
         this.move4.power = 50;
       }
+
+      this.loaded++;
     });
+
+    // Load types
     $.ajax({
       url: 'https://pokeapi.co/api/v2/type/' + type1,
       method: 'GET'
     }).then(results => {
       this.type1 = results;
+
+      this.loaded++;
     });
     if (type2 !== 0) {
       $.ajax({
@@ -197,6 +210,10 @@ class Pokemon {
     if (this.hp < 0) {
       this.hp = 0;
     }
+  }
+
+  isLoaded() {
+    return this.loaded >= 5;
   }
 }
 
