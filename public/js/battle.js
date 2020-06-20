@@ -18,8 +18,6 @@ const messageWaitTime = 1500;
 const messageBox = new MessageBox('/img/messageBox.png', 0, 472);
 const optionsBox = new OptionsBox('/img/optionsBox.png', 500, 472);
 
-let battleBackground;
-
 $(document).ready(() => {
   loadData();
 
@@ -121,7 +119,8 @@ function initCanvas() {
 
 function drawCanvas() {
   // Clear
-  context.drawImage(battleBackground, 500, 500);
+  context.fillStyle = 'white';
+  context.fillRect(0, 0, 800, 600);
 
   player.draw(context);
   opponent.draw(context);
