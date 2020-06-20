@@ -4,6 +4,7 @@
 let viewAllRunning = false;
 let battleBtnRunning = false;
 let user;
+let pageNum;
 
 $(document).ready(() => {
   $.ajax({
@@ -21,6 +22,8 @@ $(document).ready(() => {
       $('.userBtn').append($('<a>').attr({ href: '/api/auth/logout' }).addClass('dropdown-item').text('Log out'));
     }
   });
+
+  pageNum = 0;
 });
 
 $('.searchBtn').on('click', event => {
@@ -259,7 +262,7 @@ $('.viewAll').click((event) => {
   $('.searchResults').empty();
 
   setTimeout(() => {
-    searchAll('/api/pokemon/index/0');
+    searchAll(`/api/pokemon/index/${pageNum}`);
   }, 1000);
 });
 
@@ -273,6 +276,36 @@ $('.viewYour').click(event => {
   }
 });
 
+$('.goToNextBtn').click(() => {
+  $('.goToNext').slideUp('slow');
+
+  setTimeout(() => {
+    $('.searchResults').slideUp('slow');
+
+    setTimeout(() => {
+      pageNum++;
+      
+      searchAll(`/api/pokemon/index/${pageNum}`);
+    }, 500);
+  }, 500);
+});
+
+$('.goToPrevBtn').click(() => {
+  $('.goToPrev').slideUp('slow');
+  
+  setTimeout(() => {
+    $('.error').slideUp('slow');
+  
+    $('.searchResults').slideUp('slow');
+
+    setTimeout(() => {
+      pageNum--;
+      
+      searchAll(`/api/pokemon/index/${pageNum}`);
+    }, 500);
+  }, 500);
+});
+
 function searchAll(url) {
   $.ajax({
     url: url
@@ -282,6 +315,13 @@ function searchAll(url) {
     if (results === null) {
       $('.error').text('You can\'t search for nothing...');
       $('.error').slideDown('slow');
+      return;
+    }
+
+    else if (results.length === 0 && pageNum > 0) {
+      $('.error').text('Sorry that was all the pokemon left :(');
+      $('.error').slideDown('slow');
+      $('.goToPrev').slideDown('slow');
       return;
     }
 
@@ -346,6 +386,12 @@ function searchAll(url) {
       cardBody.append(button);
 
       $('.searchResults').append(div);
+
+      if (results.length >= 20) {
+        $('.goToNext').slideDown('slow');
+      } else if (results.length <= 20 && pageNum > 0) {
+        $('.goToPrev').slideDown('slow');
+      }
     });
 
     $('.searchResults').slideDown('slow');
