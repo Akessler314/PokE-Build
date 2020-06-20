@@ -111,6 +111,10 @@ function initCanvas() {
   context = canvas.getContext('2d');
   context.imageSmoothingEnabled = false;
 
+  optionsBox.drawOptions = false;
+
+  messageBox.setMessage('Loading...');
+
   drawCanvas();
 
   startGame();
@@ -129,6 +133,7 @@ function startGame() {
     drawCanvas();
     setTimeout(opponentAttack, messageWaitTime);
   } else {
+    optionsBox.drawOptions = true;
     canInput = true;
   }
 }
