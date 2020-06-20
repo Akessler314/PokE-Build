@@ -30,7 +30,7 @@ const Creator = {
     return db.Creator.create(username);
   },
   addPokemonToCreator: function(creatorId, pokemonObj) {
-    const gif = new gifEncoder(32, 32);
+    const gif = new gifEncoder(16, 16);
 
     // When the gif is created, add it as a data URL to the pokemon
     gif.on('readable', () => {
