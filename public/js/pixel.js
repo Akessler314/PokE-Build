@@ -138,6 +138,7 @@ function goToNext() {
     // eslint-disable-next-line prettier/prettier
     if ($('.dropdown-2').text() === 'Second Type (optional)') {
       $('.dropdown-2').text('None');
+      completedPokemonObject.type2 = 0;
     }
 
     $('.chooseTypeImg').slideUp('slow');
@@ -167,11 +168,10 @@ $('a').click(function(event) {
   
   else if ($(this).hasClass('second')) {
     event.preventDefault();
-
+    
     $('.dropdown-2').text($(this).text());
 
     completedPokemonObject.type2 = parseInt($(this).attr('data-id'));
-    
   }
 
   if ($('.dropdown-1').text().trim() !== 'First Type') {
