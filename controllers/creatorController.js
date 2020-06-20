@@ -38,6 +38,7 @@ const Creator = {
 
       pokemonObj.CreatorId = creatorId;
       pokemonObj.sprite = base64;
+      pokemonObj.searchableName = pokemonObj.name.toLowerCase();
 
       db.Pokemon.create(pokemonObj);
     });

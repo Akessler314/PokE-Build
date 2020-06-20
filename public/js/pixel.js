@@ -91,7 +91,6 @@ $('#nameInputDiv').on('submit', event => {
 $('.nameNext').click(() => {
   //create object for pokemone name with a searchable name (lowercase) for db
   completedPokemonObject.name = $('#fname').val();
-  completedPokemonObject.searchableName = $('#fname').val().toLowerCase();
   nextName = 'name';
   goToNext();
 });
