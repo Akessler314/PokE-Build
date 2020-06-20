@@ -180,11 +180,11 @@ $('a').click(function(event) {
 });
 
 let usedPoints;
+const availablePoints = 1000;
 
 //Point updater
 function pointPoolUpdater(prev, current) {
   //var for the initial point pool the user will have avialible.
-  const availablePoints = 1000;
   //this will add up the values of all the points put into stats, and store it in a variable to be used.
   usedPoints =
     parseInt($hp.val()) +
@@ -195,22 +195,36 @@ function pointPoolUpdater(prev, current) {
     parseInt($attack.val()) +
     parseInt($spAttack.val());
 
+
+  if(parseInt($hp.val())<25){
+    $hp.val(25);
+    pointChecker();
+  }
+  if(parseInt($speed.val())<25){
+    $speed.val(25);
+  }
+  if(parseInt($defense.val())<25){
+    $defense.val(25);
+  }
+  if(parseInt($spDefense.val())<25){
+    $spDefense.val(25);
+  }
+  if(parseInt($defense.val())<25){
+    $defense.val(25);
+  }
+  if(parseInt($attack.val())<25){
+    $attack.val(25);
+  }
+  if(parseInt($spAttack.val())<25){
+    $spAttack.val(25);
+  }
+
+
   if (usedPoints > 1000) {
     current.val(prev);
 
-    usedPoints =
-      parseInt($hp.val()) +
-      parseInt($speed.val()) +
-      parseInt($defense.val()) +
-      parseInt($spDefense.val()) +
-      parseInt($defense.val()) +
-      parseInt($attack.val()) +
-      parseInt($spAttack.val());
+    pointChecker(); 
 
-    $('#pointPool').text(
-      'Current Points Left: ' + (availablePoints - usedPoints)
-    );
-    
     //alert user they are over the aloted points
     $('.modalText').text('You ran out of points...');
 
@@ -374,4 +388,22 @@ function formatMoveName(move) {
   }
 
   return words.join(' ');
+}
+
+
+
+function pointChecker() { 
+  usedPoints =
+  parseInt($hp.val()) +
+  parseInt($speed.val()) +
+  parseInt($defense.val()) +
+  parseInt($spDefense.val()) +
+  parseInt($defense.val()) +
+  parseInt($attack.val()) +
+  parseInt($spAttack.val());
+
+
+  $('#pointPool').text(
+    'Current Points Left: ' + (availablePoints - usedPoints)
+  );
 }
