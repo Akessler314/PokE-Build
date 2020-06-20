@@ -9,7 +9,7 @@ let opponent;
 let playerHealth;
 let opponentHealth;
 
-let canInput = true;
+let canInput = false;
 
 let isGameOver = false;
 
@@ -112,6 +112,25 @@ function initCanvas() {
   context.imageSmoothingEnabled = false;
 
   drawCanvas();
+
+  startGame();
+}
+
+function startGame() {
+  if (!player.isLoaded() || !opponent.isLoaded()) {
+    setTimeout(startGame, 50);
+    return;
+  }
+
+  // Opponent goes first if they have higher speed
+  if (opponent.speed > player.speed) {
+    canInput = false;
+    messageBox.setMessage('It looks like your opponent\nhas more speed than you!');
+    drawCanvas();
+    setTimeout(opponentAttack, messageWaitTime);
+  } else {
+    canInput = true;
+  }
 }
 
 function drawCanvas() {
