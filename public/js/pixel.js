@@ -9,16 +9,8 @@ const $attack = $('#attack');
 const $spAttack = $('#SP_Attack');
 
 let nextName;
-
-//prottype object for pokemon stat object
-// const stats = {
-//   hp: 0,
-//   speed: 0,
-//   defense: 0,
-//   spDefense: 0,
-//   attack: 0,
-//   spAttack: 0
-// };
+//Object to hold all of the objects being made for the 
+const completedPokemonObject = {};
 
 $(document).ready(() => {
   $.ajax({
@@ -36,6 +28,7 @@ $(document).ready(() => {
   creatorIdFunction();
   // appends all of the mvoes to the move selctor dropdowns on load
   appendMoves();
+
 });
 
 //Adds a color to the clicked on cell
@@ -72,13 +65,8 @@ $('#nameInputDiv').on('submit', event => {
 
 $('.nameNext').click(() => {
   //create object for pokemone name with a searchable name (lowercase) for db
-  const pokemonName = new Object();
-  pokemonName.name = $('#fname').val();
-  pokemonName.searchableName = $('#fname')
-    .val()
-    .toLowerCase();
-  console.log(pokemonName);
-  
+  completedPokemonObject.name = $('#fname').val();
+  completedPokemonObject.searchableName = $('#fname').val().toLowerCase();
   nextName = 'name';
   goToNext();
 });
@@ -88,9 +76,7 @@ $('.pixelNext').click(() => {
   //palceholder empty array to hold td cell color information.
   const pixels = [];
   //placeholder empty object to add the array
-  const spriteObject = {
-    sprite: []
-  };
+ 
   //function to loop through the td cells and grab the css background color and push it into an array
   $('td').each(function() {
     const colorVals = $(this)
@@ -98,9 +84,7 @@ $('.pixelNext').click(() => {
       .match(/rgb\((\d+), (\d+), (\d+)\)/);
     pixels.push(colorVals[1], colorVals[2], colorVals[3], 255);
   });
-  const newPokeSprite = Object.create(spriteObject);
-  newPokeSprite.sprite = pixels;
-  console.log(newPokeSprite);
+  completedPokemonObject.sprite = pixels;
   $('table').toggleClass('enabled');
   goToNext();
 });
@@ -177,9 +161,7 @@ $('a').click(function(event) {
 
     $('.dropdown-1').text($(this).text());
 
-    const firstType = new Object();
-    firstType.type1 = $(this).attr('data-id');
-    console.log(firstType);
+    completedPokemonObject.type1 = parseInt($(this).attr('data-id'));
   } 
   
   else if ($(this).hasClass('second')) {
@@ -187,9 +169,8 @@ $('a').click(function(event) {
 
     $('.dropdown-2').text($(this).text());
 
-    const secondType = new Object();
-    secondType.type2 = $(this).attr('data-id');
-    console.log(secondType);
+    completedPokemonObject.type2 = parseInt($(this).attr('data-id'));
+    
   }
 
   if ($('.dropdown-1').text().trim() !== 'First Type') {
@@ -260,8 +241,7 @@ $('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').change(function() {
 //function to create an object with the current userID to be used in the DB - this is currently set to always be 1 until log in feature is implimented
 function creatorIdFunction() {
   const creatorId = 1;
-  const creatorIdObject = new Object();
-  creatorIdObject.CreatorId = creatorId;
+  const creatorIdObject = creatorId;
   console.log(creatorIdObject);
 }
 
@@ -269,8 +249,8 @@ function creatorIdFunction() {
 function appendMoves() {
   let moveSet1;
   let moveSet2;
-  // let moveSet1DataId;
-  // let moveSet2DataId;
+  let moveSet1DataId = 1;
+  let moveSet2DataId = 401;
   $.ajax({
     url: 'https://pokeapi.co/api/v2/move/?offset=0&limit=400',
     method: 'GET'
@@ -279,7 +259,8 @@ function appendMoves() {
       moveSet1 = move.name;
       $(
         '#move1Dropdown, #move2Dropdown, #move3Dropdown, #move4Dropdown'
-      ).append('<a class="dropdown-item move1" href="">' + moveSet1 + '</a>');
+      ).append('<a class="dropdown-item move1" href="" data-id = "' +moveSet1DataId +'">' + moveSet1 + '</a>');
+      moveSet1DataId ++;
     });
   });
 
@@ -291,7 +272,8 @@ function appendMoves() {
       moveSet2 = move.name;
       $(
         '#move1Dropdown, #move2Dropdown, #move3Dropdown, #move4Dropdown'
-      ).append('<a class="dropdown-item move2" href="">' + moveSet2 + '</a>');
+      ).append('<a class="dropdown-item move1" href="" data-id = "' +moveSet2DataId +'">' + moveSet2 + '</a>');
+      moveSet2DataId ++;
     });
   });
 }
@@ -310,19 +292,19 @@ $('body').delegate('.move1, .move2', 'click', function(event) {
     .text($(this).text());
 
   if ($(this).parent().prop('id') === 'move1Dropdown') {
-    moveOne = $(this).text();
+    moveOne = $(this).attr('data-id');
   } 
   
   else if ($(this).parent().prop('id') === 'move2Dropdown') {
-    moveTwo = $(this).text();
+    moveTwo = $(this).attr('data-id');
   } 
   
   else if ($(this).parent().prop('id') === 'move3Dropdown') {
-    moveThree = $(this).text();
+    moveThree = $(this).attr('data-id');
   } 
   
   else {
-    moveFour = $(this).text();
+    moveFour = $(this).attr('data-id');
   }
 
   const move1Text = $('.move1Toggle').text().trim();
@@ -348,7 +330,6 @@ $('body').delegate('.move1, .move2', 'click', function(event) {
 //event listiner for when the user submits stats
 $('#statSubmit').click(() => {
   if (usedPoints > 1000) {
-    console.log(usedPoints);
 
     //alert user they are over the aloted points if they try to submit a pokemon that has too many stats
     $('.modalText').text('Your Pokemon is too strong! Please nerf.');
@@ -360,13 +341,13 @@ $('#statSubmit').click(() => {
 
     $('#myModal').modal('show');
   } else {
-    const stats = {
-      hp: $hp.val(),
-      speed: $speed.val(),
-      defense: $defense.val(),
-      spDefense: $spDefense.val(),
-      attack: $attack.val(),
-      spAttack: $spAttack.val()
+    completedPokemonObject.stats = {
+      hp: parseInt($hp.val()),
+      speed: parseInt($speed.val()),
+      defense: parseInt($defense.val()),
+      spDefense: parseInt($spDefense.val()),
+      attack: parseInt($attack.val()),
+      spAttack: parseInt($spAttack.val())
     };
 
     moveOne = formatMoveName(moveOne);
@@ -374,15 +355,14 @@ $('#statSubmit').click(() => {
     moveThree = formatMoveName(moveThree);
     moveFour = formatMoveName(moveFour);
 
-    const pokemonMoveObject = {
-      move1: moveOne,
-      move2: moveTwo,
-      move3: moveThree,
-      move4: moveFour
+    completedPokemonObject.moves = {
+      move1: parseInt(moveOne),
+      move2: parseInt(moveTwo),
+      move3: parseInt(moveThree),
+      move4: parseInt(moveFour)
     };
 
-    console.log(pokemonMoveObject);
-    console.log(stats);
+    console.log(completedPokemonObject);
   }
 });
 
@@ -395,3 +375,4 @@ function formatMoveName(move) {
 
   return words.join(' ');
 }
+
