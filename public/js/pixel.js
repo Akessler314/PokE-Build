@@ -9,6 +9,7 @@ const $attack = $('#attack');
 const $spAttack = $('#SP_Attack');
 
 let nextName;
+let creatorsId;
 //Object to hold all of the objects being made for the 
 const completedPokemonObject = {};
 
@@ -16,6 +17,8 @@ $(document).ready(() => {
   $.ajax({
     url: '/api/auth/user'
   }).then(res => {
+    creatorsId = res.id;
+
     $('.userNameText').text(res.username);
 
     $('.userBtn').append($('<a>').attr({ href: '/api/auth/logout' }).addClass('dropdown-item').text('Log out'));
@@ -24,8 +27,6 @@ $(document).ready(() => {
   addCellClickListener();
   //Call this on page load to give the initial amount of poitns avaialable.
   pointPoolUpdater();
-  //this will imeaditely create an object to use later for the maker ID in the db
-  creatorIdFunction();
   // appends all of the mvoes to the move selctor dropdowns on load
   appendMoves();
 
@@ -238,13 +239,6 @@ $('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').change(function() {
   pointPoolUpdater(prevNum, currentNum);
 });
 
-//function to create an object with the current userID to be used in the DB - this is currently set to always be 1 until log in feature is implimented
-function creatorIdFunction() {
-  const creatorId = 1;
-  const creatorIdObject = creatorId;
-  console.log(creatorIdObject);
-}
-
 // function to append the moves into each move selector as well as the move name into a data-name attribute
 function appendMoves() {
   let moveSet1;
@@ -259,7 +253,7 @@ function appendMoves() {
       moveSet1 = move.name;
       $(
         '#move1Dropdown, #move2Dropdown, #move3Dropdown, #move4Dropdown'
-      ).append('<a class="dropdown-item move1" href="" data-id = "' +moveSet1DataId +'">' + moveSet1 + '</a>');
+      ).append('<a class="dropdown-item move1" href="" data-id = "' +moveSet1DataId +'">' + formatMoveName(moveSet1) + '</a>');
       moveSet1DataId ++;
     });
   });
@@ -272,7 +266,7 @@ function appendMoves() {
       moveSet2 = move.name;
       $(
         '#move1Dropdown, #move2Dropdown, #move3Dropdown, #move4Dropdown'
-      ).append('<a class="dropdown-item move1" href="" data-id = "' +moveSet2DataId +'">' + moveSet2 + '</a>');
+      ).append('<a class="dropdown-item move1" href="" data-id = "' +moveSet2DataId +'">' + formatMoveName(moveSet2) + '</a>');
       moveSet2DataId ++;
     });
   });
@@ -363,6 +357,14 @@ $('#statSubmit').click(() => {
     };
 
     console.log(completedPokemonObject);
+
+    $.ajax({
+      url: `/api/creators/${creatorsId}/pokemon`,
+      method: 'POST',
+      data: completedPokemonObject
+    }).then(() => {
+      window.location.href = `/view-own/${creatorsId}`;
+    });
   }
 });
 
@@ -375,4 +377,3 @@ function formatMoveName(move) {
 
   return words.join(' ');
 }
-
