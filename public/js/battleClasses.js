@@ -24,6 +24,12 @@ class Pokemon {
     }).then(results => {
       this.move1 = results;
       this.move1.ppLeft = results.pp;
+      if (!this.move1.accuracy) {
+        this.move1.accuracy = 95;
+      }
+      if (!this.move1.power) {
+        this.move1.power = 50;
+      }
     });
     $.ajax({
       url: 'https://pokeapi.co/api/v2/move/' + moves.move2,
@@ -31,6 +37,12 @@ class Pokemon {
     }).then(results => {
       this.move2 = results;
       this.move2.ppLeft = results.pp;
+      if (!this.move2.accuracy) {
+        this.move2.accuracy = 95;
+      }
+      if (!this.move2.power) {
+        this.move2.power = 50;
+      }
     });
     $.ajax({
       url: 'https://pokeapi.co/api/v2/move/' + moves.move3,
@@ -38,6 +50,12 @@ class Pokemon {
     }).then(results => {
       this.move3 = results;
       this.move3.ppLeft = results.pp;
+      if (!this.move3.accuracy) {
+        this.move3.accuracy = 95;
+      }
+      if (!this.move3.power) {
+        this.move3.power = 50;
+      }
     });
     $.ajax({
       url: 'https://pokeapi.co/api/v2/move/' + moves.move4,
@@ -45,6 +63,12 @@ class Pokemon {
     }).then(results => {
       this.move4 = results;
       this.move4.ppLeft = results.pp;
+      if (!this.move4.accuracy) {
+        this.move4.accuracy = 95;
+      }
+      if (!this.move4.power) {
+        this.move4.power = 50;
+      }
     });
     $.ajax({
       url: 'https://pokeapi.co/api/v2/type/' + type1,
@@ -59,32 +83,6 @@ class Pokemon {
       }).then(results => {
         this.type2 = results;
       });
-    }
-
-    if (!this.move1.accuracy) {
-      this.move1.accuracy = 95;
-    }
-    if (!this.move2.accuracy) {
-      this.move2.accuracy = 95;
-    }
-    if (!this.move3.accuracy) {
-      this.move3.accuracy = 95;
-    }
-    if (!this.move4.accuracy) {
-      this.move4.accuracy = 95;
-    }
-
-    if (!this.move1.power) {
-      this.move1.power = 50;
-    }
-    if (!this.move2.power) {
-      this.move2.power = 50;
-    }
-    if (!this.move3.power) {
-      this.move3.power = 50;
-    }
-    if (!this.move4.power) {
-      this.move4.power = 50;
     }
   }
 
