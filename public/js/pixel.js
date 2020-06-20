@@ -12,6 +12,9 @@ let nextName;
 let creatorsId;
 //Object to hold all of the objects being made for the 
 const completedPokemonObject = {};
+//helps with event listener for drawing 
+let mouseDown = false;
+
 
 $(document).ready(() => {
   $.ajax({
@@ -31,18 +34,40 @@ $(document).ready(() => {
   appendMoves();
 
 });
+$(document.body).mousedown(() => {
+  mouseDown = true;
+});
+$(document.body).mouseup(() => {
+  mouseDown = false;
+});
+
 
 //Adds a color to the clicked on cell
 function addCellClickListener() {
+  $('table').mousemove(event => {
+    console.log(mouseDown);
+    if (mouseDown === true) {
+      if ($('table').hasClass('enabled')) {
+        if (event.target.matches('td')) {
+          const color = $colorPicker.val();
+          $(event.target).css('background-color', color);
+        }
+      }
+    }
+  });
   $('table').click(event => {
+    
     if ($('table').hasClass('enabled')) {
       if (event.target.matches('td')) {
         const color = $colorPicker.val();
         $(event.target).css('background-color', color);
       }
     }
+    
   });
 }
+
+
 
 // Toggles grid opacity
 $('#toggle').click(() => {
@@ -77,9 +102,9 @@ $('.pixelNext').click(() => {
   //palceholder empty array to hold td cell color information.
   const pixels = [];
   //placeholder empty object to add the array
- 
+
   //function to loop through the td cells and grab the css background color and push it into an array
-  $('td').each(function() {
+  $('td').each(function () {
     const colorVals = $(this)
       .css('background-color')
       .match(/rgb\((\d+), (\d+), (\d+)\)/);
@@ -157,18 +182,18 @@ function goToNext() {
   }
 }
 
-$('a').click(function(event) {
+$('a').click(function (event) {
   if ($(this).hasClass('first')) {
     event.preventDefault();
 
     $('.dropdown-1').text($(this).text());
 
     completedPokemonObject.type1 = parseInt($(this).attr('data-id'));
-  } 
-  
+  }
+
   else if ($(this).hasClass('second')) {
     event.preventDefault();
-    
+
     $('.dropdown-2').text($(this).text());
 
     completedPokemonObject.type2 = parseInt($(this).attr('data-id'));
@@ -187,35 +212,35 @@ function pointPoolUpdater(prev, current) {
   //var for the initial point pool the user will have avialible.
   //this will add up the values of all the points put into stats, and store it in a variable to be used.
   usedPoints =
-    parseInt($hp.val()) +
-    parseInt($speed.val()) +
-    parseInt($defense.val()) +
-    parseInt($spDefense.val()) +
-    parseInt($defense.val()) +
-    parseInt($attack.val()) +
-    parseInt($spAttack.val());
+      parseInt($hp.val()) +
+      parseInt($speed.val()) +
+      parseInt($defense.val()) +
+      parseInt($spDefense.val()) +
+      parseInt($defense.val()) +
+      parseInt($attack.val()) +
+      parseInt($spAttack.val());
 
 
-  if(parseInt($hp.val())<25){
+  if (parseInt($hp.val()) < 25) {
     $hp.val(25);
     pointChecker();
   }
-  if(parseInt($speed.val())<25){
+  if (parseInt($speed.val()) < 25) {
     $speed.val(25);
   }
-  if(parseInt($defense.val())<25){
+  if (parseInt($defense.val()) < 25) {
     $defense.val(25);
   }
-  if(parseInt($spDefense.val())<25){
+  if (parseInt($spDefense.val()) < 25) {
     $spDefense.val(25);
   }
-  if(parseInt($defense.val())<25){
+  if (parseInt($defense.val()) < 25) {
     $defense.val(25);
   }
-  if(parseInt($attack.val())<25){
+  if (parseInt($attack.val()) < 25) {
     $attack.val(25);
   }
-  if(parseInt($spAttack.val())<25){
+  if (parseInt($spAttack.val()) < 25) {
     $spAttack.val(25);
   }
 
@@ -223,7 +248,7 @@ function pointPoolUpdater(prev, current) {
   if (usedPoints > 1000) {
     current.val(prev);
 
-    pointChecker(); 
+    pointChecker();
 
     //alert user they are over the aloted points
     $('.modalText').text('You ran out of points...');
@@ -242,11 +267,11 @@ function pointPoolUpdater(prev, current) {
 }
 
 //event listener for when a user changes the value of a stat
-$('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').on('focus keypres', function() {
+$('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').on('focus keypres', function () {
   $(this).data('num', $(this).val());
 });
 
-$('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').change(function() {
+$('#hp, #speed, #defense, #SP_Defense, #attack, #SP_Attack').change(function () {
   const prevNum = $(this).data('num');
   const currentNum = $(this);
 
@@ -267,8 +292,8 @@ function appendMoves() {
       moveSet1 = move.name;
       $(
         '#move1Dropdown, #move2Dropdown, #move3Dropdown, #move4Dropdown'
-      ).append('<a class="dropdown-item move1" href="" data-id = "' +moveSet1DataId +'">' + formatMoveName(moveSet1) + '</a>');
-      moveSet1DataId ++;
+      ).append('<a class="dropdown-item move1" href="" data-id = "' + moveSet1DataId + '">' + formatMoveName(moveSet1) + '</a>');
+      moveSet1DataId++;
     });
   });
 
@@ -280,8 +305,8 @@ function appendMoves() {
       moveSet2 = move.name;
       $(
         '#move1Dropdown, #move2Dropdown, #move3Dropdown, #move4Dropdown'
-      ).append('<a class="dropdown-item move1" href="" data-id = "' +moveSet2DataId +'">' + formatMoveName(moveSet2) + '</a>');
-      moveSet2DataId ++;
+      ).append('<a class="dropdown-item move1" href="" data-id = "' + moveSet2DataId + '">' + formatMoveName(moveSet2) + '</a>');
+      moveSet2DataId++;
     });
   });
 }
@@ -291,7 +316,7 @@ let moveTwo;
 let moveThree;
 let moveFour;
 
-$('body').delegate('.move1, .move2', 'click', function(event) {
+$('body').delegate('.move1, .move2', 'click', function (event) {
   event.preventDefault();
 
   $(this)
@@ -301,16 +326,16 @@ $('body').delegate('.move1, .move2', 'click', function(event) {
 
   if ($(this).parent().prop('id') === 'move1Dropdown') {
     moveOne = $(this).attr('data-id');
-  } 
-  
+  }
+
   else if ($(this).parent().prop('id') === 'move2Dropdown') {
     moveTwo = $(this).attr('data-id');
-  } 
-  
+  }
+
   else if ($(this).parent().prop('id') === 'move3Dropdown') {
     moveThree = $(this).attr('data-id');
-  } 
-  
+  }
+
   else {
     moveFour = $(this).attr('data-id');
   }
@@ -323,10 +348,10 @@ $('body').delegate('.move1, .move2', 'click', function(event) {
   // This if statement is used just to check and make sure that the user has made a selection for
   // all four moves and nothing is left undefined.
   if (
-    move1Text !== 'Move 1' && 
-    move2Text !== 'Move 2' && 
-    move3Text !== 'Move 3' && 
-    move4Text !== 'Move 4'
+    move1Text !== 'Move 1' &&
+      move2Text !== 'Move 2' &&
+      move3Text !== 'Move 3' &&
+      move4Text !== 'Move 4'
   ) {
     $('#statSubmit').slideDown('slow');
   } else {
@@ -369,7 +394,7 @@ $('#statSubmit').click(() => {
       move3: parseInt(moveThree),
       move4: parseInt(moveFour)
     };
-    
+
     $.ajax({
       url: `/api/creators/${creatorsId}/pokemon`,
       method: 'POST',
@@ -392,15 +417,15 @@ function formatMoveName(move) {
 
 
 
-function pointChecker() { 
+function pointChecker() {
   usedPoints =
-  parseInt($hp.val()) +
-  parseInt($speed.val()) +
-  parseInt($defense.val()) +
-  parseInt($spDefense.val()) +
-  parseInt($defense.val()) +
-  parseInt($attack.val()) +
-  parseInt($spAttack.val());
+      parseInt($hp.val()) +
+      parseInt($speed.val()) +
+      parseInt($defense.val()) +
+      parseInt($spDefense.val()) +
+      parseInt($defense.val()) +
+      parseInt($attack.val()) +
+      parseInt($spAttack.val());
 
 
   $('#pointPool').text(
