@@ -344,10 +344,10 @@ $('#statSubmit').click(() => {
       spAttack: parseInt($spAttack.val())
     };
 
-    moveOne = formatMoveName(moveOne);
-    moveTwo = formatMoveName(moveTwo);
-    moveThree = formatMoveName(moveThree);
-    moveFour = formatMoveName(moveFour);
+    moveOne = moveOne;
+    moveTwo = moveTwo;
+    moveThree = moveThree;
+    moveFour = moveFour;
 
     completedPokemonObject.moves = {
       move1: parseInt(moveOne),
@@ -355,9 +355,7 @@ $('#statSubmit').click(() => {
       move3: parseInt(moveThree),
       move4: parseInt(moveFour)
     };
-
-    console.log(completedPokemonObject);
-
+    
     $.ajax({
       url: `/api/creators/${creatorsId}/pokemon`,
       method: 'POST',
