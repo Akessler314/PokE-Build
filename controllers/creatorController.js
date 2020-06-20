@@ -1,4 +1,5 @@
 const db = require('../models');
+const gifEncoder = require('gif-encoder');
 
 const Creator = {
   findById: function(id) {
@@ -29,9 +30,22 @@ const Creator = {
     return db.Creator.create(username);
   },
   addPokemonToCreator: function(creatorId, pokemonObj) {
-    const fields = pokemonObj;
-    fields.CreatorId = creatorId;
-    return db.Pokemon.create(fields);
+    const gif = new gifEncoder(32, 32);
+
+    // When the gif is created, add it as a data URL to the pokemon
+    gif.on('readable', () => {
+      const base64 = 'data:image/gif;base64,' + gif.read().toString('base64');
+
+      pokemonObj.CreatorId = creatorId;
+      pokemonObj.sprite = base64;
+
+      db.Pokemon.create(pokemonObj);
+    });
+
+    // Create gif
+    gif.writeHeader();
+    gif.addFrame(pokemonObj.sprite);
+    gif.finish();
   }
 };
 

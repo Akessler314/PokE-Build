@@ -23,13 +23,4 @@ module.exports = function(app) {
       res.json(results);
     });
   });
-
-  // Updates a sprite to the given pokemon
-  app.put('/api/pokemon/:id/sprite', (req, res) => {
-    if (!req.user || req.user.id !== req.params.id) {
-      res.status(401);
-    } else {
-      Pokemon.updateSprite(req.params.id, req.body);
-    }
-  });
 };
