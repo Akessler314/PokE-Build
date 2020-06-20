@@ -386,6 +386,10 @@ $('#statSubmit').click(() => {
       move4: parseInt(moveFour)
     };
 
+    if (!completedPokemonObject.name) {
+      completedPokemonObject.name = $('#fname').val();
+    }
+
     $.ajax({
       url: `/api/creators/${creatorsId}/pokemon`,
       method: 'POST',
