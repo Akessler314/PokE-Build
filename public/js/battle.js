@@ -13,9 +13,12 @@ let canInput = true;
 
 let isGameOver = false;
 
+const messageWaitTime = 1500;
 
 const messageBox = new MessageBox('/img/messageBox.png', 0, 472);
 const optionsBox = new OptionsBox('/img/optionsBox.png', 500, 472);
+
+let battleBackground;
 
 $(document).ready(() => {
   loadData();
@@ -110,13 +113,15 @@ function initCanvas() {
   context = canvas.getContext('2d');
   context.imageSmoothingEnabled = false;
 
+  battleBackground = new Image();
+  battleBackground.src = '/img/battleBackground.png';
+
   drawCanvas();
 }
 
 function drawCanvas() {
   // Clear
-  context.fillStyle = 'white';
-  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.drawImage(battleBackground, 500, 500);
 
   player.draw(context);
   opponent.draw(context);
@@ -132,11 +137,11 @@ function playerAttack(move) {
       pokemonTakesDamage(opponent, results.effectiveness, results.damage);
 
       if (isGameOver) {
-        setTimeout(endGame, 1000, player, opponent);
+        setTimeout(endGame, messageWaitTime, player, opponent);
       } else {
-        setTimeout(opponentAttack, 1000);
+        setTimeout(opponentAttack, messageWaitTime);
       }
-    }, 1000);
+    }, messageWaitTime);
   });
 }
 
@@ -147,16 +152,16 @@ function opponentAttack() {
       setTimeout(() => {
         pokemonTakesDamage(player, results.effectiveness, results.damage);
         if (isGameOver) {
-          setTimeout(endGame, 1000, opponent, player);
+          setTimeout(endGame, messageWaitTime, opponent, player);
         } else {
           setTimeout(() => {
             canInput = true;
             optionsBox.drawOptions = true;
             messageBox.setMessage('');
             drawCanvas();
-          }, 1000);
+          }, messageWaitTime);
         }
-      }, 1000);
+      }, messageWaitTime);
     }
   );
 }
@@ -222,12 +227,12 @@ function attackPokemon(attacking, target, move) {
       };
 
       resolve(toReturn);
-    }, 1000);
+    }, messageWaitTime);
   });
 }
 
 function endGame(winner, loser) {
-  messageBox.setMessage(loser.name + ' was defeated, congrats ' + winner.name + '!');
+  messageBox.setMessage(loser.name + ' was defeated,\ncongrats ' + winner.name + '!');
   loser.sprite.src = '';
   drawCanvas();
 
@@ -235,5 +240,5 @@ function endGame(winner, loser) {
     messageBox.setMessage('Press any key to go back to the home\npage.');
     drawCanvas();
     canInput = true;
-  }, 2000);
+  }, messageWaitTime);
 }
