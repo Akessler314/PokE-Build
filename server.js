@@ -11,8 +11,10 @@ const db = require('./models');
 
 // Creating express app and configuring middleware needed for authentication
 const app = express();
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
+app.use(
+  express.urlencoded({ limit: '1mb', extended: true, parameterLimit: 1000000 })
+);
 app.use(express.static('public'));
 
 // Initialize Passport with our browser, and start a new session
