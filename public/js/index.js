@@ -290,9 +290,11 @@ $('.goToNextBtn').click(() => {
 
     setTimeout(() => {
       pageNum++;
+
+      $('.searchResults').empty();
       
       searchAll(`/api/pokemon/index/${pageNum}`);
-    }, 500);
+    }, 700);
   }, 500);
 });
 
@@ -306,9 +308,11 @@ $('.goToPrevBtn').click(() => {
 
     setTimeout(() => {
       pageNum--;
+
+      $('.searchResults').empty();
       
       searchAll(`/api/pokemon/index/${pageNum}`);
-    }, 500);
+    }, 700);
   }, 500);
 });
 
