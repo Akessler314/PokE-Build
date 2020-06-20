@@ -29,7 +29,14 @@ $(document).ready(() => {
 $('.searchBtn').on('click', event => {
   event.preventDefault();
 
+  viewAllRunning = false;
+
   $('.searchResults').empty();
+
+  $('.goToNext').slideUp('slow');
+  $('.goToPrev').slideUp('slow');
+
+  pageNum = 0;
 
   searchAll(`/api/pokemon/search/${$('.searchBar').val()}`);
 
@@ -39,9 +46,12 @@ $('.searchBar').on('keydown', key => {
   if (key.keyCode !== 13) {
     $('.error').slideUp('slow');
     $('.searchResults').slideUp('slow');
+
+    $('.goToNext').slideUp('slow');
+    $('.goToPrev').slideUp('slow');
   
     if (key.keyCode === 8) {
-      if ($('.searchBar').val().trim() === '') {
+      if ($('.searchBar').val().trim() === '' && !$('.searchBar').is(':focus')) {
         $('.searchResults').slideUp('slow');
 
         setTimeout(() => {
@@ -58,9 +68,11 @@ $('.searchBar').on('keydown', key => {
 });
 
 $(document).click(() => {
-  if ($('.searchBar').val().trim() === '' && !viewAllRunning && $('.searchResults').is(':hidden')) {
-    $('.searchResults').slideUp('slow');
-    $('.buttonRow').slideDown('slow');
+  if ($('.searchBar').is(':focus') === false) {
+    if ($('.searchBar').val().trim() === '' && !viewAllRunning && $('.searchResults').is(':hidden')) {
+      $('.searchResults').slideUp('slow');
+      $('.buttonRow').slideDown('slow');
+    }
   }
 });
 
@@ -245,7 +257,7 @@ $('body').delegate('.goBackBtn', 'click', function() {
   let lastSearchUrl;
 
   if ($(this).attr('data-search') === 'View All') {
-    lastSearchUrl = '/api/pokemon/index/0';
+    lastSearchUrl = `/api/pokemon/index/${pageNum}`;
   } else {
     $('.searchBar').val($(this).attr('data-search'));
     lastSearchUrl = `/api/pokemon/search/${$(this).attr('data-search')}`;
@@ -328,17 +340,18 @@ function searchAll(url) {
       return;
     }
 
-    else if (results.length === 0 && pageNum > 0) {
-      $('.error').text('Sorry that was all the pokemon left :(');
-      $('.error').slideDown('slow');
-      $('.goToPrev').slideDown('slow');
-      return;
-    }
 
     // Show an error if the there are no search results
     else if (results.length === 0) {
       $('.error').text('Couldn\'t find any Pokemon with that name');
       $('.error').slideDown('slow');
+      return;
+    }
+
+    else if (results.length === 0 && pageNum > 0) {
+      $('.error').text('Sorry that was all the pokemon left :(');
+      $('.error').slideDown('slow');
+      $('.goToPrev').slideDown('slow');
       return;
     }
 
@@ -399,7 +412,9 @@ function searchAll(url) {
 
       if (results.length >= 20) {
         $('.goToNext').slideDown('slow');
-      } else if (results.length <= 20 && pageNum > 0) {
+      }
+      
+      else if (results.length <= 20 && pageNum > 0) {
         $('.goToPrev').slideDown('slow');
       }
     });
