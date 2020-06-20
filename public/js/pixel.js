@@ -138,7 +138,7 @@ function goToNext() {
     // eslint-disable-next-line prettier/prettier
     if ($('.dropdown-2').text() === 'Second Type (optional)') {
       $('.dropdown-2').text('None');
-      completedPokemonObject.type2 = 0;
+      completedPokemonObject.type2 = 1;
     }
 
     $('.chooseTypeImg').slideUp('slow');
