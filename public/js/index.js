@@ -69,6 +69,9 @@ $('body').delegate('.pokemonSearch', 'click', function(event) {
   event.preventDefault();
 
   if (!battleBtnRunning) {
+    $('.goToNext').slideUp('slow');
+    $('.goToPrev').slideUp('slow');
+
     $('.searchResults').slideUp('slow');
 
     setTimeout(() => {
@@ -189,6 +192,9 @@ $('body').delegate('.battleBtn', 'click', function() {
         id: $(this).attr('data-id')
       };
 
+      $('.goToNext').slideUp('slow');
+      $('.goToPrev').slideUp('slow');
+
       sessionStorage.setItem('battleId2', JSON.stringify(battleObj));
 
       $('.searchResults').slideUp('slow');
@@ -284,9 +290,11 @@ $('.goToNextBtn').click(() => {
 
     setTimeout(() => {
       pageNum++;
+
+      $('.searchResults').empty();
       
       searchAll(`/api/pokemon/index/${pageNum}`);
-    }, 500);
+    }, 700);
   }, 500);
 });
 
@@ -300,9 +308,11 @@ $('.goToPrevBtn').click(() => {
 
     setTimeout(() => {
       pageNum--;
+
+      $('.searchResults').empty();
       
       searchAll(`/api/pokemon/index/${pageNum}`);
-    }, 500);
+    }, 700);
   }, 500);
 });
 
