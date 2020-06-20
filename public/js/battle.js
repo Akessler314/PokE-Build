@@ -133,8 +133,10 @@ function startGame() {
     drawCanvas();
     setTimeout(opponentAttack, messageWaitTime);
   } else {
+    messageBox.setMessage('');
     optionsBox.drawOptions = true;
     canInput = true;
+    drawCanvas();
   }
 }
 
