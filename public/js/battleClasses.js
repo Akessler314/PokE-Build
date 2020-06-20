@@ -52,12 +52,14 @@ class Pokemon {
     }).then(results => {
       this.type1 = results;
     });
-    $.ajax({
-      url: 'https://pokeapi.co/api/v2/type/' + type2,
-      method: 'GET'
-    }).then(results => {
-      this.type2 = results;
-    });
+    if (type2 !== 0) {
+      $.ajax({
+        url: 'https://pokeapi.co/api/v2/type/' + type2,
+        method: 'GET'
+      }).then(results => {
+        this.type2 = results;
+      });
+    }
   }
 
   draw(context) {
