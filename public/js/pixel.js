@@ -62,7 +62,6 @@ function addCellClickListener() {
         $(event.target).css('background-color', color);
       }
     }
-    
   });
 }
 
@@ -215,7 +214,6 @@ function pointPoolUpdater(prev, current) {
       parseInt($speed.val()) +
       parseInt($defense.val()) +
       parseInt($spDefense.val()) +
-      parseInt($defense.val()) +
       parseInt($attack.val()) +
       parseInt($spAttack.val());
 
@@ -232,9 +230,6 @@ function pointPoolUpdater(prev, current) {
   }
   if (parseInt($spDefense.val()) < 25) {
     $spDefense.val(25);
-  }
-  if (parseInt($defense.val()) < 25) {
-    $defense.val(25);
   }
   if (parseInt($attack.val()) < 25) {
     $attack.val(25);
@@ -420,7 +415,6 @@ function pointChecker() {
       parseInt($speed.val()) +
       parseInt($defense.val()) +
       parseInt($spDefense.val()) +
-      parseInt($defense.val()) +
       parseInt($attack.val()) +
       parseInt($spAttack.val());
 
