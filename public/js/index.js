@@ -387,9 +387,9 @@ function searchAll(url) {
 
       $('.searchResults').append(div);
 
-      if (results.length > 20) {
+      if (results.length >= 20) {
         $('.goToNext').slideDown('slow');
-      } else if (results.length < 20 && pageNum > 0) {
+      } else if (results.length <= 20 && pageNum > 0) {
         $('.goToPrev').slideDown('slow');
       }
     });
