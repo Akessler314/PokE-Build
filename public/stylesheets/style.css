@@ -12,7 +12,8 @@ td, tr, table {
     -khtml-user-drag: none;
     -moz-user-drag: none;
     -o-user-drag: none;
-  }
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -143,7 +144,7 @@ a:hover {
     outline: none;
 }
 
-.searchBtn:focus, .signIn:focus, .nextBtn:focus, .battleBtn:focus, .doneBtn:focus {
+.searchBtn:focus, .signIn:focus, .nextBtn:focus, .battleBtn:focus, .doneBtn:focus, .goToNextBtn:focus, .goToPrevBtn:focus {
     outline: none;
 }
 
@@ -187,13 +188,20 @@ a:hover {
 .goBackBtn, 
 .doneBtn,
 .signUpBtn,
-.logInBtn {
+.logInBtn,
+.goToNextBtn,
+.goToPrevBtn {
     background-color: rgb(255, 33, 35);
     border: 2px solid black;
     border-radius: 1rem;
     margin: 20px auto 0 auto;
     outline:none;
     padding: 10px 25px;
+}
+
+.goToNextBtn, .goToPrevBtn {
+    display: block;
+    margin: 30px auto;
 }
 
 .viewAll:hover, 
@@ -205,7 +213,9 @@ a:hover {
 .goBackBtn:hover, 
 .doneBtn:hover,
 .signUpBtn:hover,
-.logInBtn:hover {
+.logInBtn:hover,
+.goToNextBtn:hover,
+.goToPrevBtn:hover {
     transition: ease-in-out 0.3s;
     transform: scale(1.05);
 }
