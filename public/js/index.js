@@ -69,6 +69,9 @@ $('body').delegate('.pokemonSearch', 'click', function(event) {
   event.preventDefault();
 
   if (!battleBtnRunning) {
+    $('.goToNext').slideUp('slow');
+    $('.goToPrev').slideUp('slow');
+
     $('.searchResults').slideUp('slow');
 
     setTimeout(() => {
@@ -188,6 +191,9 @@ $('body').delegate('.battleBtn', 'click', function() {
         img: $(this).parent().parent().find('img').attr('src'),
         id: $(this).attr('data-id')
       };
+
+      $('.goToNext').slideUp('slow');
+      $('.goToPrev').slideUp('slow');
 
       sessionStorage.setItem('battleId2', JSON.stringify(battleObj));
 
