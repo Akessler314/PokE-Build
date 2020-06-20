@@ -60,6 +60,32 @@ class Pokemon {
         this.type2 = results;
       });
     }
+
+    if (!this.move1.accuracy) {
+      this.move1.accuracy = 95;
+    }
+    if (!this.move2.accuracy) {
+      this.move2.accuracy = 95;
+    }
+    if (!this.move3.accuracy) {
+      this.move3.accuracy = 95;
+    }
+    if (!this.move4.accuracy) {
+      this.move4.accuracy = 95;
+    }
+
+    if (!this.move1.power) {
+      this.move1.power = 50;
+    }
+    if (!this.move2.power) {
+      this.move2.power = 50;
+    }
+    if (!this.move3.power) {
+      this.move3.power = 50;
+    }
+    if (!this.move4.power) {
+      this.move4.power = 50;
+    }
   }
 
   draw(context) {
@@ -110,7 +136,7 @@ class Pokemon {
     // ---- DOUBLE DAMAGE FROM ----
     const doubleDamageFrom = pokemon.type1.damage_relations.double_damage_from;
     
-    if (pokemon.type2.damage_relations) {
+    if (pokemon.type2 && pokemon.type2.damage_relations) {
       doubleDamageFrom.push(...pokemon.type2.damage_relations.double_damage_from);
     }
 
@@ -124,7 +150,7 @@ class Pokemon {
     // ---- HALF DAMAGE FROM ----
     const halfDamageFrom = pokemon.type1.damage_relations.half_damage_from;
     
-    if (pokemon.type2.damage_relations) {
+    if (pokemon.type2 && pokemon.type2.damage_relations) {
       halfDamageFrom.push(...pokemon.type2.damage_relations.half_damage_from);
     }
 
@@ -138,7 +164,7 @@ class Pokemon {
     // ---- NO DAMAGE FROM ----
     const noDamageFrom = pokemon.type1.damage_relations.no_damage_from;
     
-    if (pokemon.type2.damage_relations) {
+    if (pokemon.type2 && pokemon.type2.damage_relations) {
       noDamageFrom.push(...pokemon.type2.damage_relations.no_damage_from);
     }
 
@@ -277,7 +303,12 @@ class OptionsBox {
       if (this.moveContext === 'Info') {
         let message = 'Type: ' + formatMoveName(move.type.name) + '   PP: ' + move.ppLeft + '/' + move.pp;
         message += '\nAccuracy: ' + move.accuracy + '   ' + 'Power: ' + move.power;
-        message += '\n' + move.flavor_text_entries[0].flavor_text;
+        for (let i = 0; i < move.flavor_text_entries.length; i++) {
+          if (move.flavor_text_entries[i].language.name === 'en') {
+            message += '\n' + move.flavor_text_entries[i].flavor_text;
+            break;
+          }
+        }
         messageBox.setMessage(message);
       }
       else if (this.moveContext === 'Attack')
