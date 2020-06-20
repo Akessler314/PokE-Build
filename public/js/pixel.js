@@ -83,7 +83,7 @@ $('.pixelNext').click(() => {
     const colorVals = $(this)
       .css('background-color')
       .match(/rgb\((\d+), (\d+), (\d+)\)/);
-    pixels.push(colorVals[1], colorVals[2], colorVals[3], 255);
+    pixels.push(parseInt(colorVals[1]), parseInt(colorVals[2]), parseInt(colorVals[3]), 255);
   });
   completedPokemonObject.sprite = pixels;
   $('table').toggleClass('enabled');
