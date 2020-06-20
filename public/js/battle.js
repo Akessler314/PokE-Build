@@ -13,7 +13,7 @@ let canInput = true;
 
 let isGameOver = false;
 
-const messageWaitTime = 1500;
+const messageWaitTime = 1250;
 
 const messageBox = new MessageBox('/img/messageBox.png', 0, 472);
 const optionsBox = new OptionsBox('/img/optionsBox.png', 500, 472);
@@ -110,9 +110,6 @@ function initCanvas() {
   canvas = $('#battle-canvas')[0];
   context = canvas.getContext('2d');
   context.imageSmoothingEnabled = false;
-
-  battleBackground = new Image();
-  battleBackground.src = '/img/battleBackground.png';
 
   drawCanvas();
 }
