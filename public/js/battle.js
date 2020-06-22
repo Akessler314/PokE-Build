@@ -59,51 +59,51 @@ function loadData() {
     url: '/api/pokemon/' + playerPokemon,
     method: 'get'
   })
+  .then(results => {
+    player = new Pokemon(
+      results.name,
+      results.stats,
+      results.moves,
+      results.type1,
+      results.type2,
+      results.sprite,
+      32,
+      344
+    );
+    playerHealth = new HealthBox(
+      player.maxHP,
+      player.name,
+      544,
+      344,
+      '/img/healthBox.png'
+    );
+  });
+
+  $.ajax({
+    url: '/api/pokemon/' + opponentPokemon,
+    method: 'get'
+  })
     .then(results => {
-      player = new Pokemon(
+      opponent = new Pokemon(
         results.name,
         results.stats,
         results.moves,
         results.type1,
         results.type2,
         results.sprite,
-        32,
-        344
+        640,
+        32
       );
-      playerHealth = new HealthBox(
-        player.maxHP,
-        player.name,
-        544,
-        344,
+      opponentHealth = new HealthBox(
+        opponent.maxHP,
+        opponent.name,
+        0,
+        0,
         '/img/healthBox.png'
       );
-    })
-    .then(() => {
-      $.ajax({
-        url: '/api/pokemon/' + opponentPokemon,
-        method: 'get'
-      })
-        .then(results => {
-          opponent = new Pokemon(
-            results.name,
-            results.stats,
-            results.moves,
-            results.type1,
-            results.type2,
-            results.sprite,
-            640,
-            32
-          );
-          opponentHealth = new HealthBox(
-            opponent.maxHP,
-            opponent.name,
-            0,
-            0,
-            '/img/healthBox.png'
-          );
-        })
-        .then(initCanvas);
     });
+
+    initCanvas();
 }
 
 function initCanvas() {
@@ -121,7 +121,7 @@ function initCanvas() {
 }
 
 function startGame() {
-  if (!player.isLoaded() || !opponent.isLoaded()) {
+  if (!player || !opponent || !player.isLoaded() || !opponent.isLoaded()) {
     setTimeout(startGame, 50);
     return;
   }
@@ -145,10 +145,12 @@ function drawCanvas() {
   context.fillStyle = 'white';
   context.fillRect(0, 0, 800, 600);
 
-  player.draw(context);
-  opponent.draw(context);
-  playerHealth.draw(context);
-  opponentHealth.draw(context);
+  if (player && opponent) {
+    player.draw(context);
+    opponent.draw(context);
+    playerHealth.draw(context);
+    opponentHealth.draw(context);
+  }
   messageBox.draw(context);
   optionsBox.draw(context);
 }

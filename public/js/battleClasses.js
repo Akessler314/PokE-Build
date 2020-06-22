@@ -127,10 +127,12 @@ class Pokemon {
     amount += 2;
 
     let modifier = 1;
+    let crit = false;
 
     // Check if we're critting
     if (Math.random() < DATA.critRates[this.critRate]) {
       modifier *= 1.5;
+      crit = true;
     }
 
     // Random modifier
@@ -200,7 +202,8 @@ class Pokemon {
       damage: amount,
       effective: effectiveness,
       minTimesToAttack: moveInfo.meta.min_hits || 1,
-      maxTimesToAttack: moveInfo.meta.max_hits || 1
+      maxTimesToAttack: moveInfo.meta.max_hits || 1,
+      crit: crit
     };
     return attackResult;
   }
