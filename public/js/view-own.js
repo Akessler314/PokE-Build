@@ -1,9 +1,9 @@
+let user;
+
 /* eslint-disable indent */
 /* eslint-disable prettier/prettier */
 $(document).ready(() => {
   $('.loader').hide();
-
-  let user;
 
   $.ajax({
     url: '/api/auth/user'
@@ -194,6 +194,7 @@ $('.yesBtn').click(() => {
       $.ajax({
         url: `/api/pokemon/delete/${deletePokemonId}`
       }).then(() => {
+        console.log('test');
         window.location.href = `/view-own/${user.id}`;
       });
     }, 2000);
