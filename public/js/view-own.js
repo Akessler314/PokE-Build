@@ -21,16 +21,19 @@ $(document).ready(() => {
       url: `/api/creators/${user.id}`,
       method: 'GET'
     }).then(results => {
-      const savedBattleId = JSON.parse(sessionStorage.getItem('battleId1'));
-
       results.Pokemon.forEach((type, i) => {
-          const typeName = findType(type.type1);
+        const savedBattleId = JSON.parse(sessionStorage.getItem('battleId1'));
 
+        const typeName = findType(type.type1);
+
+        if (savedBattleId !== null) {
           if ($(`.bb${i}`).attr('data-id') === savedBattleId.id) {
               $(`.bb${i}`).attr('disabled', true);
           }
+        }
 
-          $(`.type${i}`).text(typeName);
+
+        $(`.type${i}`).text(typeName);
       
       });
     });
@@ -181,6 +184,14 @@ $('.noBtn').click(() => {
 });
 
 $('.yesBtn').click(() => {
+  const savedBattleId = JSON.parse(sessionStorage.getItem('battleId1'));
+  
+  if (savedBattleId !== null) {
+    if (deletePokemonId === parseInt(savedBattleId.id)) {
+      sessionStorage.removeItem('battleId1');
+    }
+  }
+
   $('.deleteModalHeader').slideUp('slow');
   $('.modalBody').slideUp('slow');
   $('.deleteModalFooter').slideUp('slow');
