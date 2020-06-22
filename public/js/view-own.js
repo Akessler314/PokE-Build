@@ -159,6 +159,7 @@ $('body').delegate('.battleBtn', 'click', function() {
     }, 300);
 });
 
+// eslint-disable-next-line no-unused-vars
 let deletePokemonId;
 let deletePokemonName;
 
