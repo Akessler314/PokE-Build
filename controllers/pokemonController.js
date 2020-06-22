@@ -32,6 +32,13 @@ const Pokemon = {
       limit: pageLimit,
       offset: page * pageLimit
     });
+  },
+  deleteWithId: function(id) {
+    return db.Pokemon.destroy({
+      where: {
+        id: id
+      }
+    });
   }
 };
 

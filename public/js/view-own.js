@@ -1,9 +1,9 @@
+let user;
+
 /* eslint-disable indent */
 /* eslint-disable prettier/prettier */
 $(document).ready(() => {
   $('.loader').hide();
-
-  let user;
 
   $.ajax({
     url: '/api/auth/user'
@@ -18,7 +18,8 @@ $(document).ready(() => {
     // This ajax call will grab the type number from the api
     // Then parse it using the findType function and replace the "TBD" in the correct spot on the html side 
     $.ajax({
-      url: `/api/creators/${user.id}`
+      url: `/api/creators/${user.id}`,
+      method: 'GET'
     }).then(results => {
       const savedBattleId = JSON.parse(sessionStorage.getItem('battleId1'));
 
@@ -190,11 +191,12 @@ $('.yesBtn').click(() => {
     $('.modalBody').slideDown('slow');
 
     setTimeout(() => {
-      // $.ajax({
-      //   url: `/api/delete/${deletePokemonId}`
-      // }).then(() => {
-      //   window.location.href = `/view-own/${user.id}`;
-      // });
+      $.ajax({
+        url: `/api/pokemon/delete/${deletePokemonId}`
+      }).then(() => {
+        console.log('test');
+        window.location.href = `/view-own/${user.id}`;
+      });
     }, 2000);
   }, 800);
 });
