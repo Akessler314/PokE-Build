@@ -23,6 +23,35 @@
         </div>    
     </div>
 
+    {{!-- Modal for delete confirmation --}}
+    <div class="modal fade" id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                    <!-- Modal header -->
+                    <div class="modal-header deleteModalHeader">
+                        <img src="https://fontmeme.com/permalink/200622/707b75c20d54f2277d91bca3875a88cd.png" alt="Are you sure logo" class="modalLogo">
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                    <!-- Time format setting -->
+                    <div class="btn-group modalBody" role="group">
+                        <p class="modalText deleteModalText">Are you sure you want to delete <span class="pokemonName"></span> from the database? This is an unreversible process!</p>
+                    
+                        {{!-- Got this simple loader from w3Schools  https://www.w3schools.com/howto/howto_css_loader.asp --}}
+                        <div class="loader"></div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer deleteModalFooter">
+                        <button type="button" class="btn-secondary noBtn" data-dismiss="modal"><img src="https://fontmeme.com/permalink/200622/b364480e05a311648e4f5efd5dd6e97d.png" alt="No button. Click here to dismiss the modal and not delete your pokemon"></button>
+                        <button type="button" class="btn-secondary yesBtn"><img src="https://fontmeme.com/permalink/200622/2106900f4ded4e86bc3a927ebd2615c2.png" alt="Yes button. Click here to dismiss the modal and delete your pokemon"></button>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+
     <div class="row letsBattleRow" style="display: none;">
         <img src="https://fontmeme.com/permalink/200617/c481a7e89638f316964bff4c5a8d3575.png" alt="Let's Battle!" id="letsBattleImg">
     </div>
@@ -49,12 +78,15 @@
                         </div>
 
                         <div class="pokemonText">
+                            <a href="" class="trashATag" data-id="{{this.dataValues.id}}" data-name="{{this.dataValues.name}}"><i class="far fa-trash-alt trash"></i></a>
                             <p>Name: {{this.dataValues.name}}</p>
                             <p>Type: <span class="type{{@index}}">TBD</span></p>
                             <p>HP: {{this.dataValues.stats.hp}}</p>
+                            <p>Speed: {{this.dataValues.stats.speed}}</p>
                             <p>Attack: {{this.dataValues.stats.attack}}</p>
                             <p>Defense: {{this.dataValues.stats.defense}}</p>
-                            <p>Speed: {{this.dataValues.stats.speed}}</p>
+                            <p>SP Attack: {{this.dataValues.stats.spAttack}}</p>
+                            <p>SP Defense: {{this.dataValues.stats.spDefense}}</p>
 
                             <button class="battleBtn battleBtn2 btn bb{{@index}}" data-id="{{this.dataValues.id}}">
                                 <img src="https://fontmeme.com/permalink/200617/496fe144d8c773fefe9c9dbe2e35d2bf.png" alt="Click on this button to battle this pokemon!">

@@ -31,6 +31,32 @@ a:hover {
     color: black;
 }
 
+p {
+    font-size: 20px;
+}
+
+/* Got this simple loader from w3Schools  https://www.w3schools.com/howto/howto_css_loader.asp*/
+.loader {
+    border: 16px solid lightgray;
+    border-radius: 50%;
+    border-top: 16px solid rgb(255, 35, 35);
+    width: 60px;
+    height: 60px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+}
+  
+/* Safari */
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 #letsBattleImg {
     display: block;
     margin: 0 auto 50px auto;
@@ -94,7 +120,7 @@ a:hover {
 }
 
 /* Modal styling */
-.modalLogo, .signUpLogo, .logInLogo {
+.modalLogo, .signUpLogo, .logInLogo, .modalBody, .loader {
     display: block;
     margin: 0 auto;
 }
@@ -144,7 +170,7 @@ a:hover {
     outline: none;
 }
 
-.searchBtn:focus, .signIn:focus, .nextBtn:focus, .battleBtn:focus, .doneBtn:focus, .goToNextBtn:focus, .goToPrevBtn:focus {
+.searchBtn:focus, .signIn:focus, .nextBtn:focus, .battleBtn:focus, .doneBtn:focus, .noBtn:focus, .yesBtn:focus, .goToNextBtn:focus, .goToPrevBtn:focus {
     outline: none;
 }
 
@@ -169,6 +195,12 @@ a:hover {
     font-size: 35px;
 }
 
+.trash {
+    font-size: 40px;
+    float: right;
+    color: rgb(255, 35, 35);
+}
+
 .container-xl {
     margin-top: 60px;
 }
@@ -187,6 +219,8 @@ a:hover {
 .battleBtn, 
 .goBackBtn, 
 .doneBtn,
+.noBtn,
+.yesBtn,
 .signUpBtn,
 .logInBtn,
 .goToNextBtn,
@@ -197,6 +231,14 @@ a:hover {
     margin: 20px auto 0 auto;
     outline:none;
     padding: 10px 25px;
+}
+
+.noBtn {
+    margin-right: 20px;
+}
+
+.yesBtn {
+    margin-left: 20px;
 }
 
 .goToNextBtn, .goToPrevBtn {
@@ -212,6 +254,8 @@ a:hover {
 #statSubmit:hover, 
 .goBackBtn:hover, 
 .doneBtn:hover,
+.noBtn:hover,
+.yesBtn:hover,
 .signUpBtn:hover,
 .logInBtn:hover,
 .goToNextBtn:hover,
@@ -220,7 +264,7 @@ a:hover {
     transform: scale(1.05);
 }
 
-.dropdown-toggle:hover, .doneBtn:hover {
+.dropdown-toggle:hover, .doneBtn:hover, .noBtn:hover, .yesBtn:hover, .yesBtn:focus {
     background-color: rgb(255, 35, 35);
 }
 
@@ -231,8 +275,8 @@ a:hover {
 }
 
 .battleBtn2 {
-    width: 270px;
-    margin: 41px 0 0 0;
+    width: 44%;
+    margin: 29px 0 0 0;
 }
 
 .goBackBtn {
@@ -291,7 +335,7 @@ a:hover {
     border-radius: 1rem;
     box-shadow: 3px 5px 9px 0px black;
     margin: 0 auto 50px auto;
-    width: 65%;
+    width: 86%;
 }
 
 .resultCard {

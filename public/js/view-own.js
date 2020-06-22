@@ -1,38 +1,39 @@
 /* eslint-disable indent */
 /* eslint-disable prettier/prettier */
 $(document).ready(() => {
-    let user;
+  $('.loader').hide();
 
+  let user;
+
+  $.ajax({
+    url: '/api/auth/user'
+  }).then(res => {
+    user = res;
+
+    $('.userNameText').text(res.username);
+
+    $('.userBtn').append($('<a>').attr({ href: '/api/auth/logout' }).addClass('dropdown-item').text('Log out'));
+
+    // Instead of running a switch in handlebars
+    // This ajax call will grab the type number from the api
+    // Then parse it using the findType function and replace the "TBD" in the correct spot on the html side 
     $.ajax({
-      url: '/api/auth/user'
-    }).then(res => {
-      user = res;
+      url: `/api/creators/${user.id}`
+    }).then(results => {
+      const savedBattleId = JSON.parse(sessionStorage.getItem('battleId1'));
 
-      $('.userNameText').text(res.username);
-  
-      $('.userBtn').append($('<a>').attr({ href: '/api/auth/logout' }).addClass('dropdown-item').text('Log out'));
-    
+      results.Pokemon.forEach((type, i) => {
+          const typeName = findType(type.type1);
 
-      // Instead of running a switch in handlebars
-      // This ajax call will grab the type number from the api
-      // Then parse it using the findType function and replace the "TBD" in the correct spot on the html side 
-      $.ajax({
-        url: `/api/creators/${user.id}`
-      }).then(results => {
-        const savedBattleId = sessionStorage.getItem('battleId1');
+          if ($(`.bb${i}`).attr('data-id') === savedBattleId.id) {
+              $(`.bb${i}`).attr('disabled', true);
+          }
 
-        results.Pokemon.forEach((type, i) => {
-            const typeName = findType(type.type1);
-
-            if ($(`.bb${i}`).attr('data-id') === savedBattleId) {
-               $(`.bb${i}`).attr('disabled', true);
-            }
-
-            $(`.type${i}`).text(typeName);
-        
-        });
+          $(`.type${i}`).text(typeName);
+      
       });
     });
+  });
 });
 
 function findType(num) {
@@ -156,4 +157,44 @@ $('body').delegate('.battleBtn', 'click', function() {
         }, 800);
       }
     }, 300);
+});
+
+// eslint-disable-next-line no-unused-vars
+let deletePokemonId;
+let deletePokemonName;
+
+$('.trashATag').click(function(event) {
+  event.preventDefault();
+
+  deletePokemonId = $(this).data('id');
+  deletePokemonName = $(this).data('name');
+
+  $('.pokemonName').text($(this).data('name'));
+
+  $('#deleteModal').modal('show');
+});
+
+$('.noBtn').click(() => {
+  deletePokemonId = '';
+  deletePokemonName = '';
+});
+
+$('.yesBtn').click(() => {
+  $('.deleteModalHeader').slideUp('slow');
+  $('.modalBody').slideUp('slow');
+  $('.deleteModalFooter').slideUp('slow');
+
+  setTimeout(() => {
+    $('.deleteModalText').text(`Deleting ${deletePokemonName} from the Poke-Build database.`);
+    $('.loader').show();
+    $('.modalBody').slideDown('slow');
+
+    setTimeout(() => {
+      // $.ajax({
+      //   url: `/api/delete/${deletePokemonId}`
+      // }).then(() => {
+      //   window.location.href = `/view-own/${user.id}`;
+      // });
+    }, 2000);
+  }, 800);
 });
