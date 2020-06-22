@@ -23,4 +23,11 @@ module.exports = function(app) {
       res.json(results);
     });
   });
+
+  // Delete pokemon
+  app.get('/api/pokemon/delete/:id', (req, res) => {
+    Pokemon.deleteWithId(req.params.id).then(results => {
+      res.json(results);
+    });
+  });
 };
