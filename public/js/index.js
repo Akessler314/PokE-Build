@@ -125,9 +125,11 @@ $('body').delegate('.pokemonSearch', 'click', function(event) {
           .append($('<p>').text(`Name: ${results.name}`))
           .append($('<p>').text(`Type: ${type1}`))
           .append($('<p>').text(`HP: ${results.stats.hp}`))
+          .append($('<p>').text(`Speed: ${results.stats.speed}`))
           .append($('<p>').text(`Attack: ${results.stats.attack}`))
           .append($('<p>').text(`Defense: ${results.stats.defense}`))
-          .append($('<p>').text(`Speed: ${results.stats.defense}`));
+          .append($('<p>').text(`SP Attack: ${results.stats.spAttack}`))
+          .append($('<p>').text(`SP Defense: ${results.stats.spDefense}`));
 
         const goBack = $('<div>')
           .addClass('row')
