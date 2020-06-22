@@ -59,51 +59,51 @@ function loadData() {
     url: '/api/pokemon/' + playerPokemon,
     method: 'get'
   })
+  .then(results => {
+    player = new Pokemon(
+      results.name,
+      results.stats,
+      results.moves,
+      results.type1,
+      results.type2,
+      results.sprite,
+      32,
+      344
+    );
+    playerHealth = new HealthBox(
+      player.maxHP,
+      player.name,
+      544,
+      344,
+      '/img/healthBox.png'
+    );
+  });
+
+  $.ajax({
+    url: '/api/pokemon/' + opponentPokemon,
+    method: 'get'
+  })
     .then(results => {
-      player = new Pokemon(
+      opponent = new Pokemon(
         results.name,
         results.stats,
         results.moves,
         results.type1,
         results.type2,
         results.sprite,
-        32,
-        344
+        640,
+        32
       );
-      playerHealth = new HealthBox(
-        player.maxHP,
-        player.name,
-        544,
-        344,
+      opponentHealth = new HealthBox(
+        opponent.maxHP,
+        opponent.name,
+        0,
+        0,
         '/img/healthBox.png'
       );
-    })
-    .then(() => {
-      $.ajax({
-        url: '/api/pokemon/' + opponentPokemon,
-        method: 'get'
-      })
-        .then(results => {
-          opponent = new Pokemon(
-            results.name,
-            results.stats,
-            results.moves,
-            results.type1,
-            results.type2,
-            results.sprite,
-            640,
-            32
-          );
-          opponentHealth = new HealthBox(
-            opponent.maxHP,
-            opponent.name,
-            0,
-            0,
-            '/img/healthBox.png'
-          );
-        })
-        .then(initCanvas);
     });
+
+    initCanvas();
 }
 
 function initCanvas() {
@@ -121,7 +121,7 @@ function initCanvas() {
 }
 
 function startGame() {
-  if (!player.isLoaded() || !opponent.isLoaded()) {
+  if (!player || !opponent || !player.isLoaded() || !opponent.isLoaded()) {
     setTimeout(startGame, 50);
     return;
   }
@@ -145,56 +145,132 @@ function drawCanvas() {
   context.fillStyle = 'white';
   context.fillRect(0, 0, 800, 600);
 
-  player.draw(context);
-  opponent.draw(context);
-  playerHealth.draw(context);
-  opponentHealth.draw(context);
+  if (player && opponent) {
+    player.draw(context);
+    opponent.draw(context);
+    playerHealth.draw(context);
+    opponentHealth.draw(context);
+  }
   messageBox.draw(context);
   optionsBox.draw(context);
 }
 
-function playerAttack(move) {
-  attackPokemon(player, opponent, move).then(results => {
-    setTimeout(() => {
-      pokemonTakesDamage(opponent, results.effectiveness, results.damage);
+async function playerAttack(move) {
+  const damage = await attackPokemon(player, opponent, move);
 
-      if (isGameOver) {
-        setTimeout(endGame, messageWaitTime, player, opponent);
-      } else {
-        setTimeout(opponentAttack, messageWaitTime);
-      }
-    }, messageWaitTime);
-  });
+  if (damage !== 0) {
+    await pokemonTakesDamage(opponent, damage);
+  }
+
+  if (isGameOver) {
+    endGame(player, opponent);
+  }
+  else {
+    opponentAttack();
+  }
 }
 
-function opponentAttack() {
-  attackPokemon(opponent, player, Math.floor(Math.random() * 4 + 1)).then(
-    results => {
-      // Pick random move to fight with
-      setTimeout(() => {
-        pokemonTakesDamage(player, results.effectiveness, results.damage);
-        if (isGameOver) {
-          setTimeout(endGame, messageWaitTime, opponent, player);
-        } else {
-          setTimeout(() => {
-            canInput = true;
-            optionsBox.drawOptions = true;
-            messageBox.setMessage('');
-            drawCanvas();
-          }, messageWaitTime);
-        }
-      }, messageWaitTime);
-    }
-  );
+async function opponentAttack() {
+  const randomMove = Math.floor(Math.random() * 4 + 1);
+  const damage = await attackPokemon(opponent, player, randomMove);
+
+  if (damage !== 0) {
+    await pokemonTakesDamage(player, damage);
+  }
+
+  if (isGameOver) {
+    endGame(opponent, player);
+  } else {
+    canInput = true;
+    optionsBox.drawOptions = true;
+    messageBox.setMessage('');
+    drawCanvas();
+  }
 }
 
-function pokemonTakesDamage(pokemon, effectiveness, amount) {
+async function pokemonTakesDamage(pokemon, amount) {
   amount = Math.floor(amount);
   pokemon.takeDamage(amount);
 
-  if (effectiveness < 0) {
+  playerHealth.setHealth(player.hp);
+  opponentHealth.setHealth(opponent.hp);
+
+  drawCanvas();
+
+  await wait(messageWaitTime);
+
+  if (opponent.hp <= 0 || player.hp <= 0) {
+    isGameOver = true;
+  }
+}
+
+async function attackPokemon(attacking, target, move) {
+  const moveName = attacking['move' + move].name;
+  messageBox.setMessage(
+    attacking.name + ' uses ' + formatMoveName(moveName) + '!'
+  );
+
+  drawCanvas();
+
+  await wait(messageWaitTime);
+
+  const attackResult = attacking.attackPokemon(move, target);
+  attackResult.minTimesToAttack -= 1;
+  attackResult.maxTimesToAttack -= 1;
+
+  let timesHit = 1;
+  let totalDamage = attackResult.damage;
+
+  // If we missed
+  if (attackResult.effective < 0) {
     messageBox.setMessage('It missed!');
-  } else if (effectiveness === 0) {
+    drawCanvas();
+
+    await wait(messageWaitTime);
+
+    return 0;
+  }
+
+  // If we are hitting multiple times
+  if (attackResult.minTimesToAttack > 0) {
+    const timesToHit = Math.ceil(
+      Math.random() *
+        (attackResult.maxTimesToAttack - attackResult.minTimesToAttack)
+    );
+    timesHit += timesToHit;
+    for (let i = 0; i < timesToHit; i++) {
+      totalDamage += attacking.attackPokemon(move, target).damage;
+    }
+
+    messageBox.setMessage('Hit ' + timesHit + ' times');
+    drawCanvas();
+    
+    await wait(messageWaitTime);
+  }
+
+  // If we crit
+  await displayCrit(attackResult.crit);
+
+  // Display effectiveness
+  await displayEffectiveness(attackResult.effective);
+
+  return totalDamage;
+}
+
+async function endGame(winner, loser) {
+  messageBox.setMessage(loser.name + ' was defeated,\ncongrats ' + winner.name + '!');
+  loser.sprite.src = '';
+  drawCanvas();
+
+  await wait(messageWaitTime);
+
+  messageBox.setMessage('Press any key to go back to the home\npage.');
+  drawCanvas();
+  canInput = true;
+}
+
+async function displayEffectiveness(effectiveness) {
+  if (effectiveness === 0) {
     messageBox.setMessage('It has no effect...');
   } else if (effectiveness < 1) {
     messageBox.setMessage('It is not very effective.');
@@ -204,63 +280,22 @@ function pokemonTakesDamage(pokemon, effectiveness, amount) {
     messageBox.setMessage('It is super effective!');
   }
 
-  playerHealth.setHealth(player.hp);
-  opponentHealth.setHealth(opponent.hp);
-
-  drawCanvas();
-
-  if (opponent.hp <= 0 || player.hp <= 0) {
-    isGameOver = true;
+  if (effectiveness !== 1) {
+    drawCanvas();
+    await wait(messageWaitTime);
   }
 }
 
-function attackPokemon(attacking, target, move) {
-  const moveName = attacking['move' + move].name;
-  messageBox.setMessage(
-    attacking.name + ' uses ' + formatMoveName(moveName) + '!'
-  );
+async function displayCrit(crit) {
+  if (crit) {
+    messageBox.setMessage('Critical hit!');
+    drawCanvas();
 
-  drawCanvas();
-
-  return new Promise(resolve => {
-    setTimeout(() => {
-      const attackResult = attacking.attackPokemon(move, target);
-      attackResult.minTimesToAttack -= 1;
-      attackResult.maxTimesToAttack -= 1;
-      let timesHit = 1;
-      let totalDamage = attackResult.damage;
-      if (attackResult.minTimesToAttack > 0 && attackResult.effective >= 0) {
-        const timesToHit = Math.ceil(
-          Math.random() *
-            (attackResult.maxTimesToAttack - attackResult.minTimesToAttack)
-        );
-        timesHit += timesToHit;
-        for (let i = 0; i < timesToHit; i++) {
-          totalDamage += attacking.attackPokemon(move, target).damage;
-        }
-
-        messageBox.setMessage('Hit ' + timesHit + ' times');
-        drawCanvas();
-      }
-
-      const toReturn = {
-        effectiveness: attackResult.effective,
-        damage: totalDamage
-      };
-
-      resolve(toReturn);
-    }, messageWaitTime);
-  });
+    await wait(messageWaitTime);
+  }
 }
 
-function endGame(winner, loser) {
-  messageBox.setMessage(loser.name + ' was defeated,\ncongrats ' + winner.name + '!');
-  loser.sprite.src = '';
-  drawCanvas();
-
-  setTimeout(() => {
-    messageBox.setMessage('Press any key to go back to the home\npage.');
-    drawCanvas();
-    canInput = true;
-  }, messageWaitTime);
+async function wait(ms) {
+  // eslint-disable-next-line no-empty-function
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
