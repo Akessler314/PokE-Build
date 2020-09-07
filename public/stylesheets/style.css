@@ -259,6 +259,10 @@ p {
     margin: 30px auto;
 }
 
+.goToNextImg, .goToPrevImg {
+    width: 100%;
+}
+
 .viewAll:hover, 
 .viewYour:hover, 
 .createNew:hover, 
@@ -652,6 +656,10 @@ td {
         margin-left: 100px;
     }
 
+    .container-xl {
+        margin-top: 40px;
+    }
+
     .lastButton {
         margin: 50px auto;
     }
@@ -709,6 +717,10 @@ td {
 
     .searchFor {
         width: 95%;
+    }
+
+    .searchBar {
+        font-size: 15px;
     }
 
     .modalLogo, .signUpLogo, .logInLogo, .modalBody, .loader {
