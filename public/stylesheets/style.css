@@ -688,6 +688,11 @@ td {
 }
 
 @media (max-width: 640px) {
+    /* Modal */
+    .modalText {
+        font-size: 13px;
+    }
+
     /* Navbar */
     #pokeBuildLogo {
         width: 130px;
@@ -740,6 +745,13 @@ td {
         margin: 0 0 45px 0;
     }
 
+    .trash {
+        font-size: 25px;
+        position: absolute;
+        top: 7px;
+        right: 7px;
+    }
+
     /* Footer */
 
     footer p {
@@ -752,5 +764,15 @@ td {
 
     #dreamTeamLogo {
         width: 100px;
+    }
+}
+
+@media (max-width: 320px) {
+    .noBtn {
+        margin-right: 15px;
+    }
+
+    .yesBtn {
+        margin-left: 0;
     }
 }
