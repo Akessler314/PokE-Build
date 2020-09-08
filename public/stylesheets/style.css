@@ -156,12 +156,13 @@ p {
 }
 
 .searchBar, #fname {
-    box-shadow: 0px 6px 10px -3px #444;
     border: 2px black solid;
     border-radius: 50rem !important;
+    box-shadow: 0px 6px 10px -3px #444;
     font-family: 'Press Start 2P', cursive;
-    font-size: 18px;
+    font-size: 17px;
     padding: 25px 15px;
+    text-align: center;
 }
 
 .searchBtn {
@@ -197,6 +198,18 @@ p {
 
 .current {
     margin-bottom: 200px;
+}
+
+.jumbotron {
+    background-color: rgb(255, 35, 35);
+    box-shadow: 1px 2px 4px 0px black;
+    display: none;
+}
+
+.mobilePixelText {
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 17px;
 }
 
 /* Font Awesome icon */
@@ -663,6 +676,18 @@ td {
     .lastButton {
         margin: 50px auto;
     }
+
+    .namePokemonImg, .drawPokemonImg, .chooseTypeImg, .chooseStatsImg {
+        width: 90%;
+    }
+
+    .statsRow {
+        width: 65%;
+    }
+
+    .current {
+        margin-bottom: 50px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -685,9 +710,22 @@ td {
     .lastButton {
         margin: 50px auto;
     }
+
+    .moveRow {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 640px) {
+    .jumbotron {
+        display: block;
+    }
+
+    .namePokemonImg, #nameInputDiv {
+        display: none;
+    }
+
     /* Modal */
     .modalText {
         font-size: 13px;
@@ -728,8 +766,16 @@ td {
         font-size: 15px;
     }
 
-    .modalLogo, .signUpLogo, .logInLogo, .modalBody, .loader {
+    .signUpLogo, .logInLogo, .modalBody {
         width: 95%;
+    }
+
+    .modalLogo {
+        width: 55%;
+    }
+
+    .deleteModalLogo {
+        width: 85%;
     }
 
     .pokemonImg {
