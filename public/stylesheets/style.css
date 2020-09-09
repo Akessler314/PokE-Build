@@ -152,15 +152,17 @@ p {
 .searchFor {
     display: block;
     margin: 25px auto 40px auto;
+    width: 80%;
 }
 
 .searchBar, #fname {
-    box-shadow: 0px 6px 10px -3px #444;
     border: 2px black solid;
     border-radius: 50rem !important;
+    box-shadow: 0px 6px 10px -3px #444;
     font-family: 'Press Start 2P', cursive;
-    font-size: 18px;
+    font-size: 17px;
     padding: 25px 15px;
+    text-align: center;
 }
 
 .searchBtn {
@@ -170,7 +172,15 @@ p {
     outline: none;
 }
 
-.searchBtn:focus, .signIn:focus, .nextBtn:focus, .battleBtn:focus, .doneBtn:focus, .noBtn:focus, .yesBtn:focus, .goToNextBtn:focus, .goToPrevBtn:focus {
+.searchBtn:focus, 
+.signIn:focus, 
+.nextBtn:focus, 
+.battleBtn:focus, 
+.doneBtn:focus, 
+.noBtn:focus, 
+.yesBtn:focus, 
+.goToNextBtn:focus, 
+.goToPrevBtn:focus {
     outline: none;
 }
 
@@ -188,6 +198,18 @@ p {
 
 .current {
     margin-bottom: 200px;
+}
+
+.jumbotron {
+    background-color: rgb(255, 35, 35);
+    box-shadow: 1px 2px 4px 0px black;
+    display: none;
+}
+
+.mobilePixelText {
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 17px;
 }
 
 /* Font Awesome icon */
@@ -233,6 +255,10 @@ p {
     padding: 10px 25px;
 }
 
+.view {
+    width: 100%;
+}
+
 .noBtn {
     margin-right: 20px;
 }
@@ -244,6 +270,10 @@ p {
 .goToNextBtn, .goToPrevBtn {
     display: block;
     margin: 30px auto;
+}
+
+.goToNextImg, .goToPrevImg {
+    width: 100%;
 }
 
 .viewAll:hover, 
@@ -292,7 +322,7 @@ p {
     border: 5px solid rgb(255, 35, 35);
     border-radius: 1rem;
     box-shadow: 2px 5px 13px -2px black;
-    margin-bottom: 50px;
+    margin: 0 auto 50px auto;
     padding: 15px;
 }
 
@@ -369,6 +399,7 @@ p {
     display: block;
     margin: 70px auto;
     padding: 30px;
+    width: 95%;
 }
 
 #signUpUsername, 
@@ -410,6 +441,10 @@ footer {
     margin-top: auto;
     text-align: center;
     width: 100%;
+}
+
+#heartEmoji {
+    width: 40px;
 }
 
 .hide {
@@ -613,3 +648,177 @@ td {
     max-height: 600px;
     margin: auto;
 } 
+
+/* Media Queries */
+
+/* This will make is so that the user won't be able to battle on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .battleBtn {
+        display: none;
+    }
+}
+
+@media (max-width: 1025px) {
+    .col-lg-3 {
+        width: 50%;
+        flex: 0;
+        min-width: 50%;
+    }
+
+    .col-lg-4 {
+        margin-left: 100px;
+    }
+
+    .container-xl {
+        margin-top: 40px;
+    }
+
+    .lastButton {
+        margin: 50px auto;
+    }
+
+    .namePokemonImg, .drawPokemonImg, .chooseTypeImg, .chooseStatsImg {
+        width: 90%;
+    }
+
+    .statsRow {
+        width: 65%;
+    }
+
+    .current {
+        margin-bottom: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    p {
+        font-size: 15px;
+    }
+
+    .pokemonImg {
+        margin-right: 30px;
+    }
+
+    .col-lg-4 {
+        width: 50%;
+    }
+
+    .col-lg-4 {
+        margin-left: 0px;
+    }
+
+    .lastButton {
+        margin: 50px auto;
+    }
+
+    .moveRow {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 640px) {
+    .jumbotron {
+        display: block;
+    }
+
+    .namePokemonImg, #nameInputDiv {
+        display: none;
+    }
+
+    /* Modal */
+    .modalText {
+        font-size: 13px;
+    }
+
+    /* Navbar */
+    #pokeBuildLogo {
+        width: 130px;
+    }
+
+    .fas {
+        font-size: 30px;
+    }
+
+    .userNameText {
+        font-size: 11px;
+    }
+
+    /* Body */
+    .card {
+        margin-bottom: 30px;
+        width: 95%;
+    }
+
+    .col-lg-3 {
+        min-width: 100%;
+    }
+
+    .col-lg-4 {
+        width: 100%;
+    }
+
+    .searchFor {
+        width: 95%;
+    }
+
+    .searchBar {
+        font-size: 15px;
+    }
+
+    .signUpLogo, .logInLogo, .modalBody {
+        width: 95%;
+    }
+
+    .modalLogo {
+        width: 55%;
+    }
+
+    .deleteModalLogo {
+        width: 85%;
+    }
+
+    .pokemonImg {
+        margin: 15px 0;
+        width: 100%;
+    }
+
+    .pokemonText {
+        text-align: center;
+    }
+    
+    .pokemonBtnRow {
+        margin: 0 0 45px 0;
+    }
+
+    .trash {
+        font-size: 25px;
+        position: absolute;
+        top: 7px;
+        right: 7px;
+    }
+
+    /* Footer */
+
+    footer p {
+        font-size: 11px;
+    }
+
+    #heartEmoji {
+        width: 25px;
+    }
+
+    #dreamTeamLogo {
+        width: 100px;
+    }
+}
+
+@media (max-width: 320px) {
+    .noBtn {
+        margin-right: 15px;
+    }
+
+    .yesBtn {
+        margin-left: 0;
+    }
+}
