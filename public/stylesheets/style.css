@@ -235,7 +235,8 @@ p {
 .viewYour, 
 .createNew, 
 .nextBtn, 
-#toggle, 
+#toggle,
+#eraserBtn, 
 .dropdown-toggle, 
 #statSubmit, 
 .battleBtn, 
@@ -280,7 +281,8 @@ p {
 .viewYour:hover, 
 .createNew:hover, 
 .nextBtn:hover, 
-#toggle:hover, 
+#toggle:hover,
+#eraserBtn:hover, 
 #statSubmit:hover, 
 .goBackBtn:hover, 
 .doneBtn:hover,
@@ -558,13 +560,19 @@ input[type=number] {
     border-radius: 1rem;
 }
 
+#eraserBtn {
+    color: white;
+    margin: 2px 0 0 2px;
+    padding: 7px 15px 10.5px 12px;
+}
+
 #toggle {
     color: white;
-    margin-left: 30px;
+    margin-top: 0;
 }
 
 #toggle:active {
-    transform: scale(0.95);
+    transform: scale(0.99);
 }
 
 .dropdown-div {
