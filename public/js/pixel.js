@@ -15,6 +15,7 @@ const completedPokemonObject = {};
 //helps with event listener for drawing 
 let mouseDown = false;
 
+let prevColor;
 
 $(document).ready(() => {
   $.ajax({
@@ -70,6 +71,37 @@ function addCellClickListener() {
 // Toggles grid opacity
 $('#toggle').click(() => {
   $('td').toggleClass('opacity');
+});
+
+// Eraser button
+$('#eraserBtn').click(() => {
+  if ($('#eraserBtn').data('mode') === 'eraser') {
+    $('#eraserBtn').data('mode', 'brush');
+
+    $('#eraserBtn').removeClass('fa-eraser');
+    $('#eraserBtn').addClass('fa-paint-brush');
+    
+    prevColor = $colorPicker.val();
+
+    $colorPicker.val('#ffffff');
+
+  } else {
+    $('#eraserBtn').data('mode', 'eraser');
+
+    $('#eraserBtn').removeClass('fa-paint-brush');
+    $('#eraserBtn').addClass('fa-eraser');
+
+    $colorPicker.val(prevColor);
+  }
+});
+
+$('#colorPicker').change(() => {
+  if ($('#eraserBtn').data('mode') === 'brush') {
+    $('#eraserBtn').data('mode', 'eraser');
+
+    $('#eraserBtn').removeClass('fa-paint-brush');
+    $('#eraserBtn').addClass('fa-eraser');
+  }
 });
 
 $('#fname').on('keydown', () => {

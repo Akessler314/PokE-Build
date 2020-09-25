@@ -26,7 +26,7 @@ function signUp(event) {
     url: '/api/auth/login',
     method: 'POST',
     data: {
-      username: $('#logInUsername').val(),
+      username: $('#logInUsername').val().trim(),
       password: $('#logInPassword').val()
     },
     error: function() {
