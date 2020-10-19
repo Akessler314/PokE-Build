@@ -649,6 +649,14 @@ td {
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
+.eraserCursor { 
+    cursor: url(../img/eraser.png), auto;
+}
+
+.brushCursor { 
+    cursor: url(../img/paint-brush.png), auto;
+}
+
 /* End of crap for the pokemon creator  */
 
  #battle-canvas {
