@@ -56,7 +56,7 @@ function addCellClickListener() {
     }
   });
   $('table').click(event => {
-    
+
     if ($('table').hasClass('enabled')) {
       if (event.target.matches('td')) {
         const color = $colorPicker.val();
@@ -73,6 +73,7 @@ $('#toggle').click(() => {
   $('td').toggleClass('opacity');
 });
 
+
 // Eraser button
 $('#eraserBtn').click(() => {
   if ($('#eraserBtn').data('mode') === 'eraser') {
@@ -80,7 +81,10 @@ $('#eraserBtn').click(() => {
 
     $('#eraserBtn').removeClass('fa-eraser');
     $('#eraserBtn').addClass('fa-paint-brush');
-    
+    //changes the cursor to an eraser while in erase mode
+    $('body').removeClass('brushCursor');
+    $('body').addClass('eraserCursor');
+
     prevColor = $colorPicker.val();
 
     $colorPicker.val('#ffffff');
@@ -90,6 +94,9 @@ $('#eraserBtn').click(() => {
 
     $('#eraserBtn').removeClass('fa-paint-brush');
     $('#eraserBtn').addClass('fa-eraser');
+    //changes the cursor from an eraser back to a brush
+    $('body').removeClass('eraserCursor');
+    $('body').addClass('brushCursor');
 
     $colorPicker.val(prevColor);
   }
@@ -123,6 +130,8 @@ $('.nameNext').click(() => {
   //create object for pokemone name with a searchable name (lowercase) for db
   completedPokemonObject.name = $('#fname').val();
   nextName = 'name';
+  //turns the cursor to a brush when a user enters the drawing step of creating
+  $('body').addClass('brushCursor');
   goToNext();
 });
 
@@ -141,6 +150,10 @@ $('.pixelNext').click(() => {
   });
   completedPokemonObject.sprite = pixels;
   $('table').toggleClass('enabled');
+  //removes custom cursors after making the sprite
+  $('body').removeClass('eraserCursor');
+  $('body').removeClass('brushCursor');
+
   goToNext();
 });
 
@@ -241,12 +254,12 @@ function pointPoolUpdater(prev, current) {
   //var for the initial point pool the user will have avialible.
   //this will add up the values of all the points put into stats, and store it in a variable to be used.
   usedPoints =
-      parseInt($hp.val()) +
-      parseInt($speed.val()) +
-      parseInt($defense.val()) +
-      parseInt($spDefense.val()) +
-      parseInt($attack.val()) +
-      parseInt($spAttack.val());
+    parseInt($hp.val()) +
+    parseInt($speed.val()) +
+    parseInt($defense.val()) +
+    parseInt($spDefense.val()) +
+    parseInt($attack.val()) +
+    parseInt($spAttack.val());
 
 
   if (parseInt($hp.val()) < 25) {
@@ -372,9 +385,9 @@ $('body').delegate('.move1, .move2', 'click', function (event) {
   // all four moves and nothing is left undefined.
   if (
     move1Text !== 'Move 1' &&
-      move2Text !== 'Move 2' &&
-      move3Text !== 'Move 3' &&
-      move4Text !== 'Move 4'
+    move2Text !== 'Move 2' &&
+    move3Text !== 'Move 3' &&
+    move4Text !== 'Move 4'
   ) {
     $('#statSubmit').slideDown('slow');
   } else {
@@ -446,12 +459,12 @@ function formatMoveName(move) {
 
 function pointChecker() {
   usedPoints =
-      parseInt($hp.val()) +
-      parseInt($speed.val()) +
-      parseInt($defense.val()) +
-      parseInt($spDefense.val()) +
-      parseInt($attack.val()) +
-      parseInt($spAttack.val());
+    parseInt($hp.val()) +
+    parseInt($speed.val()) +
+    parseInt($defense.val()) +
+    parseInt($spDefense.val()) +
+    parseInt($attack.val()) +
+    parseInt($spAttack.val());
 
 
   $('#pointPool').text(
